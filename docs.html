@@ -2,18 +2,72 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>الوثائق | Kattour</title>
+  <title>توثيق Kattour</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-gray-900 p-10 font-sans">
-  <h1 class="text-3xl font-bold text-green-700 mb-6">دليل Kattour</h1>
-  <p class="mb-4">مرحبًا بك في توثيق لغة Kattour. هنا ستجد كيفية كتابة الصفحات، العناصر، الإجراءات، المتغيرات، والشروط.</p>
-  <ul class="list-disc list-inside space-y-2">
-    <li><strong>app:</strong> تعريف التطبيق</li>
-    <li><strong>page:</strong> إنشاء صفحة</li>
-    <li><strong>text:</strong> عنصر نص</li>
-    <li><strong>button:</strong> زر تفاعلي</li>
-    <li><strong>if / else:</strong> شروط منطقية</li>
-  </ul>
+<body class="bg-white text-gray-900 p-10 font-sans leading-loose">
+  <h1 class="text-3xl font-bold text-green-700 mb-6">📘 توثيق لغة Kattour</h1>
+
+  <section>
+    <h2 class="text-2xl font-semibold mb-2">ما هي Kattour؟</h2>
+    <p>لغة برمجة جديدة لإنشاء صفحات وتطبيقات بطريقة سهلة وسريعة باستخدام بناء يشبه YAML.</p>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="text-2xl font-semibold mb-2">🚀 تثبيت Kattour CLI</h2>
+    <pre class="bg-gray-100 p-4 rounded text-sm"><code>npm install -g kattour</code></pre>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="text-2xl font-semibold mb-2">📂 إنشاء مشروع جديد</h2>
+    <pre class="bg-gray-100 p-4 rounded text-sm"><code>kattour init
+kattour build
+kattour serve</code></pre>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="text-2xl font-semibold mb-2">🔤 العناصر الأساسية</h2>
+
+    <h3 class="text-xl font-bold mt-4">text:</h3>
+    <pre class="bg-gray-100 p-3 rounded text-sm"><code>text:
+  content: "مرحبًا بك"</code></pre>
+
+    <h3 class="text-xl font-bold mt-4">button:</h3>
+    <pre class="bg-gray-100 p-3 rounded text-sm"><code>button:
+  label: "اضغطني"</code></pre>
+
+    <h3 class="text-xl font-bold mt-4">input:</h3>
+    <pre class="bg-gray-100 p-3 rounded text-sm"><code>input:
+  name: "username"</code></pre>
+
+    <h3 class="text-xl font-bold mt-4">image:</h3>
+    <pre class="bg-gray-100 p-3 rounded text-sm"><code>image:
+  src: "assets/logo.png"</code></pre>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="text-2xl font-semibold mb-2">🔁 التكرار (for)</h2>
+    <pre class="bg-gray-100 p-3 rounded text-sm"><code>for 3:
+  button:
+    label: "زر"</code></pre>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="text-2xl font-semibold mb-2">🔂 الشروط (if / else)</h2>
+    <pre class="bg-gray-100 p-3 rounded text-sm"><code>data:
+  isAdmin: true
+
+if isAdmin:
+  text:
+    content: "مرحبًا أيها المسؤول"
+
+else:
+  text:
+    content: "لا تملك صلاحية"</code></pre>
+  </section>
+
+  <footer class="mt-10 pt-10 border-t text-center text-sm text-gray-500">
+    تم تطوير لغة Kattour © 2025 بواسطة إلياس
+  </footer>
 </body>
 </html>
