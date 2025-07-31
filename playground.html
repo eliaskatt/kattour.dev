@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="dark">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>Kattour Playground - شامل</title>
+  <title>Kattour Playground - مصحح</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: 'Cairo', sans-serif; direction: rtl; }
     textarea { font-family: monospace; }
   </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans p-10 transition-all">
-  <h1 class="text-2xl font-bold text-green-700 dark:text-green-400 mb-4">🧠 محرر Kattour - شامل</h1>
-  <textarea id="editor" class="w-full h-64 p-4 border border-gray-300 rounded mb-4 dark:bg-gray-800 dark:text-white"
-    placeholder="اكتب كود Kattour هنا...">data:
-  isAdmin: false
+<body class="bg-gray-100 font-sans p-10">
+  <h1 class="text-2xl font-bold text-green-700 mb-4">🎯 محرر Kattour المصحح</h1>
+  <textarea id="editor" class="w-full h-64 p-4 border border-gray-300 rounded mb-4">
+data:
+  show: true
 
-if isAdmin:
+if show:
   text:
-    content: "لوحة التحكم"
+    content: "مرحبًا بك!"
 
 else:
   text:
-    content: "أنت غير مسجل"
+    content: "غير مسموح"
 
 for 3:
   button:
@@ -30,99 +30,93 @@ for 3:
   <div class="flex gap-4 mb-6">
     <button onclick="compileKattour()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">تنفيذ</button>
     <button onclick="downloadHTML()" class="bg-gray-700 hover:bg-black text-white px-4 py-2 rounded shadow">💾 تحميل كـ HTML</button>
-    <button onclick="toggleDarkMode()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow">🌓 تبديل الوضع الليلي</button>
   </div>
 
-  <div class="bg-white dark:bg-gray-800 p-4 border rounded shadow mt-6">
-    <h2 class="text-xl font-semibold mb-2 text-gray-700 dark:text-gray-300">📄 النتيجة:</h2>
-    <div id="output" class="space-y-4"></div>
+  <div class="bg-white p-4 border rounded shadow mt-6">
+    <h2 class="text-xl font-semibold mb-2 text-gray-700">📄 النتيجة:</h2>
+    <div id="output" class="text-gray-800 space-y-4"></div>
   </div>
 
   <script>
-    let darkMode = true;
-
-    function toggleDarkMode() {
-      darkMode = !darkMode;
-      document.documentElement.classList.toggle("dark", darkMode);
-    }
-
     function compileKattour() {
       const code = document.getElementById('editor').value;
       const lines = code.split('\n');
       let output = '';
       let data = {};
       let context = '';
-      let inIf = false, inElse = false, skipBlock = false;
-      let ifCondition = '';
-      let loopCount = 0;
+      let conditionResult = false;
+      let inElseBlock = false;
+      let skip = false;
+      let loopCount = 1;
 
       for (let i = 0; i < lines.length; i++) {
-        const trimmed = lines[i].trim();
-        if (!trimmed) continue;
+        const line = lines[i].trim();
 
-        if (trimmed.startsWith('data:')) {
-          context = 'data';
+        if (!line) continue;
+
+        if (line.startsWith("data:")) {
+          context = "data";
           continue;
         }
 
-        if (context === 'data' && trimmed.includes(':')) {
-          const [key, val] = trimmed.split(':').map(x => x.trim());
-          data[key] = val === 'true';
+        if (context === "data" && line.includes(":")) {
+          const [key, val] = line.split(":").map(s => s.trim());
+          data[key] = val === "true";
           continue;
         }
 
-        if (trimmed.startsWith('if ')) {
-          context = 'if';
-          inIf = true;
-          inElse = false;
-          ifCondition = trimmed.replace('if', '').replace(':', '').trim();
-          skipBlock = !data[ifCondition];
+        if (line.startsWith("if ")) {
+          context = "if";
+          const conditionKey = line.replace("if", "").replace(":", "").trim();
+          conditionResult = data[conditionKey] === true;
+          skip = !conditionResult;
+          inElseBlock = false;
           continue;
         }
 
-        if (trimmed.startsWith('else:')) {
-          context = 'else';
-          inElse = true;
-          inIf = false;
-          skipBlock = data[ifCondition];
+        if (line.startsWith("else:")) {
+          context = "else";
+          skip = conditionResult;
+          inElseBlock = true;
           continue;
         }
 
-        if (trimmed.startsWith('for ')) {
-          const count = parseInt(trimmed.replace('for', '').replace(':', '').trim());
-          loopCount = count;
+        if (line.startsWith("for ")) {
+          loopCount = parseInt(line.replace("for", "").replace(":", "").trim());
+          if (isNaN(loopCount)) loopCount = 1;
           continue;
         }
 
-        if (trimmed.endsWith(':')) {
-          context = trimmed.replace(':', '').trim();
-        } else {
-          if (skipBlock) continue;
+        if (line.endsWith(":")) {
+          context = line.replace(":", "").trim();
+          continue;
+        }
 
-          let repeat = loopCount > 0 ? loopCount : 1;
-          for (let r = 0; r < repeat; r++) {
-            if (context === 'text' && trimmed.includes('content:')) {
-              const content = trimmed.split(':')[1].replace(/"/g, '').trim();
-              output += `<p>${content}</p>`;
-            }
+        if (skip) continue;
 
-            if (context === 'button' && trimmed.includes('label:')) {
-              const label = trimmed.split(':')[1].replace(/"/g, '').trim();
-              output += `<button class='bg-blue-600 text-white px-4 py-2 rounded'>${label}</button>`;
-            }
-
-            if (context === 'input' && trimmed.includes('name:')) {
-              const name = trimmed.split(':')[1].replace(/"/g, '').trim();
-              output += `<input name='${name}' placeholder='${name}' class='border p-2 rounded w-full'/>`;
-            }
-
-            if (context === 'image' && trimmed.includes('src:')) {
-              const src = trimmed.split(':')[1].replace(/"/g, '').trim();
-              output += `<img src='${src}' alt='' class='w-32 h-auto'/>`;
-            }
+        for (let r = 0; r < loopCount; r++) {
+          if (context === 'text' && line.includes('content:')) {
+            const text = line.split(':')[1].replace(/"/g, '').trim();
+            output += `<p>${text}</p>`;
           }
-          loopCount = 0; // reset loop after use
+
+          if (context === 'button' && line.includes('label:')) {
+            const label = line.split(':')[1].replace(/"/g, '').trim();
+            output += `<button class='bg-blue-600 text-white px-4 py-2 rounded'>${label}</button>`;
+          }
+
+          if (context === 'input' && line.includes('name:')) {
+            const name = line.split(':')[1].replace(/"/g, '').trim();
+            output += `<input name='${name}' placeholder='${name}' class='border p-2 rounded w-full'/>`;
+          }
+
+          if (context === 'image' && line.includes('src:')) {
+            const src = line.split(':')[1].replace(/"/g, '').trim();
+            output += `<img src='${src}' alt='' class='w-32 h-auto'/>`;
+          }
         }
+
+        loopCount = 1;
       }
 
       document.getElementById('output').innerHTML = output || '<em>لا يوجد ناتج</em>';
@@ -136,10 +130,8 @@ for 3:
         <body>${document.getElementById('output').innerHTML}</body>
         </html>
       `;
-
       const blob = new Blob([htmlContent], { type: 'text/html' });
       const url = URL.createObjectURL(blob);
-
       const a = document.createElement('a');
       a.href = url;
       a.download = 'kattour_output.html';
