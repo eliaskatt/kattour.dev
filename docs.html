@@ -1,73 +1,94 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>توثيق Kattour</title>
+  <title>Kattour Language Documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-gray-900 p-10 font-sans leading-loose">
-  <h1 class="text-3xl font-bold text-green-700 mb-6">📘 توثيق لغة Kattour</h1>
+<body class="bg-white text-gray-900 font-sans leading-relaxed p-8">
+  <header class="mb-10 border-b pb-4">
+    <h1 class="text-4xl font-bold text-green-700">📘 Kattour Language Documentation</h1>
+    <p class="text-lg text-gray-600 mt-2">The official guide for using the Kattour programming language.</p>
+  </header>
 
-  <section>
-    <h2 class="text-2xl font-semibold mb-2">ما هي Kattour؟</h2>
-    <p>لغة برمجة جديدة لإنشاء صفحات وتطبيقات بطريقة سهلة وسريعة باستخدام بناء يشبه YAML.</p>
-  </section>
+  <main class="max-w-4xl mx-auto space-y-12">
 
-  <section class="mt-8">
-    <h2 class="text-2xl font-semibold mb-2">🚀 تثبيت Kattour CLI</h2>
-    <pre class="bg-gray-100 p-4 rounded text-sm"><code>npm install -g kattour</code></pre>
-  </section>
+    <section>
+      <h2 class="text-2xl font-semibold mb-2">🚀 Getting Started</h2>
+      <p>Install the Kattour CLI globally using npm:</p>
+      <pre class="bg-gray-100 p-4 rounded text-sm mt-2"><code>npm install -g kattour</code></pre>
 
-  <section class="mt-8">
-    <h2 class="text-2xl font-semibold mb-2">📂 إنشاء مشروع جديد</h2>
-    <pre class="bg-gray-100 p-4 rounded text-sm"><code>kattour init
+      <p class="mt-4">Create and run a Kattour project:</p>
+      <pre class="bg-gray-100 p-4 rounded text-sm mt-2"><code>kattour init
 kattour build
 kattour serve</code></pre>
-  </section>
+    </section>
 
-  <section class="mt-8">
-    <h2 class="text-2xl font-semibold mb-2">🔤 العناصر الأساسية</h2>
+    <section>
+      <h2 class="text-2xl font-semibold mb-2">📄 Syntax Overview</h2>
+      <p>Kattour uses a clean, indentation-based structure similar to YAML.</p>
 
-    <h3 class="text-xl font-bold mt-4">text:</h3>
-    <pre class="bg-gray-100 p-3 rounded text-sm"><code>text:
-  content: "مرحبًا بك"</code></pre>
+      <div class="mt-4">
+        <h3 class="text-xl font-semibold">Text Element</h3>
+        <pre class="bg-gray-100 p-4 rounded text-sm"><code>text:
+  content: "Welcome to Kattour!"</code></pre>
+      </div>
 
-    <h3 class="text-xl font-bold mt-4">button:</h3>
-    <pre class="bg-gray-100 p-3 rounded text-sm"><code>button:
-  label: "اضغطني"</code></pre>
+      <div class="mt-4">
+        <h3 class="text-xl font-semibold">Button Element</h3>
+        <pre class="bg-gray-100 p-4 rounded text-sm"><code>button:
+  label: "Click Me"</code></pre>
+      </div>
 
-    <h3 class="text-xl font-bold mt-4">input:</h3>
-    <pre class="bg-gray-100 p-3 rounded text-sm"><code>input:
+      <div class="mt-4">
+        <h3 class="text-xl font-semibold">Input Element</h3>
+        <pre class="bg-gray-100 p-4 rounded text-sm"><code>input:
   name: "username"</code></pre>
+      </div>
 
-    <h3 class="text-xl font-bold mt-4">image:</h3>
-    <pre class="bg-gray-100 p-3 rounded text-sm"><code>image:
+      <div class="mt-4">
+        <h3 class="text-xl font-semibold">Image Element</h3>
+        <pre class="bg-gray-100 p-4 rounded text-sm"><code>image:
   src: "assets/logo.png"</code></pre>
-  </section>
+      </div>
+    </section>
 
-  <section class="mt-8">
-    <h2 class="text-2xl font-semibold mb-2">🔁 التكرار (for)</h2>
-    <pre class="bg-gray-100 p-3 rounded text-sm"><code>for 3:
+    <section>
+      <h2 class="text-2xl font-semibold mb-2">🔁 Looping</h2>
+      <p>Use <code>for</code> to repeat an element multiple times:</p>
+      <pre class="bg-gray-100 p-4 rounded text-sm"><code>for 3:
   button:
-    label: "زر"</code></pre>
-  </section>
+    label: "Repeat"</code></pre>
+    </section>
 
-  <section class="mt-8">
-    <h2 class="text-2xl font-semibold mb-2">🔂 الشروط (if / else)</h2>
-    <pre class="bg-gray-100 p-3 rounded text-sm"><code>data:
+    <section>
+      <h2 class="text-2xl font-semibold mb-2">🔂 Conditional Logic</h2>
+      <p>Use <code>data</code> to define boolean variables and control logic with <code>if</code> and <code>else</code>.</p>
+      <pre class="bg-gray-100 p-4 rounded text-sm"><code>data:
   isAdmin: true
 
 if isAdmin:
   text:
-    content: "مرحبًا أيها المسؤول"
+    content: "Admin Panel"
 
 else:
   text:
-    content: "لا تملك صلاحية"</code></pre>
-  </section>
+    content: "Access Denied"</code></pre>
+    </section>
 
-  <footer class="mt-10 pt-10 border-t text-center text-sm text-gray-500">
-    تم تطوير لغة Kattour © 2025 بواسطة إلياس
+    <section>
+      <h2 class="text-2xl font-semibold mb-2">📦 Project Structure</h2>
+      <p>Typical Kattour project layout:</p>
+      <pre class="bg-gray-100 p-4 rounded text-sm"><code>main.kt       # Main Kattour source file
+build/        # Output directory
+assets/       # Static files like images or stylesheets</code></pre>
+    </section>
+
+  </main>
+
+  <footer class="mt-16 border-t pt-6 text-center text-sm text-gray-500">
+    &copy; 2025 Kattour Language. Created by Elias.
   </footer>
 </body>
 </html>
