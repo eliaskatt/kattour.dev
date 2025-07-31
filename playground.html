@@ -23,7 +23,10 @@ input:
 
 image:
   src: "logo.png"</textarea>
-  <button onclick="compileKattour()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">تنفيذ</button>
+  <div class="flex gap-4 mb-6">
+    <button onclick="compileKattour()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">تنفيذ</button>
+    <button onclick="downloadHTML()" class="bg-gray-700 hover:bg-black text-white px-4 py-2 rounded shadow">💾 تحميل كـ HTML</button>
+  </div>
   <div class="bg-white p-4 border rounded shadow mt-6">
     <h2 class="text-xl font-semibold mb-2 text-gray-700">📄 النتيجة:</h2>
     <div id="output" class="text-gray-800 space-y-4"></div>
@@ -66,6 +69,25 @@ image:
       });
 
       document.getElementById('output').innerHTML = output || '<em>لا يوجد ناتج</em>';
+    }
+
+    function downloadHTML() {
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html lang="ar" dir="rtl">
+        <head><meta charset="UTF-8"><title>Kattour Output</title></head>
+        <body>${document.getElementById('output').innerHTML}</body>
+        </html>
+      `;
+
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'kattour_output.html';
+      a.click();
+      URL.revokeObjectURL(url);
     }
   </script>
 </body>
