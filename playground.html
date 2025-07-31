@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>Kattour Playground - مصحح</title>
+  <title>Kattour Playground - Indentation Fixed</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: 'Cairo', sans-serif; direction: rtl; }
@@ -10,26 +10,25 @@
   </style>
 </head>
 <body class="bg-gray-100 font-sans p-10">
-  <h1 class="text-2xl font-bold text-green-700 mb-4">🎯 محرر Kattour المصحح</h1>
+  <h1 class="text-2xl font-bold text-green-700 mb-4">🧠 Kattour - دعم التوسيع (الفراغات)</h1>
   <textarea id="editor" class="w-full h-64 p-4 border border-gray-300 rounded mb-4">
 data:
-  show: true
+  isAdmin: true
 
-if show:
+if isAdmin:
   text:
-    content: "مرحبًا بك!"
+    content: "أهلاً بك أيها المسؤول"
 
 else:
   text:
-    content: "غير مسموح"
+    content: "أنت مستخدم عادي"
 
-for 3:
+for 2:
   button:
-    label: "زر"</textarea>
+    label: "اضغطني"</textarea>
 
   <div class="flex gap-4 mb-6">
     <button onclick="compileKattour()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">تنفيذ</button>
-    <button onclick="downloadHTML()" class="bg-gray-700 hover:bg-black text-white px-4 py-2 rounded shadow">💾 تحميل كـ HTML</button>
   </div>
 
   <div class="bg-white p-4 border rounded shadow mt-6">
@@ -43,100 +42,86 @@ for 3:
       const lines = code.split('\n');
       let output = '';
       let data = {};
-      let context = '';
-      let conditionResult = false;
-      let inElseBlock = false;
+      let stack = [];
+      let currentBlock = null;
+      let result = [];
       let skip = false;
+      let skipElse = false;
       let loopCount = 1;
 
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-
-        if (!line) continue;
-
-        if (line.startsWith("data:")) {
-          context = "data";
-          continue;
+      const processLine = (line, indent) => {
+        if (line.startsWith('data:')) {
+          currentBlock = 'data';
+          return;
         }
 
-        if (context === "data" && line.includes(":")) {
-          const [key, val] = line.split(":").map(s => s.trim());
-          data[key] = val === "true";
-          continue;
+        if (currentBlock === 'data' && line.includes(':')) {
+          const [key, val] = line.split(':').map(x => x.trim());
+          data[key] = val === 'true';
+          return;
         }
 
-        if (line.startsWith("if ")) {
-          context = "if";
-          const conditionKey = line.replace("if", "").replace(":", "").trim();
-          conditionResult = data[conditionKey] === true;
-          skip = !conditionResult;
-          inElseBlock = false;
-          continue;
+        if (line.startsWith('if ')) {
+          const condition = line.replace('if', '').replace(':', '').trim();
+          skip = !data[condition];
+          skipElse = !skip;
+          currentBlock = 'if';
+          return;
         }
 
-        if (line.startsWith("else:")) {
-          context = "else";
-          skip = conditionResult;
-          inElseBlock = true;
-          continue;
+        if (line.startsWith('else:')) {
+          skip = skipElse;
+          currentBlock = 'else';
+          return;
         }
 
-        if (line.startsWith("for ")) {
-          loopCount = parseInt(line.replace("for", "").replace(":", "").trim());
-          if (isNaN(loopCount)) loopCount = 1;
-          continue;
+        if (line.startsWith('for ')) {
+          loopCount = parseInt(line.replace('for', '').replace(':', '').trim());
+          return;
         }
 
-        if (line.endsWith(":")) {
-          context = line.replace(":", "").trim();
-          continue;
-        }
-
-        if (skip) continue;
-
-        for (let r = 0; r < loopCount; r++) {
-          if (context === 'text' && line.includes('content:')) {
-            const text = line.split(':')[1].replace(/"/g, '').trim();
-            output += `<p>${text}</p>`;
+        if (line.endsWith(':')) {
+          stack.push({ type: line.replace(':', '').trim(), indent });
+        } else {
+          if (skip) return;
+          const parent = stack.length ? stack[stack.length - 1].type : '';
+          if (parent === 'text' && line.includes('content:')) {
+            const content = line.split(':')[1].replace(/"/g, '').trim();
+            for (let i = 0; i < loopCount; i++) {
+              result.push(`<p>${content}</p>`);
+            }
           }
 
-          if (context === 'button' && line.includes('label:')) {
+          if (parent === 'button' && line.includes('label:')) {
             const label = line.split(':')[1].replace(/"/g, '').trim();
-            output += `<button class='bg-blue-600 text-white px-4 py-2 rounded'>${label}</button>`;
+            for (let i = 0; i < loopCount; i++) {
+              result.push(`<button class='bg-blue-600 text-white px-4 py-2 rounded'>${label}</button>`);
+            }
           }
 
-          if (context === 'input' && line.includes('name:')) {
+          if (parent === 'input' && line.includes('name:')) {
             const name = line.split(':')[1].replace(/"/g, '').trim();
-            output += `<input name='${name}' placeholder='${name}' class='border p-2 rounded w-full'/>`;
+            result.push(`<input name='${name}' placeholder='${name}' class='border p-2 rounded w-full'/>`);
           }
 
-          if (context === 'image' && line.includes('src:')) {
+          if (parent === 'image' && line.includes('src:')) {
             const src = line.split(':')[1].replace(/"/g, '').trim();
-            output += `<img src='${src}' alt='' class='w-32 h-auto'/>`;
+            result.push(`<img src='${src}' alt='' class='w-32 h-auto'/>`);
           }
+
+          loopCount = 1;
         }
+      };
 
-        loopCount = 1;
-      }
+      lines.forEach((line, index) => {
+        const indent = line.search(/\S|$/);
+        if (stack.length && indent <= stack[stack.length - 1].indent) {
+          stack.pop();
+        }
+        processLine(line.trim(), indent);
+      });
 
-      document.getElementById('output').innerHTML = output || '<em>لا يوجد ناتج</em>';
-    }
-
-    function downloadHTML() {
-      const htmlContent = `
-        <!DOCTYPE html>
-        <html lang="ar" dir="rtl">
-        <head><meta charset="UTF-8"><title>Kattour Output</title></head>
-        <body>${document.getElementById('output').innerHTML}</body>
-        </html>
-      `;
-      const blob = new Blob([htmlContent], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'kattour_output.html';
-      a.click();
-      URL.revokeObjectURL(url);
+      document.getElementById('output').innerHTML = result.join('') || '<em>لا يوجد ناتج</em>';
     }
   </script>
 </body>
