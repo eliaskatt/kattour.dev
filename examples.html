@@ -2,151 +2,224 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Kattour Examples</title>
+  <title>Kattour Pro UI Examples</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>
     pre { white-space: pre-wrap; }
   </style>
 </head>
-<body class="bg-white text-gray-900 font-sans">
-  <header class="bg-green-700 text-white shadow">
-    <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
-      <h1 class="text-2xl font-bold">Kattour</h1>
-      <div class="space-x-4 text-sm">
-        <a href="index.html">Home</a>
-        <a href="docs.html">Docs</a>
-        <a href="examples.html" class="font-bold underline">Examples</a>
-        <a href="playground.html">Playground</a>
-        <a href="modules.html">Modules</a>
-        <a href="mobile.html">Mobile App</a>
+<body class="bg-gray-900 text-gray-300 font-sans">
+  
+  <!-- Header -->
+  <header x-data="{ open: false }" class="bg-gray-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-3">
+          <a href="index.html" class="flex items-center gap-3">
+            <img src="assets/images/logo.png" alt="Kattour Logo" class="w-9 h-9" />
+            <h1 class="text-2xl font-bold tracking-wide text-white">Kattour</h1>
+          </a>
+        </div>
+        <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+          <a href="index.html" class="text-gray-300 hover:text-white transition">Home</a>
+          <a href="docs.html" class="text-gray-300 hover:text-white transition">Docs</a>
+          <a href="examples.html" class="text-indigo-400 font-bold">Examples</a>
+          <a href="modules.html" class="text-gray-300 hover:text-white transition">Modules</a>
+          <a href="mobile.html" class="text-gray-300 hover:text-white transition">Mobile</a>
+          <a href="playground.html" class="text-gray-300 hover:text-white transition">Playground</a>
+        </div>
+        <div class="md:hidden">
+          <button @click="open = !open" class="text-gray-300 hover:text-white focus:outline-none">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+          </button>
+        </div>
       </div>
     </nav>
+    <!-- Mobile Menu -->
+    <div x-show="open" @click.away="open = false" class="md:hidden"><div class="px-2 pt-2 pb-3 space-y-1 sm:px-3"><a href="index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a><a href="docs.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Docs</a><a href="examples.html" class="text-indigo-400 block px-3 py-2 rounded-md text-base font-bold">Examples</a><a href="modules.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Modules</a><a href="mobile.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Mobile</a><a href="playground.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Playground</a></div></div>
   </header>
 
-  <main class="max-w-6xl mx-auto p-6 space-y-12">
+  <main class="max-w-7xl mx-auto p-4 md:p-8 space-y-16">
     <section class="text-center">
-      <h2 class="text-3xl font-bold text-green-700 mb-2">🔥 Real UI Examples with Kattour</h2>
-      <p class="text-gray-600">See how to build modern UI layouts with minimal syntax.</p>
+      <h2 class="text-4xl font-extrabold text-white">🚀 Professional UI Examples</h2>
+      <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Discover how Kattour builds complex, real-world interfaces for both websites and mobile applications with elegant syntax.</p>
     </section>
 
-    <!-- Example 1: Hero Section -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">🖼️ Hero Section</h3>
-      <pre class="bg-gray-100 p-4 rounded text-sm"><code>page:
-  title: "Welcome to Kattour"
-  subtitle: "Build fast UIs with clean syntax"
-  button:
-    label: "Get Started"</code></pre>
-      <div class="bg-white shadow rounded p-6 mt-3 text-center space-y-2">
-        <h1 class="text-3xl font-bold">Welcome to Kattour</h1>
-        <p class="text-gray-600">Build fast UIs with clean syntax</p>
-        <button class="bg-green-600 text-white px-6 py-2 rounded">Get Started</button>
+    <!-- Website UI Examples -->
+    <div>
+      <h3 class="text-2xl font-bold text-white mb-8 text-center border-b border-gray-700 pb-4">🖥️ Pro Website UI Examples</h3>
+      <div class="space-y-12">
+
+        <!-- Example 1: Dashboard Welcome Header -->
+        <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+          <h4 class="text-xl font-semibold text-white mb-4">Dashboard Welcome Header</h4>
+          <div class="grid lg:grid-cols-2 gap-8 items-center">
+            <pre class="bg-gray-900 rounded-lg p-4 text-sm"><code><span class="text-blue-400">header:</span>
+  <span class="text-yellow-400">title:</span> <span class="text-green-400">"Good morning, Elias!"</span>
+  <span class="text-yellow-400">subtitle:</span> <span class="text-green-400">"Here's your sales overview for today."</span>
+  <span class="text-blue-400">actions:</span>
+    <span class="text-purple-400">- button:</span>
+        <span class="text-yellow-400">label:</span> <span class="text-green-400">"View Reports"</span>
+        <span class="text-yellow-400">style:</span> <span class="text-green-400">"secondary"</span>
+    <span class="text-purple-400">- button:</span>
+        <span class="text-yellow-400">label:</span> <span class="text-green-400">"Add New Sale"</span>
+        <span class="text-yellow-400">style:</span> <span class="text-green-400">"primary"</span>
+</code></pre>
+            <div class="bg-gray-900/50 p-6 rounded-lg">
+              <div class="sm:flex sm:items-center sm:justify-between">
+                <div>
+                  <h2 class="text-2xl font-bold text-white">Good morning, Elias!</h2>
+                  <p class="mt-1 text-sm text-gray-400">Here's your sales overview for today.</p>
+                </div>
+                <div class="mt-4 sm:mt-0 flex-shrink-0 flex gap-3">
+                  <button type="button" class="rounded-md bg-gray-700 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-600 hover:bg-gray-600">View Reports</button>
+                  <button type="button" class="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400">Add New Sale</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Example 2: Data Table -->
+        <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+          <h4 class="text-xl font-semibold text-white mb-4">Responsive Data Table</h4>
+          <div class="grid lg:grid-cols-2 gap-8 items-start">
+            <pre class="bg-gray-900 rounded-lg p-4 text-sm"><code><span class="text-blue-400">table:</span>
+  <span class="text-yellow-400">headers:</span> <span class="text-green-400">["Invoice ID", "Client", "Amount", "Status"]</span>
+  <span class="text-yellow-400">rows:</span>
+    <span class="text-purple-400">- ["#1001", "Stark Industries", "$5,000", "Paid"]</span>
+    <span class="text-purple-400">- ["#1002", "Wayne Enterprises", "$2,500", "Pending"]</span>
+    <span class="text-purple-400">- ["#1003", "Cyberdyne Systems", "$8,200", "Overdue"]</span>
+</code></pre>
+            <div class="bg-gray-900/50 p-4 rounded-lg overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-700">
+                <thead>
+                  <tr>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white">Invoice ID</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Client</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Amount</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-800">
+                  <tr>
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white">#1001</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">Stark Industries</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$5,000.00</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"><span class="inline-flex items-center rounded-md bg-green-500/10 px-2 py-1 text-xs font-medium text-green-400 ring-1 ring-inset ring-green-500/20">Paid</span></td>
+                  </tr>
+                  <tr>
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white">#1002</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">Wayne Enterprises</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$2,500.00</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"><span class="inline-flex items-center rounded-md bg-yellow-500/10 px-2 py-1 text-xs font-medium text-yellow-400 ring-1 ring-inset ring-yellow-500/20">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white">#1003</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">Cyberdyne Systems</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$8,200.00</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"><span class="inline-flex items-center rounded-md bg-red-500/10 px-2 py-1 text-xs font-medium text-red-400 ring-1 ring-inset ring-red-500/20">Overdue</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
+    
+    <!-- Mobile App UI Examples -->
+    <div>
+      <h3 class="text-2xl font-bold text-white mb-8 text-center border-b border-gray-700 pb-4">📱 Pro Mobile App UI Examples</h3>
+      <div class="space-y-12">
 
-    <!-- Example 2: Login Form -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">🔐 Login Form</h3>
-      <pre class="bg-gray-100 p-4 rounded text-sm"><code>form:
-  title: "Login"
-  fields:
-    - name: "email"
-      type: "email"
-    - name: "password"
-      type: "password"
-  button:
-    label: "Login"</code></pre>
-      <div class="bg-white shadow rounded p-6 mt-3 space-y-3 max-w-sm">
-        <h2 class="text-lg font-semibold">Login</h2>
-        <input type="email" placeholder="Email" class="border p-2 w-full rounded">
-        <input type="password" placeholder="Password" class="border p-2 w-full rounded">
-        <button class="bg-blue-600 text-white w-full py-2 rounded">Login</button>
+        <!-- Example 1: Social Media Feed Card -->
+        <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+          <h4 class="text-xl font-semibold text-white mb-4">Social Media Feed Card</h4>
+          <div class="grid lg:grid-cols-2 gap-8 items-center">
+            <pre class="bg-gray-900 rounded-lg p-4 text-sm"><code><span class="text-blue-400">card:</span>
+  <span class="text-yellow-400">type:</span> <span class="text-green-400">'feed-item'</span>
+  <span class="text-yellow-400">user:</span>
+    <span class="text-yellow-400">name:</span> <span class="text-green-400">"Elias Kattour"</span>
+    <span class="text-yellow-400">avatar:</span> <span class="text-green-400">"elias.jpg"</span>
+  <span class="text-yellow-400">content:</span> <span class="text-green-400">"Excited to release the new Kattour UI modules!"</span>
+  <span class="text-yellow-400">actions:</span> <span class="text-green-400">["Like", "Comment", "Share"]</span>
+</code></pre>
+            <div class="bg-gray-900/50 p-4 rounded-lg max-w-sm mx-auto w-full">
+              <div class="flex items-center gap-3">
+                <img class="h-10 w-10 rounded-full" src="https://avatars.githubusercontent.com/u/16886253?v=4" alt="User Avatar">
+                <div>
+                  <p class="font-semibold text-white">Elias Kattour</p>
+                  <p class="text-xs text-gray-400">2h ago</p>
+                </div>
+              </div>
+              <p class="mt-4 text-gray-300">Excited to release the new Kattour UI modules! They are fully responsive and built with a professional dark theme.</p>
+              <div class="mt-4 pt-3 border-t border-gray-700 flex justify-around">
+                <button class="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg> Like</button>
+                <button class="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg> Comment</button>
+                <button class="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342a8.962 8.962 0 01-1.332-1.342 1 1 0 010-1.414 1 1 0 011.414 0 6.962 6.962 0 008.486 0 1 1 0 011.414 1.414 8.962 8.962 0 01-9.818 2.756z" /></svg> Share</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Example 2: Settings List -->
+        <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+          <h4 class="text-xl font-semibold text-white mb-4">Mobile App Settings Screen</h4>
+          <div class="grid lg:grid-cols-2 gap-8 items-start">
+            <pre class="bg-gray-900 rounded-lg p-4 text-sm"><code><span class="text-blue-400">screen:</span>
+  <span class="text-yellow-400">title:</span> <span class="text-green-400">'Settings'</span>
+  <span class="text-blue-400">list:</span>
+    <span class="text-purple-400">- item:</span>
+        <span class="text-yellow-400">icon:</span> <span class="text-green-400">'user-circle'</span>
+        <span class="text-yellow-400">label:</span> <span class="text-green-400">'Account'</span>
+    <span class="text-purple-400">- item:</span>
+        <span class="text-yellow-400">icon:</span> <span class="text-green-400">'bell'</span>
+        <span class="text-yellow-400">label:</span> <span class="text-green-400">'Notifications'</span>
+    <span class="text-purple-400">- item:</span>
+        <span class="text-yellow-400">icon:</span> <span class="text-green-400">'moon'</span>
+        <span class="text-yellow-400">label:</span> <span class="text-green-400">'Dark Mode'</span>
+        <span class="text-yellow-400">control:</span> <span class="text-green-400">'toggle'</span>
+</code></pre>
+            <div class="bg-gray-900/50 p-4 rounded-lg max-w-sm mx-auto w-full">
+              <h2 class="text-xl font-bold text-white px-2 pb-4">Settings</h2>
+              <ul class="divide-y divide-gray-700">
+                <li class="flex items-center justify-between py-3 px-2 hover:bg-gray-800 rounded-lg">
+                  <div class="flex items-center gap-4">
+                    <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    <span class="text-white">Account</span>
+                  </div>
+                  <svg class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>
+                </li>
+                <li class="flex items-center justify-between py-3 px-2 hover:bg-gray-800 rounded-lg">
+                  <div class="flex items-center gap-4">
+                     <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" /></svg>
+                    <span class="text-white">Notifications</span>
+                  </div>
+                  <svg class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>
+                </li>
+                 <li class="flex items-center justify-between py-3 px-2 hover:bg-gray-800 rounded-lg" x-data="{ enabled: true }">
+                  <div class="flex items-center gap-4">
+                    <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+                    <span class="text-white">Dark Mode</span>
+                  </div>
+                  <button type="button" @click="enabled = !enabled" :class="enabled ? 'bg-indigo-500' : 'bg-gray-600'" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out" role="switch">
+                    <span :class="enabled ? 'translate-x-5' : 'translate-x-0'" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        
       </div>
-    </section>
-
-    <!-- Example 3: Product Cards -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">🛍️ Product Cards</h3>
-      <pre class="bg-gray-100 p-4 rounded text-sm"><code>for 3:
-  image: "item.jpg"
-  text: "Product Name"
-  button: "Buy Now"</code></pre>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-3">
-        <div class="border rounded shadow p-4 text-center">
-          <img src="https://via.placeholder.com/150" class="mx-auto" />
-          <p class="mt-2">Product Name</p>
-          <button class="bg-green-600 text-white mt-2 px-4 py-1 rounded">Buy Now</button>
-        </div>
-        <div class="border rounded shadow p-4 text-center">
-          <img src="https://via.placeholder.com/150" class="mx-auto" />
-          <p class="mt-2">Product Name</p>
-          <button class="bg-green-600 text-white mt-2 px-4 py-1 rounded">Buy Now</button>
-        </div>
-        <div class="border rounded shadow p-4 text-center">
-          <img src="https://via.placeholder.com/150" class="mx-auto" />
-          <p class="mt-2">Product Name</p>
-          <button class="bg-green-600 text-white mt-2 px-4 py-1 rounded">Buy Now</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Example 4: Conditional Message -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">🔁 Conditional Logic</h3>
-      <pre class="bg-gray-100 p-4 rounded text-sm"><code>data:
-  loggedIn: true
-
-if loggedIn:
-  text: "Welcome back!"
-else:
-  text: "Please log in"</code></pre>
-      <div class="bg-white border p-4 mt-3 rounded text-center">
-        ✅ Welcome back!
-      </div>
-    </section>
-
-    <!-- Example 5: Pricing Table -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">💰 Pricing Plans</h3>
-      <pre class="bg-gray-100 p-4 rounded text-sm"><code>for 3:
-  card:
-    title: "Pro Plan"
-    price: "$19/mo"
-    features:
-      - "Unlimited pages"
-      - "100 components"</code></pre>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-3">
-        <div class="p-4 shadow border rounded text-center">
-          <h4 class="font-bold text-xl">Pro Plan</h4>
-          <p class="text-gray-700 mb-2">$19/mo</p>
-          <ul class="text-sm text-gray-600 space-y-1">
-            <li>✓ Unlimited pages</li>
-            <li>✓ 100 components</li>
-          </ul>
-        </div>
-        <div class="p-4 shadow border rounded text-center">
-          <h4 class="font-bold text-xl">Pro Plan</h4>
-          <p class="text-gray-700 mb-2">$19/mo</p>
-          <ul class="text-sm text-gray-600 space-y-1">
-            <li>✓ Unlimited pages</li>
-            <li>✓ 100 components</li>
-          </ul>
-        </div>
-        <div class="p-4 shadow border rounded text-center">
-          <h4 class="font-bold text-xl">Pro Plan</h4>
-          <p class="text-gray-700 mb-2">$19/mo</p>
-          <ul class="text-sm text-gray-600 space-y-1">
-            <li>✓ Unlimited pages</li>
-            <li>✓ 100 components</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
 
-  <footer class="text-center py-8 text-sm text-gray-500 border-t mt-16">
-    &copy; 2025 Kattour Language.
+  <footer class="text-center py-8 text-sm text-gray-500 border-t border-gray-800 mt-16">
+    © 2025 Kattour Language.
   </footer>
 </body>
 </html>
