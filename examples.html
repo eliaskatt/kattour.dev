@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kattour Advanced Examples</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans p-8">
+  <header class="mb-10">
+    <h1 class="text-4xl font-bold text-green-700">🚀 Kattour Advanced Examples</h1>
+    <p class="text-lg text-gray-600 mt-2">Real UI components, layouts, and app-ready designs built using Kattour syntax.</p>
+  </header>
+
+  <main class="max-w-5xl mx-auto space-y-16">
+
+    <!-- Hero Section -->
+    <section>
+      <h2 class="text-2xl font-semibold mb-4">🖼️ Hero Section</h2>
+      <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>page home:
+  text:
+    content: "Welcome to Kattour"
+
+  text:
+    content: "Build fast and simple UIs with clean code."
+
+  button:
+    label: "Get Started"</code></pre>
+
+      <div class="border p-6 rounded bg-white mt-4 text-center space-y-4 shadow">
+        <h1 class="text-3xl font-bold">Welcome to Kattour</h1>
+        <p class="text-gray-600 text-lg">Build fast and simple UIs with clean code.</p>
+        <button class="bg-green-600 text-white px-6 py-2 rounded">Get Started</button>
+      </div>
+    </section>
+
+    <!-- Login Form -->
+    <section>
+      <h2 class="text-2xl font-semibold mb-4">🔐 Login Form</h2>
+      <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>page login:
+  text:
+    content: "Login to continue"
+
+  input:
+    name: "email"
+
+  input:
+    name: "password"
+
+  button:
+    label: "Login"</code></pre>
+
+      <div class="border p-6 rounded bg-white mt-4 space-y-3 shadow-md w-full max-w-md mx-auto">
+        <p class="text-xl font-semibold">Login to continue</p>
+        <input placeholder="email" class="border p-2 w-full rounded" />
+        <input placeholder="password" class="border p-2 w-full rounded" />
+        <button class="bg-blue-600 text-white px-4 py-2 w-full rounded">Login</button>
+      </div>
+    </section>
+
+    <!-- Cards with shadow -->
+    <section>
+      <h2 class="text-2xl font-semibold mb-4">🧱 UI Cards with Shadow</h2>
+      <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>for 3:
+  image:
+    src: "assets/product.png"
+  text:
+    content: "Product Name"
+  button:
+    label: "Buy Now"</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+        <div class="bg-white rounded shadow p-4 text-center space-y-2">
+          <img src="https://via.placeholder.com/150" class="mx-auto" />
+          <p>Product Name</p>
+          <button class="bg-green-600 text-white px-4 py-1 rounded">Buy Now</button>
+        </div>
+        <div class="bg-white rounded shadow p-4 text-center space-y-2">
+          <img src="https://via.placeholder.com/150" class="mx-auto" />
+          <p>Product Name</p>
+          <button class="bg-green-600 text-white px-4 py-1 rounded">Buy Now</button>
+        </div>
+        <div class="bg-white rounded shadow p-4 text-center space-y-2">
+          <img src="https://via.placeholder.com/150" class="mx-auto" />
+          <p>Product Name</p>
+          <button class="bg-green-600 text-white px-4 py-1 rounded">Buy Now</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Bar -->
+    <section>
+      <h2 class="text-2xl font-semibold mb-4">🔗 Navigation Bar</h2>
+      <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>page layout:
+  row:
+    text:
+      content: "Home"
+    text:
+      content: "Features"
+    text:
+      content: "Contact"</code></pre>
+
+      <div class="bg-white border rounded px-6 py-3 flex gap-6 mt-4 shadow-sm text-gray-700 font-medium">
+        <span>Home</span>
+        <span>Features</span>
+        <span>Contact</span>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="mt-20 border-t pt-6 text-center text-sm text-gray-500">
+    &copy; 2025 Kattour Language. Built with ❤️ by Elias.
+  </footer>
+</body>
+</html>
