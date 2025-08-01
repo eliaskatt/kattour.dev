@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Kattour Modules & Snippets</title>
+  <title>Kattour UI Modules (Preview + Code)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -27,96 +27,1573 @@
     </nav>
   </header>
 
-  <main class="max-w-6xl mx-auto px-6 py-12 space-y-16">
-    <section class="text-center">
-      <h2 class="text-3xl font-bold text-green-700 mb-2">🧩 Kattour Modules & Code Gallery</h2>
-      <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-        Explore reusable UI components, ready-to-copy snippets, and layout patterns.
+  <main class="max-w-7xl mx-auto px-6 py-12 space-y-16">
+    <section class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-green-700">🧩 Kattour UI Modules Preview</h2>
+      <p class="text-gray-600 text-lg max-w-3xl mx-auto">
+        First 30 reusable UI patterns with live preview and copy-ready Kattour syntax.
       </p>
     </section>
-
-    <!-- 🧱 Content Box with Border & Shadow -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">🧱 Content Box (Card with Shadow)</h3>
-      <pre id="cardbox" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>box:
-  title: "Getting Started"
-  content: "Install the CLI and build your first UI in seconds."
-  border: true
-  shadow: true
-  corner: "rounded"</code></pre>
-      <button onclick="copyCode('cardbox')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#01 Module Example</h3>
+        <pre id="code1" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #01"</code></pre>
+        <button onclick="copyCode('code1')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#01</strong></p>
+      </div>
     </section>
-
-    <!-- 🔍 Search Bar -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">🔍 Search Field</h3>
-      <pre id="searchbar" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>input:
-  name: "search"
-  placeholder: "Search modules..."
-  icon: "🔍"</code></pre>
-      <button onclick="copyCode('searchbar')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#02 Module Example</h3>
+        <pre id="code2" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #02"</code></pre>
+        <button onclick="copyCode('code2')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#02</strong></p>
+      </div>
     </section>
-
-    <!-- 📋 Vertical Menu -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">📋 Vertical Menu</h3>
-      <pre id="vmenu" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>menu:
-  direction: "vertical"
-  items:
-    - "Home"
-    - "Docs"
-    - "Playground"
-    - "Modules"</code></pre>
-      <button onclick="copyCode('vmenu')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#03 Module Example</h3>
+        <pre id="code3" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #03"</code></pre>
+        <button onclick="copyCode('code3')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#03</strong></p>
+      </div>
     </section>
-
-    <!-- 📄 Horizontal Menu -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">📄 Horizontal Menu</h3>
-      <pre id="hmenu" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>menu:
-  direction: "horizontal"
-  items:
-    - "Overview"
-    - "Examples"
-    - "Mobile App"</code></pre>
-      <button onclick="copyCode('hmenu')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#04 Module Example</h3>
+        <pre id="code4" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #04"</code></pre>
+        <button onclick="copyCode('code4')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#04</strong></p>
+      </div>
     </section>
-
-    <!-- 👤 Login Form -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">👤 Login Form</h3>
-      <pre id="loginform" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>form:
-  title: "Sign in"
-  fields:
-    - name: "email"
-      type: "email"
-    - name: "password"
-      type: "password"
-  button:
-    label: "Login"</code></pre>
-      <button onclick="copyCode('loginform')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#05 Module Example</h3>
+        <pre id="code5" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #05"</code></pre>
+        <button onclick="copyCode('code5')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#05</strong></p>
+      </div>
     </section>
-
-    <!-- 🔔 Notification -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">🔔 Floating Notification</h3>
-      <pre id="notify" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>alert:
-  content: "You have 3 new messages!"
-  position: "top-right"
-  type: "info"
-  floating: true</code></pre>
-      <button onclick="copyCode('notify')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#06 Module Example</h3>
+        <pre id="code6" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #06"</code></pre>
+        <button onclick="copyCode('code6')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#06</strong></p>
+      </div>
     </section>
-
-    <!-- 🎯 Animated Button -->
-    <section>
-      <h3 class="text-xl font-semibold mb-2">🎯 Animated Button</h3>
-      <pre id="animatedbtn" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>button:
-  label: "Hover Me"
-  style: "animated pulse"
-  color: "blue"</code></pre>
-      <button onclick="copyCode('animatedbtn')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#07 Module Example</h3>
+        <pre id="code7" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #07"</code></pre>
+        <button onclick="copyCode('code7')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#07</strong></p>
+      </div>
     </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#08 Module Example</h3>
+        <pre id="code8" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #08"</code></pre>
+        <button onclick="copyCode('code8')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#08</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#09 Module Example</h3>
+        <pre id="code9" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #09"</code></pre>
+        <button onclick="copyCode('code9')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#09</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#10 Module Example</h3>
+        <pre id="code10" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #10"</code></pre>
+        <button onclick="copyCode('code10')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#10</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#11 Module Example</h3>
+        <pre id="code11" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #11"</code></pre>
+        <button onclick="copyCode('code11')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#11</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#12 Module Example</h3>
+        <pre id="code12" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #12"</code></pre>
+        <button onclick="copyCode('code12')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#12</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#13 Module Example</h3>
+        <pre id="code13" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #13"</code></pre>
+        <button onclick="copyCode('code13')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#13</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#14 Module Example</h3>
+        <pre id="code14" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #14"</code></pre>
+        <button onclick="copyCode('code14')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#14</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#15 Module Example</h3>
+        <pre id="code15" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #15"</code></pre>
+        <button onclick="copyCode('code15')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#15</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#16 Module Example</h3>
+        <pre id="code16" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #16"</code></pre>
+        <button onclick="copyCode('code16')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#16</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#17 Module Example</h3>
+        <pre id="code17" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #17"</code></pre>
+        <button onclick="copyCode('code17')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#17</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#18 Module Example</h3>
+        <pre id="code18" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #18"</code></pre>
+        <button onclick="copyCode('code18')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#18</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#19 Module Example</h3>
+        <pre id="code19" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #19"</code></pre>
+        <button onclick="copyCode('code19')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#19</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#20 Module Example</h3>
+        <pre id="code20" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #20"</code></pre>
+        <button onclick="copyCode('code20')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#20</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#21 Module Example</h3>
+        <pre id="code21" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #21"</code></pre>
+        <button onclick="copyCode('code21')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#21</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#22 Module Example</h3>
+        <pre id="code22" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #22"</code></pre>
+        <button onclick="copyCode('code22')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#22</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#23 Module Example</h3>
+        <pre id="code23" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #23"</code></pre>
+        <button onclick="copyCode('code23')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#23</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#24 Module Example</h3>
+        <pre id="code24" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #24"</code></pre>
+        <button onclick="copyCode('code24')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#24</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#25 Module Example</h3>
+        <pre id="code25" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #25"</code></pre>
+        <button onclick="copyCode('code25')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#25</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#26 Module Example</h3>
+        <pre id="code26" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #26"</code></pre>
+        <button onclick="copyCode('code26')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#26</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#27 Module Example</h3>
+        <pre id="code27" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #27"</code></pre>
+        <button onclick="copyCode('code27')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#27</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#28 Module Example</h3>
+        <pre id="code28" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #28"</code></pre>
+        <button onclick="copyCode('code28')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#28</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#29 Module Example</h3>
+        <pre id="code29" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #29"</code></pre>
+        <button onclick="copyCode('code29')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#29</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#30 Module Example</h3>
+        <pre id="code30" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #30"</code></pre>
+        <button onclick="copyCode('code30')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#30</strong></p>
+      </div>
+    </section>
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#031 Module Example</h3>
+        <pre id="code31" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #031"</code></pre>
+        <button onclick="copyCode('code31')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#031</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#032 Module Example</h3>
+        <pre id="code32" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #032"</code></pre>
+        <button onclick="copyCode('code32')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#032</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#033 Module Example</h3>
+        <pre id="code33" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #033"</code></pre>
+        <button onclick="copyCode('code33')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#033</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#034 Module Example</h3>
+        <pre id="code34" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #034"</code></pre>
+        <button onclick="copyCode('code34')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#034</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#035 Module Example</h3>
+        <pre id="code35" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #035"</code></pre>
+        <button onclick="copyCode('code35')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#035</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#036 Module Example</h3>
+        <pre id="code36" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #036"</code></pre>
+        <button onclick="copyCode('code36')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#036</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#037 Module Example</h3>
+        <pre id="code37" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #037"</code></pre>
+        <button onclick="copyCode('code37')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#037</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#038 Module Example</h3>
+        <pre id="code38" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #038"</code></pre>
+        <button onclick="copyCode('code38')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#038</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#039 Module Example</h3>
+        <pre id="code39" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #039"</code></pre>
+        <button onclick="copyCode('code39')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#039</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#040 Module Example</h3>
+        <pre id="code40" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #040"</code></pre>
+        <button onclick="copyCode('code40')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#040</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#041 Module Example</h3>
+        <pre id="code41" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #041"</code></pre>
+        <button onclick="copyCode('code41')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#041</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#042 Module Example</h3>
+        <pre id="code42" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #042"</code></pre>
+        <button onclick="copyCode('code42')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#042</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#043 Module Example</h3>
+        <pre id="code43" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #043"</code></pre>
+        <button onclick="copyCode('code43')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#043</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#044 Module Example</h3>
+        <pre id="code44" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #044"</code></pre>
+        <button onclick="copyCode('code44')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#044</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#045 Module Example</h3>
+        <pre id="code45" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #045"</code></pre>
+        <button onclick="copyCode('code45')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#045</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#046 Module Example</h3>
+        <pre id="code46" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #046"</code></pre>
+        <button onclick="copyCode('code46')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#046</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#047 Module Example</h3>
+        <pre id="code47" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #047"</code></pre>
+        <button onclick="copyCode('code47')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#047</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#048 Module Example</h3>
+        <pre id="code48" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #048"</code></pre>
+        <button onclick="copyCode('code48')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#048</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#049 Module Example</h3>
+        <pre id="code49" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #049"</code></pre>
+        <button onclick="copyCode('code49')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#049</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#050 Module Example</h3>
+        <pre id="code50" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #050"</code></pre>
+        <button onclick="copyCode('code50')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#050</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#051 Module Example</h3>
+        <pre id="code51" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #051"</code></pre>
+        <button onclick="copyCode('code51')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#051</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#052 Module Example</h3>
+        <pre id="code52" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #052"</code></pre>
+        <button onclick="copyCode('code52')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#052</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#053 Module Example</h3>
+        <pre id="code53" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #053"</code></pre>
+        <button onclick="copyCode('code53')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#053</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#054 Module Example</h3>
+        <pre id="code54" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #054"</code></pre>
+        <button onclick="copyCode('code54')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#054</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#055 Module Example</h3>
+        <pre id="code55" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #055"</code></pre>
+        <button onclick="copyCode('code55')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#055</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#056 Module Example</h3>
+        <pre id="code56" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #056"</code></pre>
+        <button onclick="copyCode('code56')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#056</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#057 Module Example</h3>
+        <pre id="code57" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #057"</code></pre>
+        <button onclick="copyCode('code57')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#057</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#058 Module Example</h3>
+        <pre id="code58" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #058"</code></pre>
+        <button onclick="copyCode('code58')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#058</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#059 Module Example</h3>
+        <pre id="code59" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #059"</code></pre>
+        <button onclick="copyCode('code59')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#059</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#060 Module Example</h3>
+        <pre id="code60" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #060"</code></pre>
+        <button onclick="copyCode('code60')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#060</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#061 Module Example</h3>
+        <pre id="code61" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #061"</code></pre>
+        <button onclick="copyCode('code61')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#061</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#062 Module Example</h3>
+        <pre id="code62" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #062"</code></pre>
+        <button onclick="copyCode('code62')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#062</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#063 Module Example</h3>
+        <pre id="code63" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #063"</code></pre>
+        <button onclick="copyCode('code63')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#063</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#064 Module Example</h3>
+        <pre id="code64" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #064"</code></pre>
+        <button onclick="copyCode('code64')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#064</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#065 Module Example</h3>
+        <pre id="code65" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #065"</code></pre>
+        <button onclick="copyCode('code65')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#065</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#066 Module Example</h3>
+        <pre id="code66" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #066"</code></pre>
+        <button onclick="copyCode('code66')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#066</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#067 Module Example</h3>
+        <pre id="code67" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #067"</code></pre>
+        <button onclick="copyCode('code67')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#067</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#068 Module Example</h3>
+        <pre id="code68" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #068"</code></pre>
+        <button onclick="copyCode('code68')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#068</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#069 Module Example</h3>
+        <pre id="code69" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #069"</code></pre>
+        <button onclick="copyCode('code69')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#069</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#070 Module Example</h3>
+        <pre id="code70" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #070"</code></pre>
+        <button onclick="copyCode('code70')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#070</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#071 Module Example</h3>
+        <pre id="code71" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #071"</code></pre>
+        <button onclick="copyCode('code71')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#071</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#072 Module Example</h3>
+        <pre id="code72" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #072"</code></pre>
+        <button onclick="copyCode('code72')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#072</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#073 Module Example</h3>
+        <pre id="code73" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #073"</code></pre>
+        <button onclick="copyCode('code73')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#073</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#074 Module Example</h3>
+        <pre id="code74" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #074"</code></pre>
+        <button onclick="copyCode('code74')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#074</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#075 Module Example</h3>
+        <pre id="code75" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #075"</code></pre>
+        <button onclick="copyCode('code75')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#075</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#076 Module Example</h3>
+        <pre id="code76" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #076"</code></pre>
+        <button onclick="copyCode('code76')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#076</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#077 Module Example</h3>
+        <pre id="code77" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #077"</code></pre>
+        <button onclick="copyCode('code77')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#077</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#078 Module Example</h3>
+        <pre id="code78" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #078"</code></pre>
+        <button onclick="copyCode('code78')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#078</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#079 Module Example</h3>
+        <pre id="code79" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #079"</code></pre>
+        <button onclick="copyCode('code79')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#079</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#080 Module Example</h3>
+        <pre id="code80" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #080"</code></pre>
+        <button onclick="copyCode('code80')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#080</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#081 Module Example</h3>
+        <pre id="code81" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #081"</code></pre>
+        <button onclick="copyCode('code81')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#081</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#082 Module Example</h3>
+        <pre id="code82" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #082"</code></pre>
+        <button onclick="copyCode('code82')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#082</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#083 Module Example</h3>
+        <pre id="code83" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #083"</code></pre>
+        <button onclick="copyCode('code83')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#083</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#084 Module Example</h3>
+        <pre id="code84" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #084"</code></pre>
+        <button onclick="copyCode('code84')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#084</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#085 Module Example</h3>
+        <pre id="code85" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #085"</code></pre>
+        <button onclick="copyCode('code85')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#085</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#086 Module Example</h3>
+        <pre id="code86" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #086"</code></pre>
+        <button onclick="copyCode('code86')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#086</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#087 Module Example</h3>
+        <pre id="code87" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #087"</code></pre>
+        <button onclick="copyCode('code87')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#087</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#088 Module Example</h3>
+        <pre id="code88" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #088"</code></pre>
+        <button onclick="copyCode('code88')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#088</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#089 Module Example</h3>
+        <pre id="code89" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #089"</code></pre>
+        <button onclick="copyCode('code89')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#089</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#090 Module Example</h3>
+        <pre id="code90" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #090"</code></pre>
+        <button onclick="copyCode('code90')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#090</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#091 Module Example</h3>
+        <pre id="code91" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #091"</code></pre>
+        <button onclick="copyCode('code91')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#091</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#092 Module Example</h3>
+        <pre id="code92" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #092"</code></pre>
+        <button onclick="copyCode('code92')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#092</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#093 Module Example</h3>
+        <pre id="code93" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #093"</code></pre>
+        <button onclick="copyCode('code93')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#093</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#094 Module Example</h3>
+        <pre id="code94" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #094"</code></pre>
+        <button onclick="copyCode('code94')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#094</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#095 Module Example</h3>
+        <pre id="code95" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #095"</code></pre>
+        <button onclick="copyCode('code95')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#095</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#096 Module Example</h3>
+        <pre id="code96" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #096"</code></pre>
+        <button onclick="copyCode('code96')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#096</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#097 Module Example</h3>
+        <pre id="code97" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #097"</code></pre>
+        <button onclick="copyCode('code97')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#097</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#098 Module Example</h3>
+        <pre id="code98" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #098"</code></pre>
+        <button onclick="copyCode('code98')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#098</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#099 Module Example</h3>
+        <pre id="code99" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #099"</code></pre>
+        <button onclick="copyCode('code99')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#099</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#100 Module Example</h3>
+        <pre id="code100" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #100"</code></pre>
+        <button onclick="copyCode('code100')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#100</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#101 Module Example</h3>
+        <pre id="code101" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #101"</code></pre>
+        <button onclick="copyCode('code101')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#101</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#102 Module Example</h3>
+        <pre id="code102" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #102"</code></pre>
+        <button onclick="copyCode('code102')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#102</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#103 Module Example</h3>
+        <pre id="code103" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #103"</code></pre>
+        <button onclick="copyCode('code103')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#103</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#104 Module Example</h3>
+        <pre id="code104" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #104"</code></pre>
+        <button onclick="copyCode('code104')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#104</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#105 Module Example</h3>
+        <pre id="code105" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #105"</code></pre>
+        <button onclick="copyCode('code105')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#105</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#106 Module Example</h3>
+        <pre id="code106" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #106"</code></pre>
+        <button onclick="copyCode('code106')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#106</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#107 Module Example</h3>
+        <pre id="code107" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #107"</code></pre>
+        <button onclick="copyCode('code107')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#107</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#108 Module Example</h3>
+        <pre id="code108" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #108"</code></pre>
+        <button onclick="copyCode('code108')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#108</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#109 Module Example</h3>
+        <pre id="code109" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #109"</code></pre>
+        <button onclick="copyCode('code109')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#109</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#110 Module Example</h3>
+        <pre id="code110" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #110"</code></pre>
+        <button onclick="copyCode('code110')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#110</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#111 Module Example</h3>
+        <pre id="code111" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #111"</code></pre>
+        <button onclick="copyCode('code111')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#111</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#112 Module Example</h3>
+        <pre id="code112" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #112"</code></pre>
+        <button onclick="copyCode('code112')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#112</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#113 Module Example</h3>
+        <pre id="code113" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #113"</code></pre>
+        <button onclick="copyCode('code113')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#113</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#114 Module Example</h3>
+        <pre id="code114" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #114"</code></pre>
+        <button onclick="copyCode('code114')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#114</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#115 Module Example</h3>
+        <pre id="code115" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #115"</code></pre>
+        <button onclick="copyCode('code115')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#115</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#116 Module Example</h3>
+        <pre id="code116" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #116"</code></pre>
+        <button onclick="copyCode('code116')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#116</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#117 Module Example</h3>
+        <pre id="code117" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #117"</code></pre>
+        <button onclick="copyCode('code117')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#117</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#118 Module Example</h3>
+        <pre id="code118" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #118"</code></pre>
+        <button onclick="copyCode('code118')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#118</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#119 Module Example</h3>
+        <pre id="code119" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #119"</code></pre>
+        <button onclick="copyCode('code119')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#119</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#120 Module Example</h3>
+        <pre id="code120" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #120"</code></pre>
+        <button onclick="copyCode('code120')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#120</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#121 Module Example</h3>
+        <pre id="code121" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #121"</code></pre>
+        <button onclick="copyCode('code121')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#121</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#122 Module Example</h3>
+        <pre id="code122" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #122"</code></pre>
+        <button onclick="copyCode('code122')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#122</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#123 Module Example</h3>
+        <pre id="code123" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #123"</code></pre>
+        <button onclick="copyCode('code123')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#123</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#124 Module Example</h3>
+        <pre id="code124" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #124"</code></pre>
+        <button onclick="copyCode('code124')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#124</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#125 Module Example</h3>
+        <pre id="code125" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #125"</code></pre>
+        <button onclick="copyCode('code125')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#125</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#126 Module Example</h3>
+        <pre id="code126" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #126"</code></pre>
+        <button onclick="copyCode('code126')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#126</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#127 Module Example</h3>
+        <pre id="code127" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #127"</code></pre>
+        <button onclick="copyCode('code127')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#127</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#128 Module Example</h3>
+        <pre id="code128" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #128"</code></pre>
+        <button onclick="copyCode('code128')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#128</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#129 Module Example</h3>
+        <pre id="code129" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #129"</code></pre>
+        <button onclick="copyCode('code129')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#129</strong></p>
+      </div>
+    </section>
+    
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">#130 Module Example</h3>
+        <pre id="code130" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>text:
+  content: "This is module #130"</code></pre>
+        <button onclick="copyCode('code130')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+      </div>
+      <div class="bg-white p-6 border rounded shadow text-center">
+        <p>This is module <strong>#130</strong></p>
+      </div>
+    </section>
+    
   </main>
 
   <footer class="text-center py-8 text-sm text-gray-500 border-t mt-16">
