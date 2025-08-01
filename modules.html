@@ -1,1 +1,126 @@
-KATTOUR MODULES HTML CONTENT HERE
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kattour Modules & Snippets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function copyCode(id) {
+      const code = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(code).then(() => alert("✅ Code copied!"));
+    }
+  </script>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+  <header class="bg-green-700 text-white shadow-md">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Kattour</h1>
+      <div class="space-x-4 text-sm font-medium">
+        <a href="index.html">Home</a>
+        <a href="docs.html">Docs</a>
+        <a href="examples.html">Examples</a>
+        <a href="playground.html">Playground</a>
+        <a href="mobile.html">Mobile App</a>
+        <a href="modules.html" class="underline font-semibold">Modules</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-12 space-y-16">
+    <section class="text-center">
+      <h2 class="text-3xl font-bold text-green-700 mb-2">🧩 Kattour Modules & Code Gallery</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+        Explore reusable UI components, ready-to-copy snippets, and layout patterns.
+      </p>
+    </section>
+
+    <!-- 🧱 Content Box with Border & Shadow -->
+    <section>
+      <h3 class="text-xl font-semibold mb-2">🧱 Content Box (Card with Shadow)</h3>
+      <pre id="cardbox" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>box:
+  title: "Getting Started"
+  content: "Install the CLI and build your first UI in seconds."
+  border: true
+  shadow: true
+  corner: "rounded"</code></pre>
+      <button onclick="copyCode('cardbox')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    </section>
+
+    <!-- 🔍 Search Bar -->
+    <section>
+      <h3 class="text-xl font-semibold mb-2">🔍 Search Field</h3>
+      <pre id="searchbar" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>input:
+  name: "search"
+  placeholder: "Search modules..."
+  icon: "🔍"</code></pre>
+      <button onclick="copyCode('searchbar')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    </section>
+
+    <!-- 📋 Vertical Menu -->
+    <section>
+      <h3 class="text-xl font-semibold mb-2">📋 Vertical Menu</h3>
+      <pre id="vmenu" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>menu:
+  direction: "vertical"
+  items:
+    - "Home"
+    - "Docs"
+    - "Playground"
+    - "Modules"</code></pre>
+      <button onclick="copyCode('vmenu')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    </section>
+
+    <!-- 📄 Horizontal Menu -->
+    <section>
+      <h3 class="text-xl font-semibold mb-2">📄 Horizontal Menu</h3>
+      <pre id="hmenu" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>menu:
+  direction: "horizontal"
+  items:
+    - "Overview"
+    - "Examples"
+    - "Mobile App"</code></pre>
+      <button onclick="copyCode('hmenu')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    </section>
+
+    <!-- 👤 Login Form -->
+    <section>
+      <h3 class="text-xl font-semibold mb-2">👤 Login Form</h3>
+      <pre id="loginform" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>form:
+  title: "Sign in"
+  fields:
+    - name: "email"
+      type: "email"
+    - name: "password"
+      type: "password"
+  button:
+    label: "Login"</code></pre>
+      <button onclick="copyCode('loginform')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    </section>
+
+    <!-- 🔔 Notification -->
+    <section>
+      <h3 class="text-xl font-semibold mb-2">🔔 Floating Notification</h3>
+      <pre id="notify" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>alert:
+  content: "You have 3 new messages!"
+  position: "top-right"
+  type: "info"
+  floating: true</code></pre>
+      <button onclick="copyCode('notify')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    </section>
+
+    <!-- 🎯 Animated Button -->
+    <section>
+      <h3 class="text-xl font-semibold mb-2">🎯 Animated Button</h3>
+      <pre id="animatedbtn" class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>button:
+  label: "Hover Me"
+  style: "animated pulse"
+  color: "blue"</code></pre>
+      <button onclick="copyCode('animatedbtn')" class="bg-green-600 text-white px-4 py-1 rounded mt-2">Copy Code</button>
+    </section>
+  </main>
+
+  <footer class="text-center py-8 text-sm text-gray-500 border-t mt-16">
+    &copy; 2025 Kattour Language. All rights reserved.
+  </footer>
+</body>
+</html>
