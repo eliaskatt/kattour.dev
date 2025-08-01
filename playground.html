@@ -33,41 +33,35 @@
         </div>
       </div>
     </nav>
-    <!-- Mobile Menu -->
-    <div x-show="open" @click.away="open = false" class="md:hidden"><div class="px-2 pt-2 pb-3 space-y-1 sm:px-3"><a href="index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a><a href="docs.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Docs</a><a href="examples.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Examples</a><a href="modules.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Modules</a><a href="mobile.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Mobile</a><a href="playground.html" class="text-indigo-400 block px-3 py-2 rounded-md text-base font-bold">Playground</a></div></div>
+    <div x-show="open" @click.away="open = false" class="md:hidden"><div class="px-2 pt-2 pb-3 space-y-1 sm:px-3"><a href="index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2">Home</a><a href="docs.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2">Docs</a><a href="examples.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2">Examples</a><a href="modules.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2">Modules</a><a href="mobile.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2">Mobile</a><a href="playground.html" class="text-indigo-400 font-bold block px-3 py-2">Playground</a></div></div>
   </header>
   
   <main class="p-4 sm:p-8">
     <div class="text-center mb-8">
         <h2 class="text-4xl font-extrabold text-white">🧪 Kattour Playground</h2>
-        <p class="mt-4 text-lg text-gray-400">Write Kattour code and see the result instantly update below.</p>
+        <p class="mt-4 text-lg text-gray-400">Build UI in real-time with our smart editor.</p>
     </div>
 
     <div class="grid lg:grid-cols-2 gap-8">
         <div>
-            <label for="editor" class="block text-sm font-medium text-white mb-2">Kattour Code Editor</label>
-            <textarea id="editor" class="w-full h-[32rem] p-4 border border-gray-700 rounded-lg font-mono bg-gray-900 text-gray-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">card:
-  type: 'feed-item'
-  user:
-    name: "Elias Kattour"
-    avatar: "https://avatars.githubusercontent.com/u/16886253?v=4"
-  content: "Excited to release the new Kattour UI modules! The playground now supports complex components."
-  actions: ["Like", "Comment", "Share"]
-
-text:
-  content: "---"
-  style: "muted"
-
-button:
-  label: "Load More"
-  style: "secondary"</textarea>
-            <button onclick="compile()" class="mt-4 w-full bg-indigo-600 text-white px-4 py-2.5 rounded-lg font-semibold hover:bg-indigo-500 transition">Run</button>
+            <div class="flex justify-between items-center mb-2">
+                <label for="editor" class="block text-sm font-medium text-white">Kattour Code Editor</label>
+                <select id="example-selector" class="bg-gray-700 text-white text-xs rounded-md border-gray-600 focus:ring-indigo-500">
+                    <option value="feedCard">Load Example: Feed Card</option>
+                    <option value="loginForm">Load Example: Login Form</option>
+                    <option value="stats">Load Example: Stats Group</option>
+                </select>
+            </div>
+            <textarea id="editor" class="w-full h-[32rem] p-4 border border-gray-700 rounded-lg font-mono bg-gray-900 text-gray-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+            <div class="flex gap-2 mt-4">
+                <button onclick="compile()" class="w-full bg-indigo-600 text-white px-4 py-2.5 rounded-lg font-semibold hover:bg-indigo-500 transition">Run</button>
+                <button onclick="clearEditor()" class="w-1/3 bg-gray-600 text-white px-4 py-2.5 rounded-lg font-semibold hover:bg-gray-500 transition">Clear</button>
+            </div>
         </div>
 
         <div class="mt-6 lg:mt-0">
             <label class="block text-sm font-medium text-white mb-2">Live Preview</label>
             <div id="output" class="h-full min-h-[32rem] space-y-4 bg-gray-800 p-6 rounded-lg border border-gray-700 overflow-auto">
-                <!-- Compiled HTML will be injected here -->
             </div>
         </div>
     </div>
@@ -78,134 +72,187 @@ button:
   </footer>
 
   <script>
-    // --- ADVANCED PARSER & RENDERER ---
+    const examples = {
+        feedCard: `card:
+  type: 'feed-item'
+  user:
+    name: "Elias Kattour"
+    avatar: "https://avatars.githubusercontent.com/u/16886253?v=4"
+  content: "Excited to release the new Kattour UI modules! The playground now supports complex components."
+  actions: ["Like", "Comment", "Share"]`,
+        loginForm: `text:
+  content: "Log In"
+  style: "heading"
+
+input:
+  label: "Email Address"
+  placeholder: "you@example.com"
+
+input:
+  label: "Password"
+  type: "password"
+
+button:
+  label: "Sign In"`,
+        stats: `grid:
+  cols: 3
+  items:
+    - stat:
+        label: "Revenue"
+        value: "$12,500"
+    - stat:
+        label: "Users"
+        value: "1,200"
+        trend: "+5.4%"
+    - stat:
+        label: "Uptime"
+        value: "99.9%"
+`
+    };
+
+    const editor = document.getElementById('editor');
+    const exampleSelector = document.getElementById('example-selector');
+
+    function loadExample() {
+        const selected = exampleSelector.value;
+        editor.value = examples[selected];
+        compile();
+    }
+
+    function clearEditor() {
+        editor.value = '';
+        compile();
+    }
+
+    exampleSelector.addEventListener('change', loadExample);
+
+    // --- Smart YAML-like Parser ---
+    function parseKattour(text) {
+        const lines = text.split('\n').filter(line => line.trim().length > 0);
+        const result = {};
+        const stack = [{ obj: result, indent: -1 }];
+
+        lines.forEach(line => {
+            const indent = line.search(/\S/);
+            const [key, ...valueParts] = line.trim().split(':');
+            const value = valueParts.join(':').trim().replace(/['"]/g, '');
+
+            while (indent <= stack[stack.length - 1].indent) {
+                stack.pop();
+            }
+
+            const parent = stack[stack.length - 1].obj;
+            
+            if (value) {
+                if (parent[key.trim()]) { // If key exists, convert to array
+                    if (!Array.isArray(parent[key.trim()])) {
+                        parent[key.trim()] = [parent[key.trim()]];
+                    }
+                    parent[key.trim()].push(value);
+                } else {
+                    parent[key.trim()] = value;
+                }
+            } else {
+                const newObj = {};
+                if (parent[key.trim()]) {
+                     if (!Array.isArray(parent[key.trim()])) {
+                        parent[key.trim()] = [parent[key.trim()]];
+                    }
+                    parent[key.trim()].push(newObj);
+                } else {
+                    parent[key.trim()] = newObj;
+                }
+                stack.push({ obj: newObj, indent });
+            }
+        });
+        return result;
+    }
+
+    // --- Renderer ---
+    function render(parsed) {
+        let html = '';
+        for (const key in parsed) {
+            const data = parsed[key];
+            if (Array.isArray(data)) {
+                 data.forEach(item => html += renderComponent(key, item));
+            } else {
+                html += renderComponent(key, data);
+            }
+        }
+        return html;
+    }
+
+    function renderComponent(type, data) {
+        switch (type) {
+            case 'card':
+                if (data.type === 'feed-item') {
+                    const actions = data.actions.replace(/[\[\]]/g, '').split(',').map(a => a.trim());
+                    const actionButtons = actions.map(action => `<button class="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white">${action}</button>`).join('');
+                    return `
+                        <div class="bg-gray-900/50 p-4 rounded-lg max-w-sm mx-auto w-full">
+                          <div class="flex items-center gap-3">
+                            <img class="h-10 w-10 rounded-full" src="${data.user.avatar}" alt="User Avatar">
+                            <div><p class="font-semibold text-white">${data.user.name}</p><p class="text-xs text-gray-400">Just now</p></div>
+                          </div>
+                          <p class="mt-4 text-gray-300">${data.content}</p>
+                          <div class="mt-4 pt-3 border-t border-gray-700 flex justify-around">${actionButtons}</div>
+                        </div>`;
+                }
+                return '';
+            case 'text':
+                let textClass = 'text-gray-300';
+                if (data.style === 'heading') textClass = 'text-2xl font-bold text-white';
+                if (data.style === 'muted') textClass = 'text-sm text-center text-gray-600';
+                return `<p class="${textClass}">${data.content}</p>`;
+            case 'button':
+                let btnClass = 'bg-indigo-600 hover:bg-indigo-500';
+                if (data.style === 'secondary') btnClass = 'bg-gray-700 hover:bg-gray-600';
+                return `<button class="${btnClass} w-full text-white px-4 py-2 rounded-lg font-semibold">${data.label}</button>`;
+            case 'input':
+                let inputHtml = `<div>`;
+                if(data.label) inputHtml += `<label class="block text-sm font-medium text-white">${data.label}</label>`;
+                const marginTop = data.label ? 'mt-1' : 'mt-0';
+                inputHtml += `<input type="${data.type || 'text'}" placeholder="${data.placeholder || ''}" class="${marginTop} block w-full rounded-md border-0 bg-white/5 py-2 px-3 text-white ring-1 ring-inset ring-white/10 focus:ring-indigo-500">`;
+                inputHtml += `</div>`;
+                return inputHtml;
+            case 'grid':
+                let gridHtml = `<div class="grid grid-cols-${data.cols || 1} gap-4">`;
+                if(Array.isArray(data.items)) {
+                    data.items.forEach(item => {
+                        for(const key in item) {
+                            gridHtml += renderComponent(key, item[key]);
+                        }
+                    });
+                }
+                gridHtml += `</div>`;
+                return gridHtml;
+            case 'stat':
+                 let trendHtml = data.trend ? `<p class="text-xs ${data.trend.startsWith('+') ? 'text-green-400' : 'text-red-400'}">${data.trend}</p>` : '';
+                 return `<div class="bg-gray-800 p-4 rounded-lg text-center"><p class="text-sm font-medium text-gray-400">${data.label}</p><p class="text-2xl font-bold text-white">${data.value}</p>${trendHtml}</div>`;
+            default:
+                return '';
+        }
+    }
+
     function compile() {
         try {
-            const code = document.getElementById('editor').value;
-            let html = '';
-
-            const blocks = code.split(/(?=^\w+:)/m).filter(s => s.trim() !== '');
-
-            blocks.forEach(block => {
-                const trimmedBlock = block.trim();
-                const componentType = trimmedBlock.split(':')[0];
-
-                switch(componentType) {
-                    case 'card':
-                        html += parseCard(trimmedBlock);
-                        break;
-                    case 'text':
-                        html += parseText(trimmedBlock);
-                        break;
-                    case 'button':
-                        html += parseButton(trimmedBlock);
-                        break;
-                    case 'input':
-                        html += parseInput(trimmedBlock);
-                        break;
-                    // Add other top-level components here
-                }
-            });
-
-            document.getElementById('output').innerHTML = html || '<p class="text-yellow-400">No valid elements to render. Try defining a component.</p>';
-
+            const code = editor.value;
+            if (!code.trim()) {
+                document.getElementById('output').innerHTML = '<p class="text-gray-500">Editor is empty. Type some code or load an example.</p>';
+                return;
+            }
+            const parsedObject = parseKattour(code);
+            const html = render(parsedObject);
+            document.getElementById('output').innerHTML = html;
         } catch (error) {
-            document.getElementById('output').innerHTML = `<p class="text-red-500">An error occurred: ${error.message}</p>`;
+            document.getElementById('output').innerHTML = `<p class="text-red-500 font-mono">Parsing Error: ${error.message}</p>`;
             console.error("Compilation Error:", error);
         }
     }
 
-    function getValue(block, key) {
-        const regex = new RegExp(`${key}:\\s*"([^"]*)"`);
-        const match = block.match(regex);
-        return match ? match[1] : null;
-    }
-    
-    function getNestedValue(block, parent, key) {
-        const nestedBlockRegex = new RegExp(`${parent}:\\s*\\n([^]*?)(?=\\n\\w|$)`);
-        const nestedBlockMatch = block.match(nestedBlockRegex);
-        if (nestedBlockMatch) {
-            return getValue(nestedBlockMatch[1], key);
-        }
-        return null;
-    }
+    editor.addEventListener('input', compile);
+    document.addEventListener('DOMContentLoaded', loadExample);
 
-    function getList(block, key) {
-        const regex = new RegExp(`${key}:\\s*\\[([^\\]]*)\\]`);
-        const match = block.match(regex);
-        if (match && match[1]) {
-            return match[1].split(',').map(item => item.trim().replace(/"/g, ''));
-        }
-        return [];
-    }
-
-    function parseCard(block) {
-        const type = getValue(block, 'type');
-        if (type === "'feed-item'") {
-            const userName = getNestedValue(block, 'user', 'name');
-            const userAvatar = getNestedValue(block, 'user', 'avatar') || 'https://i.pravatar.cc/48';
-            const content = getValue(block, 'content');
-            const actions = getList(block, 'actions');
-
-            let actionButtons = '';
-            if (actions.length) {
-                actionButtons = actions.map(action => `<button class="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white">${action}</button>`).join('');
-            }
-            
-            return `
-                <div class="bg-gray-900/50 p-4 rounded-lg max-w-sm mx-auto w-full">
-                  <div class="flex items-center gap-3">
-                    <img class="h-10 w-10 rounded-full" src="${userAvatar}" alt="User Avatar">
-                    <div>
-                      <p class="font-semibold text-white">${userName || 'Anonymous'}</p>
-                      <p class="text-xs text-gray-400">Just now</p>
-                    </div>
-                  </div>
-                  <p class="mt-4 text-gray-300">${content || ''}</p>
-                  <div class="mt-4 pt-3 border-t border-gray-700 flex justify-around">
-                    ${actionButtons}
-                  </div>
-                </div>
-            `;
-        }
-        return '<p class="text-red-400">Unknown card type.</p>';
-    }
-
-    function parseText(block) {
-        const content = getValue(block, 'content');
-        const style = getValue(block, 'style');
-        let styleClass = 'text-gray-300 text-base';
-        if (style === 'heading') styleClass = 'text-2xl font-bold text-white';
-        else if (style === 'subheading') styleClass = 'text-lg text-gray-400';
-        else if (style === 'muted') styleClass = 'text-sm text-center text-gray-600';
-        return `<p class="${styleClass}">${content}</p>`;
-    }
-
-    function parseButton(block) {
-        const label = getValue(block, 'label');
-        const style = getValue(block, 'style');
-        let styleClass = 'bg-indigo-600 hover:bg-indigo-500';
-        if (style === 'secondary') styleClass = 'bg-gray-700 hover:bg-gray-600';
-        return `<button class="w-full ${styleClass} text-white px-4 py-2 rounded-lg font-semibold transition">${label}</button>`;
-    }
-    
-    function parseInput(block) {
-         const placeholder = getValue(block, 'placeholder');
-         const label = getValue(block, 'label');
-         let inputHtml = '';
-         if (label) {
-             inputHtml += `<label class="block text-sm font-medium text-white">${label}</label>`;
-         }
-         const marginTop = label ? 'mt-1' : 'mt-0';
-         inputHtml += `<input placeholder="${placeholder || ''}" class="${marginTop} block w-full rounded-md border-0 bg-white/5 py-2 px-3 text-white ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500">`;
-         return `<div>${inputHtml}</div>`;
-    }
-
-
-    // Add event listener for real-time updates
-    document.getElementById('editor').addEventListener('input', compile);
-    // Initial compile on page load
-    document.addEventListener('DOMContentLoaded', compile);
   </script>
 </body>
 </html>
