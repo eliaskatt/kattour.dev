@@ -46,27 +46,27 @@
     <div class="grid lg:grid-cols-2 gap-8">
         <div>
             <label for="editor" class="block text-sm font-medium text-white mb-2">Kattour Code Editor</label>
-            <textarea id="editor" class="w-full h-96 p-4 border border-gray-700 rounded-lg font-mono bg-gray-900 text-gray-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">text:
-  content: "User Registration"
-  style: "heading"
+            <textarea id="editor" class="w-full h-[32rem] p-4 border border-gray-700 rounded-lg font-mono bg-gray-900 text-gray-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">card:
+  type: 'feed-item'
+  user:
+    name: "Elias Kattour"
+    avatar: "https://avatars.githubusercontent.com/u/16886253?v=4"
+  content: "Excited to release the new Kattour UI modules! The playground now supports complex components."
+  actions: ["Like", "Comment", "Share"]
 
-input:
-  label: "Email Address"
-  placeholder: "you@example.com"
-
-input:
-  label: "Password"
-  placeholder: "Enter a secure password"
+text:
+  content: "---"
+  style: "muted"
 
 button:
-  label: "Create Account"
-</textarea>
+  label: "Load More"
+  style: "secondary"</textarea>
             <button onclick="compile()" class="mt-4 w-full bg-indigo-600 text-white px-4 py-2.5 rounded-lg font-semibold hover:bg-indigo-500 transition">Run</button>
         </div>
 
         <div class="mt-6 lg:mt-0">
             <label class="block text-sm font-medium text-white mb-2">Live Preview</label>
-            <div id="output" class="h-full min-h-96 space-y-4 bg-gray-800 p-6 rounded-lg border border-gray-700 overflow-auto">
+            <div id="output" class="h-full min-h-[32rem] space-y-4 bg-gray-800 p-6 rounded-lg border border-gray-700 overflow-auto">
                 <!-- Compiled HTML will be injected here -->
             </div>
         </div>
@@ -78,60 +78,36 @@ button:
   </footer>
 
   <script>
+    // --- ADVANCED PARSER & RENDERER ---
     function compile() {
         try {
             const code = document.getElementById('editor').value;
             let html = '';
 
-            // Split the code into blocks based on lines starting with a word followed by a colon.
             const blocks = code.split(/(?=^\w+:)/m).filter(s => s.trim() !== '');
 
             blocks.forEach(block => {
                 const trimmedBlock = block.trim();
+                const componentType = trimmedBlock.split(':')[0];
 
-                // Text Component
-                if (trimmedBlock.startsWith('text:')) {
-                    const contentMatch = trimmedBlock.match(/content:\s*"([^"]*)"/);
-                    const styleMatch = trimmedBlock.match(/style:\s*"([^"]*)"/);
-                    if (contentMatch) {
-                        let styleClass = 'text-gray-300 text-base';
-                        if (styleMatch) {
-                            if (styleMatch[1] === 'heading') styleClass = 'text-2xl font-bold text-white';
-                            else if (styleMatch[1] === 'subheading') styleClass = 'text-lg text-gray-400';
-                        }
-                        html += `<p class="${styleClass}">${contentMatch[1]}</p>`;
-                    }
-                }
-
-                // Button Component
-                else if (trimmedBlock.startsWith('button:')) {
-                    const labelMatch = trimmedBlock.match(/label:\s*"([^"]*)"/);
-                    if (labelMatch) {
-                        html += `<button class="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-500 transition">${labelMatch[1]}</button>`;
-                    }
-                }
-
-                // Input Component
-                else if (trimmedBlock.startsWith('input:')) {
-                    const placeholderMatch = trimmedBlock.match(/placeholder:\s*"([^"]*)"/);
-                    const labelMatch = trimmedBlock.match(/label:\s*"([^"]*)"/);
-                    let inputHtml = '';
-                    
-                    if (labelMatch) {
-                        inputHtml += `<label class="block text-sm font-medium text-white">${labelMatch[1]}</label>`;
-                    }
-
-                    const placeholderText = placeholderMatch ? placeholderMatch[1] : '';
-                    const marginTop = labelMatch ? 'mt-1' : 'mt-0';
-                    const inputType = labelMatch && labelMatch[1].toLowerCase().includes('password') ? 'password' : 'text';
-                    
-                    inputHtml += `<input type="${inputType}" placeholder="${placeholderText}" class="${marginTop} block w-full rounded-md border-0 bg-white/5 py-2 px-3 text-white ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500">`;
-                    
-                    html += `<div>${inputHtml}</div>`;
+                switch(componentType) {
+                    case 'card':
+                        html += parseCard(trimmedBlock);
+                        break;
+                    case 'text':
+                        html += parseText(trimmedBlock);
+                        break;
+                    case 'button':
+                        html += parseButton(trimmedBlock);
+                        break;
+                    case 'input':
+                        html += parseInput(trimmedBlock);
+                        break;
+                    // Add other top-level components here
                 }
             });
 
-            document.getElementById('output').innerHTML = html || '<p class="text-yellow-400">No valid elements to render. Try defining a component like `text:`, `button:`, or `input:`.</p>';
+            document.getElementById('output').innerHTML = html || '<p class="text-yellow-400">No valid elements to render. Try defining a component.</p>';
 
         } catch (error) {
             document.getElementById('output').innerHTML = `<p class="text-red-500">An error occurred: ${error.message}</p>`;
@@ -139,10 +115,96 @@ button:
         }
     }
 
-    // Add event listener for real-time updates as the user types
-    document.getElementById('editor').addEventListener('input', compile);
+    function getValue(block, key) {
+        const regex = new RegExp(`${key}:\\s*"([^"]*)"`);
+        const match = block.match(regex);
+        return match ? match[1] : null;
+    }
+    
+    function getNestedValue(block, parent, key) {
+        const nestedBlockRegex = new RegExp(`${parent}:\\s*\\n([^]*?)(?=\\n\\w|$)`);
+        const nestedBlockMatch = block.match(nestedBlockRegex);
+        if (nestedBlockMatch) {
+            return getValue(nestedBlockMatch[1], key);
+        }
+        return null;
+    }
 
-    // Initial compile on page load to show the default example
+    function getList(block, key) {
+        const regex = new RegExp(`${key}:\\s*\\[([^\\]]*)\\]`);
+        const match = block.match(regex);
+        if (match && match[1]) {
+            return match[1].split(',').map(item => item.trim().replace(/"/g, ''));
+        }
+        return [];
+    }
+
+    function parseCard(block) {
+        const type = getValue(block, 'type');
+        if (type === "'feed-item'") {
+            const userName = getNestedValue(block, 'user', 'name');
+            const userAvatar = getNestedValue(block, 'user', 'avatar') || 'https://i.pravatar.cc/48';
+            const content = getValue(block, 'content');
+            const actions = getList(block, 'actions');
+
+            let actionButtons = '';
+            if (actions.length) {
+                actionButtons = actions.map(action => `<button class="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white">${action}</button>`).join('');
+            }
+            
+            return `
+                <div class="bg-gray-900/50 p-4 rounded-lg max-w-sm mx-auto w-full">
+                  <div class="flex items-center gap-3">
+                    <img class="h-10 w-10 rounded-full" src="${userAvatar}" alt="User Avatar">
+                    <div>
+                      <p class="font-semibold text-white">${userName || 'Anonymous'}</p>
+                      <p class="text-xs text-gray-400">Just now</p>
+                    </div>
+                  </div>
+                  <p class="mt-4 text-gray-300">${content || ''}</p>
+                  <div class="mt-4 pt-3 border-t border-gray-700 flex justify-around">
+                    ${actionButtons}
+                  </div>
+                </div>
+            `;
+        }
+        return '<p class="text-red-400">Unknown card type.</p>';
+    }
+
+    function parseText(block) {
+        const content = getValue(block, 'content');
+        const style = getValue(block, 'style');
+        let styleClass = 'text-gray-300 text-base';
+        if (style === 'heading') styleClass = 'text-2xl font-bold text-white';
+        else if (style === 'subheading') styleClass = 'text-lg text-gray-400';
+        else if (style === 'muted') styleClass = 'text-sm text-center text-gray-600';
+        return `<p class="${styleClass}">${content}</p>`;
+    }
+
+    function parseButton(block) {
+        const label = getValue(block, 'label');
+        const style = getValue(block, 'style');
+        let styleClass = 'bg-indigo-600 hover:bg-indigo-500';
+        if (style === 'secondary') styleClass = 'bg-gray-700 hover:bg-gray-600';
+        return `<button class="w-full ${styleClass} text-white px-4 py-2 rounded-lg font-semibold transition">${label}</button>`;
+    }
+    
+    function parseInput(block) {
+         const placeholder = getValue(block, 'placeholder');
+         const label = getValue(block, 'label');
+         let inputHtml = '';
+         if (label) {
+             inputHtml += `<label class="block text-sm font-medium text-white">${label}</label>`;
+         }
+         const marginTop = label ? 'mt-1' : 'mt-0';
+         inputHtml += `<input placeholder="${placeholder || ''}" class="${marginTop} block w-full rounded-md border-0 bg-white/5 py-2 px-3 text-white ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500">`;
+         return `<div>${inputHtml}</div>`;
+    }
+
+
+    // Add event listener for real-time updates
+    document.getElementById('editor').addEventListener('input', compile);
+    // Initial compile on page load
     document.addEventListener('DOMContentLoaded', compile);
   </script>
 </body>
