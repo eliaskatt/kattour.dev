@@ -7,25 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-        /* Custom scrollbar for a better look in code blocks */
-        pre::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        pre::-webkit-scrollbar-track {
-            background: #1f2937; /* bg-gray-800 */
-        }
-        pre::-webkit-scrollbar-thumb {
-            background: #4b5563; /* bg-gray-600 */
-            border-radius: 4px;
-        }
-        pre::-webkit-scrollbar-thumb:hover {
-            background: #6b7280; /* bg-gray-500 */
-        }
-        /* A subtle animation for module loading */
-        .module-card {
-            animation: fadeIn 0.5s ease-in-out;
-        }
+        pre::-webkit-scrollbar { width: 8px; height: 8px; }
+        pre::-webkit-scrollbar-track { background: #1f2937; }
+        pre::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+        pre::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+        .module-card { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -33,14 +19,35 @@
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200 font-sans">
-
-    <div class="container mx-auto p-4 md:p-8">
-
-        <!-- Header -->
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-white">Kattour<span class="text-indigo-400">.dev</span> Modules</h1>
-            <p class="mt-4 text-lg text-gray-400">A collection of 20 professionally designed, real-world UI components.</p>
-        </header>
+  
+    <!-- Header -->
+    <header x-data="{ open: false }" class="bg-gray-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center gap-3">
+            <a href="index.html" class="flex items-center gap-3">
+              <img src="assets/images/logo.png" alt="Kattour Logo" class="w-9 h-9" />
+              <h1 class="text-2xl font-bold tracking-wide text-white">Kattour</h1>
+            </a>
+          </div>
+          <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+            <a href="index.html" class="text-gray-300 hover:text-white transition">Home</a>
+            <a href="docs.html" class="text-gray-300 hover:text-white transition">Docs</a>
+            <a href="examples.html" class="text-gray-300 hover:text-white transition">Examples</a>
+            <a href="modules.html" class="text-indigo-400 font-bold">Modules</a>
+            <a href="mobile.html" class="text-gray-300 hover:text-white transition">Mobile</a>
+            <a href="playground.html" class="text-gray-300 hover:text-white transition">Playground</a>
+          </div>
+          <div class="md:hidden">
+            <button @click="open = !open" class="text-gray-300 hover:text-white focus:outline-none">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+            </button>
+          </div>
+        </div>
+      </nav>
+      <!-- Mobile Menu -->
+      <div x-show="open" @click.away="open = false" class="md:hidden"><div class="px-2 pt-2 pb-3 space-y-1 sm:px-3"><a href="index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a><a href="docs.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Docs</a><a href="examples.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Examples</a><a href="modules.html" class="text-indigo-400 block px-3 py-2 rounded-md text-base font-bold">Modules</a><a href="mobile.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Mobile</a><a href="playground.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Playground</a></div></div>
+    </header>
 
         <!-- Modules Grid -->
         <div class="space-y-16">

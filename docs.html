@@ -4,65 +4,219 @@
   <meta charset="UTF-8" />
   <title>Kattour Documentation</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="bg-white text-gray-900 font-sans">
-  <header class="bg-green-700 text-white p-4">
-    <nav class="max-w-7xl mx-auto flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Kattour</h1>
-      <div class="space-x-6">
-        <a href="index.html">Home</a>
-        <a href="examples.html">Examples</a>
-        <a href="playground.html">Playground</a>
-        <a href="modules.html">Modules</a>
-        <a href="mobile.html">Mobile App</a>
+<body class="bg-gray-900 text-gray-300 font-sans">
+  
+  <!-- Header -->
+  <header x-data="{ open: false }" class="bg-gray-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-3">
+          <a href="index.html" class="flex items-center gap-3">
+            <img src="assets/images/logo.png" alt="Kattour Logo" class="w-9 h-9" />
+            <h1 class="text-2xl font-bold tracking-wide text-white">Kattour</h1>
+          </a>
+        </div>
+        <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+          <a href="index.html" class="text-gray-300 hover:text-white transition">Home</a>
+          <a href="docs.html" class="text-indigo-400 font-bold">Docs</a>
+          <a href="examples.html" class="text-gray-300 hover:text-white transition">Examples</a>
+          <a href="modules.html" class="text-gray-300 hover:text-white transition">Modules</a>
+          <a href="mobile.html" class="text-gray-300 hover:text-white transition">Mobile</a>
+          <a href="playground.html" class="text-gray-300 hover:text-white transition">Playground</a>
+        </div>
+        <div class="md:hidden">
+          <button @click="open = !open" class="text-gray-300 hover:text-white focus:outline-none">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+          </button>
+        </div>
       </div>
     </nav>
+    <!-- Mobile Menu -->
+    <div x-show="open" @click.away="open = false" class="md:hidden"><div class="px-2 pt-2 pb-3 space-y-1 sm:px-3"><a href="index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a><a href="docs.html" class="text-indigo-400 block px-3 py-2 rounded-md text-base font-bold">Docs</a><a href="examples.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Examples</a><a href="modules.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Modules</a><a href="mobile.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Mobile</a><a href="playground.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Playground</a></div></div>
   </header>
 
   <main class="max-w-4xl mx-auto p-8">
-    <h2 class="text-3xl font-bold text-green-700 mb-4">📘 Getting Started with Kattour</h2>
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-extrabold text-white">📘 Getting Started</h2>
+      <p class="mt-4 text-lg text-gray-400">Learn how to install and use Kattour in a few simple steps.</p>
+    </div>
 
-    <section class="mb-8">
-      <h3 class="text-xl font-semibold">🚀 Install CLI</h3>
-      <pre class="bg-gray-100 p-4 rounded text-sm mt-2"><code>npm install -g kattour</code></pre>
-    </section>
+    <div class="space-y-8">
+      <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+        <h3 class="text-xl font-semibold text-white">🚀 Step 1: Install the CLI</h3>
+        <p class="text-gray-400 mt-2 mb-4">Install the global command-line tool via npm.</p>
+        <pre class="bg-gray-900 rounded-lg p-4 text-sm mt-2"><code>npm install -g kattour</code></pre>
+      </section>
 
-    <section class="mb-8">
-      <h3 class="text-xl font-semibold">🛠 Create a Project</h3>
-      <pre class="bg-gray-100 p-4 rounded text-sm"><code>kattour init
+      <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+        <h3 class="text-xl font-semibold text-white">🛠 Step 2: Create and Run a Project</h3>
+        <p class="text-gray-400 mt-2 mb-4">Initialize, build, and serve your new project with three commands.</p>
+        <pre class="bg-gray-900 rounded-lg p-4 text-sm"><code>kattour init
 kattour build
 kattour serve</code></pre>
-    </section>
+      </section>
 
-    <section class="mb-8">
-      <h3 class="text-xl font-semibold">🔤 Syntax Basics</h3>
-      <pre class="bg-gray-100 p-4 rounded text-sm"><code>text:
-  content: "Hello"
+      <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+        <h3 class="text-xl font-semibold text-white">🔤 Step 3: Syntax Basics</h3>
+        <p class="text-gray-400 mt-2 mb-4">Define UI elements like text, inputs, and buttons with simple key-value pairs.</p>
+        <pre class="bg-gray-900 rounded-lg p-4 text-sm"><code><span class="text-blue-400">text:</span>
+  <span class="text-yellow-400">content:</span> <span class="text-green-400">"Hello, World!"</span>
 
-input:
-  name: "email"
+<span class="text-blue-400">input:</span>
+  <span class="text-yellow-400">name:</span> <span class="text-green-400">"email"</span>
 
-button:
-  label: "Submit"</code></pre>
-    </section>
+<span class="text-blue-400">button:</span>
+  <span class="text-yellow-400">label:</span> <span class="text-green-400">"Submit"</span></code></pre>
+      </section>
 
-    <section>
-      <h3 class="text-xl font-semibold">🔁 Logic and Data</h3>
-      <pre class="bg-gray-100 p-4 rounded text-sm"><code>data:
-  loggedIn: true
+      <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+        <h3 class="text-xl font-semibold text-white">🔁 Step 4: Logic and Data</h3>
+        <p class="text-gray-400 mt-2 mb-4">Use data and conditional logic to create dynamic interfaces.</p>
+        <pre class="bg-gray-900 rounded-lg p-4 text-sm"><code><span class="text-red-400">data:</span>
+  <span class="text-yellow-400">loggedIn:</span> <span class="text-purple-400">true</span>
 
-if loggedIn:
-  text:
-    content: "Welcome!"
-
-else:
-  text:
-    content: "Please log in"</code></pre>
-    </section>
+<span class="text-purple-400">if</span> <span class="text-gray-300">loggedIn:</span>
+  <span class="text-blue-400">text:</span>
+    <span class="text-yellow-400">content:</span> <span class="text-green-400">"Welcome back!"</span>
+<span class="text-purple-400">else:</span>
+  <span class="text-blue-400">text:</span>
+    <span class="text-yellow-400">content:</span> <span class="text-green-400">"Please log in"</span></code></pre>
+      </section>
+    </div>
   </main>
 
-  <footer class="text-center text-sm text-gray-500 py-6 border-t mt-10">
-    &copy; 2025 Kattour Language. All rights reserved.
+  <footer class="text-center text-sm text-gray-500 py-6 border-t border-gray-800 mt-10">
+    © 2025 Kattour Language. All rights reserved.
+  </footer>
+</body>
+</html>```
+
+### `examples.html` (صفحة الأمثلة)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kattour Examples</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    pre { white-space: pre-wrap; }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-300 font-sans">
+  
+  <!-- Header -->
+  <header x-data="{ open: false }" class="bg-gray-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-3">
+          <a href="index.html" class="flex items-center gap-3">
+            <img src="assets/images/logo.png" alt="Kattour Logo" class="w-9 h-9" />
+            <h1 class="text-2xl font-bold tracking-wide text-white">Kattour</h1>
+          </a>
+        </div>
+        <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+          <a href="index.html" class="text-gray-300 hover:text-white transition">Home</a>
+          <a href="docs.html" class="text-gray-300 hover:text-white transition">Docs</a>
+          <a href="examples.html" class="text-indigo-400 font-bold">Examples</a>
+          <a href="modules.html" class="text-gray-300 hover:text-white transition">Modules</a>
+          <a href="mobile.html" class="text-gray-300 hover:text-white transition">Mobile</a>
+          <a href="playground.html" class="text-gray-300 hover:text-white transition">Playground</a>
+        </div>
+        <div class="md:hidden">
+          <button @click="open = !open" class="text-gray-300 hover:text-white focus:outline-none">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <!-- Mobile Menu -->
+    <div x-show="open" @click.away="open = false" class="md:hidden"><div class="px-2 pt-2 pb-3 space-y-1 sm:px-3"><a href="index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a><a href="docs.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Docs</a><a href="examples.html" class="text-indigo-400 block px-3 py-2 rounded-md text-base font-bold">Examples</a><a href="modules.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Modules</a><a href="mobile.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Mobile</a><a href="playground.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Playground</a></div></div>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-8 space-y-16">
+    <section class="text-center">
+      <h2 class="text-4xl font-extrabold text-white">🔥 Real UI Examples</h2>
+      <p class="mt-4 text-lg text-gray-400">See how to build modern UI layouts with minimal syntax.</p>
+    </section>
+
+    <div class="space-y-12">
+      <!-- Example 1: Hero Section -->
+      <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">🖼️ Hero Section</h3>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <pre class="bg-gray-900 rounded-lg p-4 text-sm"><code><span class="text-blue-400">page:</span>
+  <span class="text-yellow-400">title:</span> <span class="text-green-400">"Welcome to Kattour"</span>
+  <span class="text-yellow-400">subtitle:</span> <span class="text-green-400">"Build fast UIs with clean syntax"</span>
+  <span class="text-blue-400">button:</span>
+    <span class="text-yellow-400">label:</span> <span class="text-green-400">"Get Started"</span></code></pre>
+          <div class="bg-gray-900/50 p-8 rounded-lg text-center space-y-4">
+            <h1 class="text-3xl font-bold text-white">Welcome to Kattour</h1>
+            <p class="text-gray-400">Build fast UIs with clean syntax</p>
+            <button class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-500 transition">Get Started</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Example 2: Login Form -->
+      <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">🔐 Login Form</h3>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <pre class="bg-gray-900 rounded-lg p-4 text-sm"><code><span class="text-blue-400">form:</span>
+  <span class="text-yellow-400">title:</span> <span class="text-green-400">"Login"</span>
+  <span class="text-yellow-400">fields:</span>
+    <span class="text-purple-400">- name:</span> <span class="text-green-400">"email"</span>
+      <span class="text-yellow-400">type:</span> <span class="text-green-400">"email"</span>
+    <span class="text-purple-400">- name:</span> <span class="text-green-400">"password"</span>
+      <span class="text-yellow-400">type:</span> <span class="text-green-400">"password"</span>
+  <span class="text-blue-400">button:</span>
+    <span class="text-yellow-400">label:</span> <span class="text-green-400">"Login"</span></code></pre>
+          <div class="bg-gray-900/50 p-8 rounded-lg space-y-4 max-w-sm mx-auto">
+            <h2 class="text-lg font-semibold text-white">Login</h2>
+            <input type="email" placeholder="Email" class="block w-full rounded-md border-0 bg-white/5 py-2 px-3 text-white ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+            <input type="password" placeholder="Password" class="block w-full rounded-md border-0 bg-white/5 py-2 px-3 text-white ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+            <button class="bg-indigo-600 text-white w-full py-2 rounded-lg font-semibold hover:bg-indigo-500 transition">Login</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Example 3: Product Cards -->
+      <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">🛍️ Product Cards</h3>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <pre class="bg-gray-900 rounded-lg p-4 text-sm"><code><span class="text-purple-400">for 3:</span>
+  <span class="text-blue-400">image:</span> <span class="text-green-400">"item.jpg"</span>
+  <span class="text-blue-400">text:</span> <span class="text-green-400">"Product Name"</span>
+  <span class="text-blue-400">button:</span> <span class="text-green-400">"Buy Now"</span></code></pre>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-gray-900/50 rounded-lg p-4 text-center">
+              <img src="https://via.placeholder.com/150/1f2937/818cf8.png?text=Item" class="mx-auto rounded" />
+              <p class="mt-2 text-white">Product Name</p>
+              <button class="bg-indigo-600 text-white mt-2 px-4 py-1 rounded-lg text-sm font-semibold hover:bg-indigo-500 transition">Buy Now</button>
+            </div>
+            <div class="bg-gray-900/50 rounded-lg p-4 text-center">
+              <img src="https://via.placeholder.com/150/1f2937/818cf8.png?text=Item" class="mx-auto rounded" />
+              <p class="mt-2 text-white">Product Name</p>
+              <button class="bg-indigo-600 text-white mt-2 px-4 py-1 rounded-lg text-sm font-semibold hover:bg-indigo-500 transition">Buy Now</button>
+            </div>
+            <div class="bg-gray-900/50 rounded-lg p-4 text-center">
+              <img src="https://via.placeholder.com/150/1f2937/818cf8.png?text=Item" class="mx-auto rounded" />
+              <p class="mt-2 text-white">Product Name</p>
+              <button class="bg-indigo-600 text-white mt-2 px-4 py-1 rounded-lg text-sm font-semibold hover:bg-indigo-500 transition">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="text-center py-8 text-sm text-gray-500 border-t border-gray-800 mt-16">
+    © 2025 Kattour Language.
   </footer>
 </body>
 </html>

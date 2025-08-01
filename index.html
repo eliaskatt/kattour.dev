@@ -5,69 +5,113 @@
   <title>Kattour – Build UIs with Clarity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    .glow-text { -webkit-text-fill-color: transparent; }
+  </style>
 </head>
-<body class="bg-white text-gray-900 font-sans leading-relaxed">
-  <header class="bg-green-700 text-white shadow-md">
-    <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <img src="assets/images/logo.png" alt="Logo" class="w-10 h-10" />
-        <h1 class="text-2xl font-bold tracking-wide">Kattour</h1>
-      </div>
-      <div class="space-x-6 text-sm font-medium">
-        <a href="index.html" class="hover:underline">Home</a>
-        <a href="docs.html" class="hover:underline">Docs</a>
-        <a href="examples.html" class="hover:underline">Examples</a>
-        <a href="playground.html" class="hover:underline">Playground</a>
-        <a href="modules.html" class="hover:underline">Modules</a>
-        <a href="mobile.html" class="hover:underline">Mobile App</a>
+<body class="bg-gray-900 text-gray-300 font-sans leading-relaxed">
+  
+  <!-- Header -->
+  <header x-data="{ open: false }" class="bg-gray-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-3">
+          <a href="index.html" class="flex items-center gap-3">
+            <img src="assets/images/logo.png" alt="Kattour Logo" class="w-9 h-9" />
+            <h1 class="text-2xl font-bold tracking-wide text-white">Kattour</h1>
+          </a>
+        </div>
+        <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+          <a href="index.html" class="text-indigo-400 font-bold">Home</a>
+          <a href="docs.html" class="text-gray-300 hover:text-white transition">Docs</a>
+          <a href="examples.html" class="text-gray-300 hover:text-white transition">Examples</a>
+          <a href="modules.html" class="text-gray-300 hover:text-white transition">Modules</a>
+          <a href="mobile.html" class="text-gray-300 hover:text-white transition">Mobile</a>
+          <a href="playground.html" class="text-gray-300 hover:text-white transition">Playground</a>
+        </div>
+        <div class="md:hidden">
+          <button @click="open = !open" class="text-gray-300 hover:text-white focus:outline-none">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </button>
+        </div>
       </div>
     </nav>
+    <!-- Mobile Menu -->
+    <div x-show="open" @click.away="open = false" class="md:hidden">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="index.html" class="text-indigo-400 block px-3 py-2 rounded-md text-base font-bold">Home</a>
+        <a href="docs.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Docs</a>
+        <a href="examples.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Examples</a>
+        <a href="modules.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Modules</a>
+        <a href="mobile.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Mobile</a>
+        <a href="playground.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Playground</a>
+      </div>
+    </div>
   </header>
 
-  <main class="max-w-5xl mx-auto px-6 py-16 space-y-12">
+  <main class="max-w-6xl mx-auto px-6 py-20 sm:py-28 space-y-20">
     <section class="text-center">
-      <h2 class="text-4xl font-bold text-green-700 mb-4">Create Stunning Interfaces with Kattour</h2>
-      <p class="text-lg text-gray-600 max-w-2xl mx-auto">Kattour is a declarative, minimal, YAML-inspired programming language for designing modern user interfaces quickly and clearly.</p>
+      <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+        Create <span class="glow-text bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Stunning Interfaces</span> with Clarity
+      </h2>
+      <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Kattour is a declarative, minimal, YAML-inspired programming language for designing modern user interfaces quickly and clearly.</p>
+      <div class="mt-8 flex justify-center gap-4">
+        <a href="docs.html" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-lg shadow-lg font-semibold transition">Start Building →</a>
+        <a href="examples.html" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition">View Examples</a>
+      </div>
     </section>
 
     <section>
-      <h3 class="text-2xl font-semibold text-green-600 mb-3">🌟 Why Kattour?</h3>
-      <ul class="list-disc list-inside space-y-2 text-gray-700">
-        <li>⚡ Blazing fast prototyping for websites and apps</li>
-        <li>📦 Lightweight syntax focused only on UI logic</li>
-        <li>💡 Easy to learn: no HTML, no CSS, no JS needed</li>
-        <li>📄 Readable and clean like writing in plain English</li>
-        <li>🔁 Built-in support for <code>if</code>, <code>for</code>, and <code>data</code></li>
-      </ul>
+      <div class="grid md:grid-cols-3 gap-8 text-center">
+        <!-- Feature 1 -->
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-500 text-white">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-white">Fast Prototyping</h3>
+          <p class="mt-2 text-sm text-gray-400">Blazing fast prototyping for websites and apps with a minimal learning curve.</p>
+        </div>
+        <!-- Feature 2 -->
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-500 text-white">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-white">Lightweight Syntax</h3>
+          <p class="mt-2 text-sm text-gray-400">A clean syntax focused on UI logic. No need to write HTML, CSS, or JS.</p>
+        </div>
+        <!-- Feature 3 -->
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-500 text-white">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.667 0l3.181-3.183m-4.991-2.691v4.992" /></svg>
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-white">Built-in Logic</h3>
+          <p class="mt-2 text-sm text-gray-400">Built-in, simple support for conditions, loops, and data handling.</p>
+        </div>
+      </div>
     </section>
 
-    <section>
-      <h3 class="text-2xl font-semibold text-green-600 mb-4">🧠 What does it look like?</h3>
-      <pre class="bg-gray-100 p-4 rounded text-sm"><code>data:
-  user: "Elias"
+    <section class="grid md:grid-cols-2 gap-8 items-center bg-gray-800/50 p-8 rounded-xl border border-gray-700">
+      <div>
+        <h3 class="text-2xl font-bold text-white mb-4">🧠 What does it look like?</h3>
+        <p class="text-gray-400 mb-4">Write UI descriptions that are easy to read and understand, just like plain text.</p>
+      </div>
+      <pre class="bg-gray-900 rounded-lg p-4 text-sm overflow-x-auto"><code><span class="text-red-400">data:</span>
+  <span class="text-yellow-400">user:</span> <span class="text-green-400">"Elias"</span>
 
-if user:
-  text:
-    content: "Welcome, $user"
+<span class="text-purple-400">if</span> <span class="text-gray-300">user:</span>
+  <span class="text-blue-400">text:</span>
+    <span class="text-yellow-400">content:</span> <span class="text-green-400">"Welcome, $user"</span>
 
-button:
-  label: "Logout"</code></pre>
-    </section>
-
-    <section>
-      <h3 class="text-2xl font-semibold text-green-600 mb-4">🚀 Build with 3 commands</h3>
-      <pre class="bg-gray-100 p-4 rounded text-sm"><code>kattour init
-kattour build
-kattour serve</code></pre>
-    </section>
-
-    <section class="text-center">
-      <a href="docs.html" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded shadow">Start Building →</a>
+<span class="text-blue-400">button:</span>
+  <span class="text-yellow-400">label:</span> <span class="text-green-400">"Logout"</span></code></pre>
     </section>
   </main>
 
-  <footer class="border-t mt-20 py-6 text-center text-sm text-gray-500">
-    &copy; 2025 Kattour. Crafted with passion by Elias.
+  <footer class="border-t border-gray-800 mt-20 py-8 text-center text-sm text-gray-500">
+    <p>© 2025 Kattour. Crafted with passion by Elias.</p>
   </footer>
 </body>
 </html>
