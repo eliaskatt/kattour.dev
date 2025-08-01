@@ -40,25 +40,33 @@
   <main class="p-4 sm:p-8">
     <div class="text-center mb-8">
         <h2 class="text-4xl font-extrabold text-white">🧪 Kattour Playground</h2>
-        <p class="mt-4 text-lg text-gray-400">Write Kattour code and see the result instantly.</p>
+        <p class="mt-4 text-lg text-gray-400">Write Kattour code and see the result instantly update below.</p>
     </div>
 
     <div class="grid lg:grid-cols-2 gap-8">
         <div>
-            <label for="editor" class="block text-sm font-medium text-white mb-2">Kattour Code</label>
+            <label for="editor" class="block text-sm font-medium text-white mb-2">Kattour Code Editor</label>
             <textarea id="editor" class="w-full h-96 p-4 border border-gray-700 rounded-lg font-mono bg-gray-900 text-gray-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">text:
-  content: "Hello, Kattour!"
+  content: "User Registration"
   style: "heading"
 
+input:
+  label: "Email Address"
+  placeholder: "you@example.com"
+
+input:
+  label: "Password"
+  placeholder: "Enter a secure password"
+
 button:
-  label: "Click Me"
+  label: "Create Account"
 </textarea>
             <button onclick="compile()" class="mt-4 w-full bg-indigo-600 text-white px-4 py-2.5 rounded-lg font-semibold hover:bg-indigo-500 transition">Run</button>
         </div>
 
         <div class="mt-6 lg:mt-0">
             <label class="block text-sm font-medium text-white mb-2">Live Preview</label>
-            <div id="output" class="h-96 bg-gray-800 p-6 rounded-lg border border-gray-700 overflow-auto">
+            <div id="output" class="h-full min-h-96 space-y-4 bg-gray-800 p-6 rounded-lg border border-gray-700 overflow-auto">
                 <!-- Compiled HTML will be injected here -->
             </div>
         </div>
@@ -71,32 +79,71 @@ button:
 
   <script>
     function compile() {
-      const code = document.getElementById('editor').value;
-      let html = '';
+        try {
+            const code = document.getElementById('editor').value;
+            let html = '';
 
-      if (code.includes('text:')) {
-        const textMatch = code.match(/text:\s*\n\s*content: "([^"]+)"/);
-        const styleMatch = code.match(/style: "([^"]+)"/);
-        if (textMatch) {
-            let styleClass = 'text-gray-300';
-            if (styleMatch && styleMatch[1] === 'heading') {
-                styleClass = 'text-2xl font-bold text-white';
-            }
-            html += `<p class="${styleClass}">${textMatch[1]}</p>`;
-        }
-      }
-      
-      if (code.includes('button:')) {
-        const buttonMatch = code.match(/button:\s*\n\s*label: "([^"]+)"/);
-        if(buttonMatch) {
-            html += `<button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-500 transition">${buttonMatch[1]}</button>`;
-        }
-      }
+            // Split the code into blocks based on lines starting with a word followed by a colon.
+            const blocks = code.split(/(?=^\w+:)/m).filter(s => s.trim() !== '');
 
-      document.getElementById('output').innerHTML = html || '<p class="text-red-400">No valid elements to render.</p>';
+            blocks.forEach(block => {
+                const trimmedBlock = block.trim();
+
+                // Text Component
+                if (trimmedBlock.startsWith('text:')) {
+                    const contentMatch = trimmedBlock.match(/content:\s*"([^"]*)"/);
+                    const styleMatch = trimmedBlock.match(/style:\s*"([^"]*)"/);
+                    if (contentMatch) {
+                        let styleClass = 'text-gray-300 text-base';
+                        if (styleMatch) {
+                            if (styleMatch[1] === 'heading') styleClass = 'text-2xl font-bold text-white';
+                            else if (styleMatch[1] === 'subheading') styleClass = 'text-lg text-gray-400';
+                        }
+                        html += `<p class="${styleClass}">${contentMatch[1]}</p>`;
+                    }
+                }
+
+                // Button Component
+                else if (trimmedBlock.startsWith('button:')) {
+                    const labelMatch = trimmedBlock.match(/label:\s*"([^"]*)"/);
+                    if (labelMatch) {
+                        html += `<button class="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-500 transition">${labelMatch[1]}</button>`;
+                    }
+                }
+
+                // Input Component
+                else if (trimmedBlock.startsWith('input:')) {
+                    const placeholderMatch = trimmedBlock.match(/placeholder:\s*"([^"]*)"/);
+                    const labelMatch = trimmedBlock.match(/label:\s*"([^"]*)"/);
+                    let inputHtml = '';
+                    
+                    if (labelMatch) {
+                        inputHtml += `<label class="block text-sm font-medium text-white">${labelMatch[1]}</label>`;
+                    }
+
+                    const placeholderText = placeholderMatch ? placeholderMatch[1] : '';
+                    const marginTop = labelMatch ? 'mt-1' : 'mt-0';
+                    const inputType = labelMatch && labelMatch[1].toLowerCase().includes('password') ? 'password' : 'text';
+                    
+                    inputHtml += `<input type="${inputType}" placeholder="${placeholderText}" class="${marginTop} block w-full rounded-md border-0 bg-white/5 py-2 px-3 text-white ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500">`;
+                    
+                    html += `<div>${inputHtml}</div>`;
+                }
+            });
+
+            document.getElementById('output').innerHTML = html || '<p class="text-yellow-400">No valid elements to render. Try defining a component like `text:`, `button:`, or `input:`.</p>';
+
+        } catch (error) {
+            document.getElementById('output').innerHTML = `<p class="text-red-500">An error occurred: ${error.message}</p>`;
+            console.error("Compilation Error:", error);
+        }
     }
-    // Initial compile on load
-    compile();
+
+    // Add event listener for real-time updates as the user types
+    document.getElementById('editor').addEventListener('input', compile);
+
+    // Initial compile on page load to show the default example
+    document.addEventListener('DOMContentLoaded', compile);
   </script>
 </body>
 </html>
