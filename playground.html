@@ -41,7 +41,7 @@
             <label for="editor" class="block text-sm font-medium text-white mb-2">Kattour Code Editor</label>
             <textarea id="editor" class="w-full h-[32rem] p-4 border border-gray-700 rounded-lg font-mono bg-gray-900 text-gray-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
             <div class="flex gap-2 mt-4">
-                <button onclick="compile()" class="w-full bg-indigo-600 text-white px-4 py-2.5 rounded-lg font-semibold hover:bg-indigo-500 transition">Run</button>
+                <button onclick="compile()" class="w-full bg-indigo-600 text-white px-4 py-2.5 rounded-lg font-semibold hover:bg-indigo-500 transition">Render</button>
                 <button onclick="clearEditor()" class="w-1/3 bg-gray-600 text-white px-4 py-2.5 rounded-lg font-semibold hover:bg-gray-500 transition">Clear</button>
             </div>
         </div>
@@ -78,26 +78,22 @@ actions:
         compile();
     }
     
-    // --- THE DEFINITIVE Kattoour RENDERER ---
     const RENDERERS = {
-        // Main entry point for components
-        render(component) {
-            const type = Object.keys(component)[0];
-            const data = component[type];
+        render(parsedData) {
+            if (!parsedData || typeof parsedData !== 'object') return '';
+            const type = Object.keys(parsedData)[0];
+            const data = parsedData[type];
             if (this[type]) {
                 return this[type](data);
             }
             return `<div class="text-red-400">Unknown component type: ${type}</div>`;
         },
 
-        // --- COMPONENT IMPLEMENTATIONS ---
         module(data) {
-            if (!data.type) return `<div class="text-red-400">Module is missing a 'type'.</div>`;
-            const moduleType = data.type.toLowerCase();
+            const moduleType = (data.type || '').toLowerCase();
             if (moduleType.startsWith('card')) return this.card(data);
             if (moduleType.startsWith('form')) return this.form(data);
-            if (moduleType.startsWith('navigation')) return this.navigation(data);
-            return `<div class="text-red-400">Unknown module type: ${data.type}</div>`;
+            return `<div class="text-red-400">Unknown module: ${data.type}</div>`;
         },
 
         card(data) {
@@ -109,11 +105,6 @@ actions:
                         return `<button class="rounded-md px-4 py-2 text-sm font-semibold text-white ${btnClass}">${action.text}</button>`;
                     }).join('');
                     return `<div class="bg-gray-900 p-8 rounded-lg flex justify-center"><div class="w-full max-w-sm text-center bg-gray-800 border border-gray-700 rounded-lg p-6"><img class="w-24 h-24 rounded-full mx-auto ring-4 ring-indigo-500/50" src="${cardData.avatar}" alt="Avatar"><div class="mt-4"><h3 class="text-xl font-bold text-white">${cardData.name}</h3><p class="text-sm text-indigo-400">${cardData.handle}</p><p class="mt-2 text-sm text-gray-400">${cardData.title}</p></div><div class="mt-6 flex gap-4 justify-center">${actions}</div></div></div>`;
-                
-                case 'feed-item':
-                     const feedActions = (cardData.actions || []).map(action => `<button class="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white">${action}</button>`).join('');
-                    return `<div class="bg-gray-900/50 p-4 rounded-lg max-w-sm mx-auto w-full"><div class="flex items-center gap-3"><img class="h-10 w-10 rounded-full" src="${cardData.user?.avatar}" alt="Avatar"><div><p class="font-semibold text-white">${cardData.user?.name}</p><p class="text-xs text-gray-400">Just now</p></div></div><p class="mt-4 text-gray-300">${cardData.content}</p><div class="mt-4 pt-3 border-t border-gray-700 flex justify-around">${feedActions}</div></div>`;
-
                 default:
                     return `<div class="text-red-400">Unknown card type: ${data.type}</div>`;
             }
@@ -126,40 +117,6 @@ actions:
                 return `<div class="bg-gray-900 p-8 rounded-lg flex justify-center"><div class="w-full max-w-sm"><h3 class="text-2xl font-bold text-center text-white">Sign in</h3><form class="mt-8 space-y-6">${fields}<br>${actions}</form></div></div>`;
             }
             return `<div class="text-red-400">Unknown form type: ${data.type}</div>`;
-        },
-
-        navigation(data) {
-             if (data.type === 'stepper') {
-                let stepperHtml = '<ol class="flex items-center w-full">';
-                const total = data.steps?.length || data.total || 3;
-                const current = data.current_step || data.current || 1;
-                for (let i = 1; i <= total; i++) {
-                    const isCompleted = i < current;
-                    const isCurrent = i == current;
-                    let stepClass = 'bg-gray-700 text-white';
-                    if (isCompleted) stepClass = 'bg-indigo-500 text-white';
-                    if (isCurrent) stepClass = 'ring-2 ring-indigo-500 bg-gray-800 text-indigo-400';
-                    stepperHtml += `<li class="flex w-full items-center ${i < total ? "after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-700" : ''}"><span class="flex items-center justify-center w-8 h-8 ${stepClass} rounded-full shrink-0">${i}</span></li>`;
-                }
-                return stepperHtml + '</ol>';
-            }
-            return `<div class="text-red-400">Unknown navigation type: ${data.type}</div>`;
-        },
-
-        // Simple components
-        text(data) {
-            const content = (typeof data === 'string') ? data : data.content;
-            let textClass = 'text-gray-300';
-            if (data.style === 'heading') textClass = 'text-2xl font-bold text-white';
-            if (data.style === 'muted') textClass = 'text-sm text-center text-gray-600';
-            return `<p class="${textClass}">${content}</p>`;
-        },
-
-        button(data) {
-            const label = (typeof data === 'string') ? data : data.label;
-            let btnClass = 'bg-indigo-600 hover:bg-indigo-500';
-            if (data.style === 'secondary') btnClass = 'bg-gray-700 hover:bg-gray-600';
-            return `<button class="${btnClass} w-full text-white px-4 py-2 rounded-lg font-semibold">${label}</button>`;
         }
     };
 
@@ -171,17 +128,8 @@ actions:
                 return;
             }
             
-            // Standardize YAML format to always be a list
-            let processedCode = code.trim();
-            if (!processedCode.startsWith('- ')) {
-                 processedCode = "- " + processedCode.replace(/\n(\w+:)/g, '\n- $1');
-            }
-
-            const parsed = jsyaml.load(processedCode);
-
-            if (!Array.isArray(parsed)) throw new Error("Kattour code should be structured as a list of components.");
-            
-            const html = parsed.map(component => RENDERERS.render(component)).join('');
+            const parsed = jsyaml.load(code);
+            const html = RENDERERS.render(parsed);
             
             document.getElementById('output').innerHTML = html || `<p class="text-yellow-400">No components rendered. Check your syntax.</p>`;
         } catch (error) {
@@ -190,7 +138,6 @@ actions:
     }
 
     editor.addEventListener('input', compile);
-    exampleSelector.addEventListener('change', () => loadExample());
     document.addEventListener('DOMContentLoaded', () => {
         editor.value = defaultCode;
         compile();
