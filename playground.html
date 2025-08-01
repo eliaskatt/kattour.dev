@@ -5,6 +5,7 @@
   <title>Kattour Playground</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
 </head>
 <body class="bg-gray-900 text-gray-300 font-sans">
 
@@ -27,9 +28,7 @@
           <a href="playground.html" class="text-indigo-400 font-bold">Playground</a>
         </div>
         <div class="md:hidden">
-          <button @click="open = !open" class="text-gray-300 hover:text-white focus:outline-none">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-          </button>
+          <button @click="open = !open" class="text-gray-300 hover:text-white focus:outline-none"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg></button>
         </div>
       </div>
     </nav>
@@ -47,9 +46,9 @@
             <div class="flex justify-between items-center mb-2">
                 <label for="editor" class="block text-sm font-medium text-white">Kattour Code Editor</label>
                 <select id="example-selector" class="bg-gray-700 text-white text-xs rounded-md border-gray-600 focus:ring-indigo-500">
-                    <option value="feedCard">Load Example: Feed Card</option>
-                    <option value="loginForm">Load Example: Login Form</option>
-                    <option value="stats">Load Example: Stats Group</option>
+                    <option value="feedCard">Load: Feed Card</option>
+                    <option value="loginForm">Load: Login Form</option>
+                    <option value="stepper">Load: Stepper</option>
                 </select>
             </div>
             <textarea id="editor" class="w-full h-[32rem] p-4 border border-gray-700 rounded-lg font-mono bg-gray-900 text-gray-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
@@ -73,44 +72,29 @@
 
   <script>
     const examples = {
-        feedCard: `card:
-  type: 'feed-item'
-  user:
-    name: "Elias Kattour"
-    avatar: "https://avatars.githubusercontent.com/u/16886253?v=4"
-  content: "Excited to release the new Kattour UI modules! The playground now supports complex components."
-  actions: ["Like", "Comment", "Share"]
-
-text: "A simple line of text."
-button: "A simple button"`,
-        loginForm: `text:
-  content: "Log In"
-  style: "heading"
-
-input:
-  label: "Email Address"
-  placeholder: "you@example.com"
-
-input:
-  label: "Password"
-  type: "password"
-
-button:
-  label: "Sign In"`,
-        stats: `grid:
-  cols: 3
-  items:
-    - stat:
-        label: "Revenue"
-        value: "$12,500"
-    - stat:
-        label: "Users"
-        value: "1,200"
-        trend: "+5.4%"
-    - stat:
-        label: "Uptime"
-        value: "99.9%"
-`
+        feedCard: `- card:
+    type: 'feed-item'
+    user:
+      name: "Elias Kattour"
+      avatar: "https://avatars.githubusercontent.com/u/16886253?v=4"
+    content: "Excited to release the new Kattour UI modules! The playground now supports complex components."
+    actions: ["Like", "Comment", "Share"]
+- text: "A simple line of text."
+- button: "A simple button"`,
+        loginForm: `- text:
+    content: "Log In"
+    style: "heading"
+- input:
+    label: "Email Address"
+    placeholder: "you@example.com"
+- input:
+    label: "Password"
+    type: "password"
+- button:
+    label: "Sign In"`,
+        stepper: `- stepper:
+    current: 2
+    total: 4`
     };
 
     const editor = document.getElementById('editor');
@@ -128,18 +112,18 @@ button:
     
     // --- PARSER & RENDERER ---
     function renderComponent(type, data) {
-        if(typeof data !== 'object' || data === null) {
-            data = { content: String(data) };
+        // Handle shorthand syntax like `text: "Hello"`
+        if (typeof data !== 'object' || data === null) {
+            data = { content: String(data), label: String(data) };
         }
 
         switch (type) {
             case 'card':
                 if (data.type === 'feed-item') {
-                    const actions = (data.actions || '').replace(/[\[\]"]/g, '').split(',').map(a => a.trim());
+                    const actions = Array.isArray(data.actions) ? data.actions : [];
                     const actionButtons = actions.map(action => `<button class="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white">${action}</button>`).join('');
                     return `<div class="bg-gray-900/50 p-4 rounded-lg max-w-sm mx-auto w-full"><div class="flex items-center gap-3"><img class="h-10 w-10 rounded-full" src="${data.user?.avatar || ''}" alt="User Avatar"><div><p class="font-semibold text-white">${data.user?.name || 'User'}</p><p class="text-xs text-gray-400">Just now</p></div></div><p class="mt-4 text-gray-300">${data.content}</p><div class="mt-4 pt-3 border-t border-gray-700 flex justify-around">${actionButtons}</div></div>`;
-                }
-                return ``; // Default card
+                } return '';
             case 'text':
                 let textClass = 'text-gray-300';
                 if (data.style === 'heading') textClass = 'text-2xl font-bold text-white';
@@ -148,21 +132,25 @@ button:
             case 'button':
                 let btnClass = 'bg-indigo-600 hover:bg-indigo-500';
                 if (data.style === 'secondary') btnClass = 'bg-gray-700 hover:bg-gray-600';
-                return `<button class="${btnClass} w-full text-white px-4 py-2 rounded-lg font-semibold">${data.label || data.content}</button>`;
+                return `<button class="${btnClass} w-full text-white px-4 py-2 rounded-lg font-semibold">${data.label}</button>`;
             case 'input':
                 let inputHtml = `<div>`;
                 if(data.label) inputHtml += `<label class="block text-sm font-medium text-white">${data.label}</label>`;
                 inputHtml += `<input type="${data.type || 'text'}" placeholder="${data.placeholder || ''}" class="${data.label ? 'mt-1' : ''} block w-full rounded-md border-0 bg-white/5 py-2 px-3 text-white ring-1 ring-inset ring-white/10 focus:ring-indigo-500">`;
                 return inputHtml + `</div>`;
-            case 'grid':
-                let gridHtml = `<div class="grid grid-cols-${data.cols || 1} gap-4">`;
-                (data.items || []).forEach(item => { const key = Object.keys(item)[0]; gridHtml += renderComponent(key, item[key]); });
-                return gridHtml + `</div>`;
-            case 'stat':
-                 let trendHtml = data.trend ? `<p class="text-xs ${data.trend.startsWith('+') ? 'text-green-400' : 'text-red-400'}">${data.trend}</p>` : '';
-                 return `<div class="bg-gray-800 p-4 rounded-lg text-center"><p class="text-sm font-medium text-gray-400">${data.label}</p><p class="text-2xl font-bold text-white">${data.value}</p>${trendHtml}</div>`;
+            case 'stepper':
+                let stepperHtml = '<ol class="flex items-center w-full">';
+                for (let i = 1; i <= data.total; i++) {
+                    const isCompleted = i < data.current;
+                    const isCurrent = i == data.current;
+                    let stepClass = 'bg-gray-700 text-white';
+                    if (isCompleted) stepClass = 'bg-indigo-500 text-white';
+                    if (isCurrent) stepClass = 'ring-2 ring-indigo-500 bg-gray-800 text-indigo-400';
+                    stepperHtml += `<li class="flex w-full items-center ${i < data.total ? "after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-700" : ''}"><span class="flex items-center justify-center w-8 h-8 ${stepClass} rounded-full shrink-0">${i}</span></li>`;
+                }
+                return stepperHtml + '</ol>';
             default:
-                return `<p class="text-xs text-red-400">Unknown component: ${type}</p>`;
+                return ''; // Silently ignore unknown components
         }
     }
 
@@ -173,34 +161,28 @@ button:
                 document.getElementById('output').innerHTML = '<p class="text-gray-500">Editor is empty. Type some code or load an example.</p>';
                 return;
             }
+            // Use js-yaml to safely parse the input as a list of components
+            const parsed = jsyaml.load(code, { schema: jsyaml.DEFAULT_SCHEMA });
 
-            const parsed = jsyaml.load(code, { schema: jsyaml.FAILSAFE_SCHEMA });
-            const html = Object.entries(parsed)
-                .map(([type, data]) => {
-                    if (Array.isArray(data)) {
-                        return data.map(item => renderComponent(type, item)).join('');
-                    }
-                    return renderComponent(type, data);
-                })
-                .join('');
+            if (!Array.isArray(parsed)) {
+                throw new Error("Kattour code must be a list of components (each component starts with a '-').");
+            }
+            
+            const html = parsed.map(component => {
+                const type = Object.keys(component)[0];
+                const data = component[type];
+                return renderComponent(type, data);
+            }).join('');
             
             document.getElementById('output').innerHTML = html;
         } catch (error) {
-            document.getElementById('output').innerHTML = `<div class="text-red-400 font-mono text-sm"><p class="font-bold mb-2">Parsing Error:</p><pre>${error.message}</pre></div>`;
+            document.getElementById('output').innerHTML = `<div class="text-red-400 font-mono text-sm"><p class="font-bold mb-2">Parsing Error:</p><pre>${error.message.split('\n')[0]}</pre></div>`;
         }
     }
 
-    // Load js-yaml library
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js';
-    script.onload = () => {
-        editor.addEventListener('input', compile);
-        exampleSelector.addEventListener('change', loadExample);
-        document.addEventListener('DOMContentLoaded', loadExample);
-        // Initial load
-        loadExample();
-    };
-    document.head.appendChild(script);
+    editor.addEventListener('input', compile);
+    exampleSelector.addEventListener('change', loadExample);
+    document.addEventListener('DOMContentLoaded', loadExample);
 
   </script>
 </body>
