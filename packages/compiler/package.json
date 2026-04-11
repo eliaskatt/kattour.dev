@@ -1,0 +1,10 @@
+{
+  "name": "@kattour/compiler",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo build compiler",
+    "typecheck": "echo typecheck compiler"
+  }
+}
