@@ -1,0 +1,16 @@
+{
+  "name": "kattour-dev",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@9.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:website": "pnpm --filter @kattour/website dev",
+    "dev:playground": "pnpm --filter @kattour/playground dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck"
+  }
+}
