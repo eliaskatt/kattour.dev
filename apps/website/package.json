@@ -1,0 +1,10 @@
+{
+  "name": "@kattour/website",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "echo website app scaffolded",
+    "build": "echo build website",
+    "typecheck": "echo typecheck website"
+  }
+}
