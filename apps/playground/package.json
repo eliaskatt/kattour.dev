@@ -1,0 +1,10 @@
+{
+  "name": "@kattour/playground",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "echo playground app scaffolded",
+    "build": "echo build playground",
+    "typecheck": "echo typecheck playground"
+  }
+}
