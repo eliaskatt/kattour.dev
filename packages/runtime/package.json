@@ -1,0 +1,10 @@
+{
+  "name": "@kattour/runtime",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo build runtime",
+    "typecheck": "echo typecheck runtime"
+  }
+}
