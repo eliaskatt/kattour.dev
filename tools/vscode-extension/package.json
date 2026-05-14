@@ -1,0 +1,61 @@
+{
+  "name": "kattour-language",
+  "displayName": "Kattour Language",
+  "description": "Syntax highlighting, snippets and tooling for the Kattour UI language.",
+  "version": "0.0.1",
+  "publisher": "kattour",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Formatters"
+  ],
+  "activationEvents": [
+    "onLanguage:kattour"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "kattour",
+        "aliases": ["Kattour", "kattour"],
+        "extensions": [".kat", ".kattour"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "kattour",
+        "scopeName": "source.kattour",
+        "path": "./syntaxes/kattour.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "kattour",
+        "path": "./snippets/kattour.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "kattour.formatFile",
+        "title": "Kattour: Format File"
+      },
+      {
+        "command": "kattour.openPlayground",
+        "title": "Kattour: Open Playground"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.4.0",
+    "@vscode/vsce": "^2.15.0"
+  }
+}
