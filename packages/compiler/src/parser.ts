@@ -90,10 +90,7 @@ export function parse(source: string): ProgramNode {
     const thenBody = parseBlock();
     let elseBody: UINode[] = [];
     skipNewlines();
-    if (match('else')) {
-      consume();
-      elseBody = parseBlock();
-    }
+    if (match('else')) { consume(); elseBody = parseBlock(); }
     return { type: 'If', condition, then: thenBody, else: elseBody };
   }
 
@@ -119,18 +116,8 @@ export function parse(source: string): ProgramNode {
       while (!match('}') && peek().type !== 'eof') {
         skipNewlines();
         if (match('}')) break;
-        if (peek().value === 'click') {
-          consume();
-          element.events.push({ name: 'click', action: parseExpressionUntilLine() });
-          skipNewlines();
-          continue;
-        }
-        if (peek().value === 'bind') {
-          consume();
-          element.bindings.push({ property: 'value', state: consume().value.replace(/^\$/, '') });
-          skipNewlines();
-          continue;
-        }
+        if (peek().value === 'click') { consume(); element.events.push({ name: 'click', action: parseExpressionUntilLine() }); skipNewlines(); continue; }
+        if (peek().value === 'bind') { consume(); element.bindings.push({ property: 'value', state: consume().value.replace(/^\$/, '') }); skipNewlines(); continue; }
         if (peek().type === 'identifier' && peek(1).type !== 'brace_open') {
           const key = consume().value;
           const value = consume().value;
@@ -138,11 +125,7 @@ export function parse(source: string): ProgramNode {
           skipNewlines();
           continue;
         }
-        if (peek().type === 'identifier') {
-          element.children.push(parseUINode());
-          skipNewlines();
-          continue;
-        }
+        if (peek().type === 'identifier') { element.children.push(parseUINode()); skipNewlines(); continue; }
         consume();
       }
       expect('}');
@@ -168,6 +151,13 @@ export function parse(source: string): ProgramNode {
     return { type: 'Effect', dependencies, body: actions };
   }
 
+  function parseRoute() {
+    consume();
+    const path = consume().value;
+    const body = parseBlock();
+    return { type: 'Route', path, body };
+  }
+
   const body: any[] = [];
   while (peek().type !== 'eof') {
     skipNewlines();
@@ -178,11 +168,7 @@ export function parse(source: string): ProgramNode {
       const themeTokens = [];
       while (!match('}') && peek().type !== 'eof') {
         skipNewlines();
-        if (peek().type === 'identifier') {
-          const key = consume().value;
-          themeTokens.push({ key, value: String(parseValue()) });
-          continue;
-        }
+        if (peek().type === 'identifier') { const key = consume().value; themeTokens.push({ key, value: String(parseValue()) }); continue; }
         consume();
       }
       expect('}'); body.push({ type: 'Theme', tokens: themeTokens }); continue;
@@ -190,6 +176,7 @@ export function parse(source: string): ProgramNode {
     if (match('state')) { consume(); const name = consume().value; expect('='); body.push({ type: 'State', name, value: parseValue() }); continue; }
     if (match('computed')) { consume(); const name = consume().value; expect('='); body.push({ type: 'Computed', name, expression: parseExpressionUntilLine() }); continue; }
     if (match('effect')) { body.push(parseEffect()); continue; }
+    if (match('route')) { body.push(parseRoute()); continue; }
     if (match('component')) {
       consume(); const name = consume().value; const params: string[] = [];
       if (peek().type === 'paren_open') {
