@@ -1,4 +1,4 @@
-import { KattourValue, ProgramNode, UINode, ElementNode } from './ast';
+import { KattourValue, ProgramNode, UINode, ElementNode, EffectActionNode, PropertyNode, StatementNode } from './ast';
 import { tokenize, Token } from './tokenizer';
 
 export function parse(source: string): ProgramNode {
@@ -135,7 +135,7 @@ export function parse(source: string): ProgramNode {
     const dependencies: string[] = [];
     while (peek().type === 'identifier' && peek(1).type !== 'brace_open') dependencies.push(consume().value.replace(/^\$/, ''));
     expect('{');
-    const actions = [];
+    const actions: EffectActionNode[] = [];
     while (!match('}') && peek().type !== 'eof') {
       skipNewlines();
       if (match('}')) break;
@@ -145,14 +145,14 @@ export function parse(source: string): ProgramNode {
       skipNewlines();
     }
     expect('}');
-    return { type: 'Effect', dependencies, body: actions };
+    return { type: 'Effect' as const, dependencies, body: actions };
   }
 
   function parseRoute() {
     consume();
     const path = consume().value;
     const body = parseBlock();
-    return { type: 'Route', path, body };
+    return { type: 'Route' as const, path, body };
   }
 
   function parseResource() {
@@ -171,17 +171,17 @@ export function parse(source: string): ProgramNode {
       skipNewlines();
     }
     expect('}');
-    return { type: 'Resource', name, url, method };
+    return { type: 'Resource' as const, name, url, method };
   }
 
-  const body: any[] = [];
+  const body: StatementNode[] = [];
   while (peek().type !== 'eof') {
     skipNewlines();
     if (peek().type === 'eof') break;
     if (match('page')) { consume(); body.push({ type: 'Page', name: consume().value }); continue; }
     if (match('theme')) {
       consume(); expect('{');
-      const themeTokens = [];
+      const themeTokens: PropertyNode[] = [];
       while (!match('}') && peek().type !== 'eof') {
         skipNewlines();
         if (peek().type === 'identifier') { const key = consume().value; themeTokens.push({ key, value: String(parseValue()) }); continue; }
