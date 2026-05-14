@@ -1,4 +1,4 @@
-import { ProgramNode, UINode, ElementNode } from './ast';
+import { KattourValue, ProgramNode, UINode, ElementNode } from './ast';
 import { tokenize, Token } from './tokenizer';
 
 export function parse(source: string): ProgramNode {
@@ -27,7 +27,57 @@ export function parse(source: string): ProgramNode {
   }
 
   function skipNewlines() {
-    while (peek().type === 'newline') consume();
+    while (peek().type === 'newline' || peek().type === 'comma') consume();
+  }
+
+  function parseValue(): KattourValue {
+    skipNewlines();
+
+    if (peek().type === 'bracket_open') return parseArrayValue();
+    if (peek().type === 'brace_open') return parseObjectValue();
+
+    const token = consume();
+
+    if (token.type === 'number') return Number(token.value);
+    if (token.value === 'true') return true;
+    if (token.value === 'false') return false;
+
+    return token.value;
+  }
+
+  function parseArrayValue(): KattourValue[] {
+    expect('[');
+    const values: KattourValue[] = [];
+
+    while (!match(']') && peek().type !== 'eof') {
+      skipNewlines();
+      if (match(']')) break;
+      values.push(parseValue());
+      skipNewlines();
+    }
+
+    expect(']');
+    return values;
+  }
+
+  function parseObjectValue(): Record<string, KattourValue> {
+    expect('{');
+    const object: Record<string, KattourValue> = {};
+
+    while (!match('}') && peek().type !== 'eof') {
+      skipNewlines();
+      if (match('}')) break;
+
+      const key = consume().value;
+
+      if (match(':')) consume();
+
+      object[key] = parseValue();
+      skipNewlines();
+    }
+
+    expect('}');
+    return object;
   }
 
   function parseBlock(): UINode[] {
@@ -70,12 +120,7 @@ export function parse(source: string): ProgramNode {
       elseBody = parseBlock();
     }
 
-    return {
-      type: 'If',
-      condition,
-      then: thenBody,
-      else: elseBody
-    };
+    return { type: 'If', condition, then: thenBody, else: elseBody };
   }
 
   function parseFor(): UINode {
@@ -85,12 +130,7 @@ export function parse(source: string): ProgramNode {
     const collection = consume().value;
     const body = parseBlock();
 
-    return {
-      type: 'For',
-      item,
-      collection,
-      body
-    };
+    return { type: 'For', item, collection, body };
   }
 
   function parseElement(): ElementNode {
@@ -125,12 +165,7 @@ export function parse(source: string): ProgramNode {
         if (peek().value === 'click') {
           consume();
           const action = consume().value;
-
-          element.events.push({
-            name: 'click',
-            action
-          });
-
+          element.events.push({ name: 'click', action });
           skipNewlines();
           continue;
         }
@@ -138,7 +173,6 @@ export function parse(source: string): ProgramNode {
         if (peek().type === 'identifier' && peek(1).type !== 'brace_open') {
           const key = consume().value;
           const value = consume().value;
-
           element.properties.push({ key, value });
           skipNewlines();
           continue;
@@ -182,7 +216,7 @@ export function parse(source: string): ProgramNode {
 
         if (peek().type === 'identifier') {
           const key = consume().value;
-          const value = consume().value;
+          const value = String(parseValue());
           themeTokens.push({ key, value });
           continue;
         }
@@ -199,7 +233,7 @@ export function parse(source: string): ProgramNode {
       consume();
       const name = consume().value;
       expect('=');
-      const value = consume().value;
+      const value = parseValue();
       body.push({ type: 'State', name, value });
       continue;
     }
