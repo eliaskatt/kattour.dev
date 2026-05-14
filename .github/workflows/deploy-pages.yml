@@ -23,13 +23,17 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p dist
-          cp apps/website/static/index.html dist/index.html
-          cp apps/website/static/index.html dist/404.html
+
+          # Restore the legacy root website as the primary public website.
+          cp index.html dist/index.html || true
+          cp index.html dist/404.html || true
           cp modules.html dist/modules.html || true
           cp docs.html dist/docs.html || true
           cp examples.html dist/examples.html || true
           cp mobile.html dist/mobile.html || true
           cp playground.html dist/playground.html || true
+
+          # Keep assets and optional newer sections available without replacing the legacy pages.
           cp -R assets dist/assets || true
           cp -R examples dist/examples || true
           cp -R playground dist/playground || true
@@ -46,8 +50,9 @@ jobs:
           cp -R community dist/community || true
           cp -R site dist/site || true
           cp -R vscode dist/vscode || true
+
           touch dist/.nojekyll
-          echo "kattour-pages-ok" > dist/status.txt
+          echo "kattour-legacy-pages-restored" > dist/status.txt
 
       - name: Deploy to GitHub Pages branch
         uses: peaceiris/actions-gh-pages@v3
