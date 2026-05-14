@@ -6,6 +6,10 @@ export type TokenType =
   | 'brace_close'
   | 'paren_open'
   | 'paren_close'
+  | 'bracket_open'
+  | 'bracket_close'
+  | 'comma'
+  | 'colon'
   | 'newline'
   | 'operator'
   | 'eof';
@@ -83,6 +87,30 @@ export function tokenize(source: string): Token[] {
       continue;
     }
 
+    if (char === '[') {
+      push('bracket_open', char);
+      advance();
+      continue;
+    }
+
+    if (char === ']') {
+      push('bracket_close', char);
+      advance();
+      continue;
+    }
+
+    if (char === ',') {
+      push('comma', char);
+      advance();
+      continue;
+    }
+
+    if (char === ':') {
+      push('colon', char);
+      advance();
+      continue;
+    }
+
     if (char === '"') {
       const startLine = line;
       const startColumn = column;
@@ -107,7 +135,7 @@ export function tokenize(source: string): Token[] {
       const startColumn = column;
       let value = '';
 
-      while (/\d/.test(source[current])) {
+      while (/\d/.test(source[current]) || source[current] === '.') {
         value += advance();
       }
 
