@@ -1,0 +1,15 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Kattour VSCode Extension</title><link rel="stylesheet" href="../assets/css/kattour-site.css"></head><body><header class="kt-header"><div class="kt-shell"><nav class="kt-nav"><a href="../index.html" class="kt-brand"><img src="../assets/images/logo.png"><span>Kattour VSCode</span></a><div class="kt-links"><a href="../docs/index.html">Docs</a><a href="../playground/index.html">Playground</a><a href="../install/index.html">Install</a><a href="https://github.com/eliaskatt/kattour.dev/tree/main/tools/vscode-extension" class="kt-btn primary">Source</a></div></nav></div></header><main class="kt-shell"><section class="kt-hero"><div class="kt-kicker">Editor Tooling</div><h1 class="kt-title">Kattour inside VSCode.</h1><p class="kt-lead">The official Kattour extension adds .kat file support, syntax highlighting, snippets, bracket pairing, formatting, and a command to open the live playground.</p></section><section class="kt-section"><div class="kt-grid"><article class="kt-card"><div class="kt-card-body"><span class="kt-badge">Language</span><h2 style="margin-top:16px">Syntax Highlighting</h2><p>Keywords, blocks, components, strings, interpolations and runtime events are highlighted for .kat and .kattour files.</p><pre class="kt-code">page Home
+
+route "/" {
+  column {
+    title "Hello"
+  }
+}</pre></div></article><article class="kt-card"><div class="kt-card-body"><span class="kt-badge">Productivity</span><h2 style="margin-top:16px">Snippets</h2><p>Start faster with snippets for pages, routes, forms, components and stats blocks.</p><pre class="kt-code">page
+component
+route
+form
+stats</pre></div></article><article class="kt-card"><div class="kt-card-body"><span class="kt-badge">Commands</span><h2 style="margin-top:16px">Formatter + Playground</h2><p>Format the current Kattour file and open the official playground directly from VSCode.</p><pre class="kt-code">Kattour: Format File
+Kattour: Open Playground</pre></div></article></div></section><section class="kt-section"><div class="kt-card"><div class="kt-card-body"><h2>Development install</h2><p>Until Marketplace publishing is ready, build and package the extension locally.</p><pre class="kt-code">cd tools/vscode-extension
+npm install
+npm run build
+npm run package</pre></div></div></section></main></body></html>
