@@ -68,10 +68,7 @@ export function parse(source: string): ProgramNode {
     while (!match('}') && peek().type !== 'eof') {
       skipNewlines();
       if (match('}')) break;
-      if (peek().type === 'identifier') {
-        nodes.push(parseUINode());
-        continue;
-      }
+      if (peek().type === 'identifier') { nodes.push(parseUINode()); continue; }
       consume();
     }
     expect('}');
@@ -158,6 +155,25 @@ export function parse(source: string): ProgramNode {
     return { type: 'Route', path, body };
   }
 
+  function parseResource() {
+    consume();
+    const name = consume().value;
+    let url = '';
+    let method = 'GET';
+    expect('{');
+    while (!match('}') && peek().type !== 'eof') {
+      skipNewlines();
+      if (match('}')) break;
+      const key = consume().value;
+      const value = parseValue();
+      if (key === 'url') url = String(value);
+      if (key === 'method') method = String(value).toUpperCase();
+      skipNewlines();
+    }
+    expect('}');
+    return { type: 'Resource', name, url, method };
+  }
+
   const body: any[] = [];
   while (peek().type !== 'eof') {
     skipNewlines();
@@ -175,6 +191,7 @@ export function parse(source: string): ProgramNode {
     }
     if (match('state')) { consume(); const name = consume().value; expect('='); body.push({ type: 'State', name, value: parseValue() }); continue; }
     if (match('computed')) { consume(); const name = consume().value; expect('='); body.push({ type: 'Computed', name, expression: parseExpressionUntilLine() }); continue; }
+    if (match('resource')) { body.push(parseResource()); continue; }
     if (match('effect')) { body.push(parseEffect()); continue; }
     if (match('route')) { body.push(parseRoute()); continue; }
     if (match('component')) {
