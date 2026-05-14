@@ -3,7 +3,10 @@ export interface ProgramNode {
   body: StatementNode[];
 }
 
-export type KattourValue = string | number | boolean | KattourValue[] | Record<string, KattourValue>;
+export type KattourPrimitive = string | number | boolean | null;
+export type KattourValue = KattourPrimitive | KattourArray | KattourObject;
+export interface KattourArray extends Array<KattourValue> {}
+export interface KattourObject { [key: string]: KattourValue; }
 
 export type StatementNode =
   | PageNode
