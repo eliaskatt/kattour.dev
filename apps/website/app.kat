@@ -1,0 +1,86 @@
+page KattourWebsite
+
+theme {
+  primary "#cb0606"
+  radius 18
+}
+
+state installs = "npm install -g kattour"
+
+route "/" {
+  screen {
+    column {
+      title "Kattour"
+
+      text "The clarity-first UI language"
+
+      card {
+        title "Build production apps with absurd simplicity"
+
+        text "Web, mobile, desktop, SSR, routing, state, hydration, and reactivity built directly into the language."
+      }
+
+      card {
+        title "Install"
+
+        text "$installs"
+      }
+
+      row {
+        link "Documentation" {
+          to "/docs"
+        }
+
+        link "Playground" {
+          to "/playground"
+        }
+      }
+    }
+  }
+}
+
+route "/docs" {
+  screen {
+    column {
+      title "Documentation"
+
+      text "Kattour syntax is designed for humans first."
+
+      card {
+        title "Reactive state"
+
+        text "state counter = 0"
+      }
+
+      card {
+        title "Routing"
+
+        text "route \"/dashboard\" { }"
+      }
+
+      link "Back Home" {
+        to "/"
+      }
+    }
+  }
+}
+
+route "/playground" {
+  screen {
+    column {
+      title "Playground"
+
+      text "Realtime compiler preview coming next."
+
+      card {
+        title "Example"
+
+        text "button \"Click\" { click counter++ }"
+      }
+
+      link "Back Home" {
+        to "/"
+      }
+    }
+  }
+}
