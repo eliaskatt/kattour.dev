@@ -1,0 +1,14 @@
+{
+  "name": "kattour",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "kattour": "./bin/kattour.js"
+  },
+  "files": [
+    "bin"
+  ],
+  "dependencies": {
+    "@kattour/cli": "workspace:*"
+  }
+}
