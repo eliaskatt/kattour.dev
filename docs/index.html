@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Kattour Docs</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-gray-950 text-white min-h-screen font-sans"><header class="border-b border-gray-800 bg-gray-950/80 backdrop-blur sticky top-0"><div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"><a href="../index.html" class="flex items-center gap-3"><img src="../assets/images/logo.png" class="w-9 h-9 rounded-lg"><span class="text-2xl font-bold">Kattour Docs</span></a><nav class="hidden md:flex gap-6 text-gray-300"><a href="../examples/">Examples</a><a href="../templates/">Templates</a><a href="../playground/">Playground</a></nav></div></header><main class="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-[280px_1fr] gap-10"><aside class="space-y-2 text-sm text-gray-300"><a class="block bg-indigo-600 text-white px-4 py-3 rounded-xl" href="#start">Getting Started</a><a class="block hover:bg-gray-900 px-4 py-3 rounded-xl" href="#syntax">Syntax</a><a class="block hover:bg-gray-900 px-4 py-3 rounded-xl" href="#state">State</a><a class="block hover:bg-gray-900 px-4 py-3 rounded-xl" href="#routing">Routing</a><a class="block hover:bg-gray-900 px-4 py-3 rounded-xl" href="#effects">Effects</a></aside><section class="space-y-12"><div><h1 class="text-6xl font-black tracking-tight">Documentation</h1><p class="text-gray-400 text-xl mt-5 max-w-3xl">Learn Kattour from zero to production UI. The docs are being built as interactive pages with live examples.</p></div><article id="start" class="bg-gray-900/70 border border-gray-800 rounded-3xl p-8"><h2 class="text-3xl font-bold mb-4">Getting Started</h2><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-x-auto text-indigo-300">npm install -g kattour
+kattour create my-app
+cd my-app
+kattour dev app.kat</pre></article><article id="syntax" class="bg-gray-900/70 border border-gray-800 rounded-3xl p-8"><h2 class="text-3xl font-bold mb-4">Syntax</h2><p class="text-gray-400 mb-5">Kattour is not YAML. It uses a clean block-based declarative syntax focused on UI intent.</p><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-x-auto text-green-300">page Home
+
+route "/" {
+  column {
+    title "Hello"
+    button "Start"
+  }
+}</pre></article><article id="state" class="bg-gray-900/70 border border-gray-800 rounded-3xl p-8"><h2 class="text-3xl font-bold mb-4">State</h2><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-x-auto text-green-300">state count = 0
+computed label = "Count: " + $count
+
+button "$label" {
+  click count++
+}</pre></article><article id="routing" class="bg-gray-900/70 border border-gray-800 rounded-3xl p-8"><h2 class="text-3xl font-bold mb-4">Routing</h2><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-x-auto text-green-300">route "/user/:name" {
+  title "$route.params.name"
+}</pre></article><article id="effects" class="bg-gray-900/70 border border-gray-800 rounded-3xl p-8"><h2 class="text-3xl font-bold mb-4">Effects</h2><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-x-auto text-green-300">effect username {
+  log "$username changed"
+}</pre></article></section></main></body></html>
