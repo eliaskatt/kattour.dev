@@ -1,0 +1,60 @@
+{
+  "Page": {
+    "prefix": "page",
+    "body": [
+      "page ${1:Home}",
+      "",
+      "route \"${2:/}\" {",
+      "  column {",
+      "    title \"${3:Hello Kattour}\"",
+      "    text \"${4:Build readable UIs.}\"",
+      "    button \"${5:Start}\"",
+      "  }",
+      "}"
+    ],
+    "description": "Create a Kattour page"
+  },
+  "Component": {
+    "prefix": "component",
+    "body": [
+      "component ${1:Card}(${2:title}) {",
+      "  card \"$${2:title}\" {",
+      "    text \"${3:Reusable component}\"",
+      "  }",
+      "}"
+    ],
+    "description": "Create a Kattour component"
+  },
+  "Route": {
+    "prefix": "route",
+    "body": [
+      "route \"${1:/path}\" {",
+      "  section {",
+      "    title \"${2:Page title}\"",
+      "  }",
+      "}"
+    ],
+    "description": "Create a route block"
+  },
+  "Form": {
+    "prefix": "form",
+    "body": [
+      "form {",
+      "  input \"${1:Email}\"",
+      "  input \"${2:Password}\"",
+      "  button \"${3:Submit}\"",
+      "}"
+    ],
+    "description": "Create a form"
+  },
+  "Stats": {
+    "prefix": "stats",
+    "body": [
+      "stats {",
+      "  stat \"${1:Revenue}\" \"${2:48K}\"",
+      "  stat \"${3:Users}\" \"${4:12K}\"",
+      "}"
+    ],
+    "description": "Create stats cards"
+  }
+}
