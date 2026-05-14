@@ -9,7 +9,9 @@ export type StatementNode =
   | ThemeNode
   | ComponentNode
   | ViewNode
-  | ElementNode;
+  | UINode;
+
+export type UINode = ElementNode | IfNode | ForNode;
 
 export interface PageNode {
   type: 'Page';
@@ -31,12 +33,12 @@ export interface ComponentNode {
   type: 'Component';
   name: string;
   params: string[];
-  body: ElementNode[];
+  body: UINode[];
 }
 
 export interface ViewNode {
   type: 'View';
-  body: ElementNode[];
+  body: UINode[];
 }
 
 export interface ElementNode {
@@ -45,7 +47,21 @@ export interface ElementNode {
   label?: string;
   properties: PropertyNode[];
   events: EventNode[];
-  children: ElementNode[];
+  children: UINode[];
+}
+
+export interface IfNode {
+  type: 'If';
+  condition: string;
+  then: UINode[];
+  else: UINode[];
+}
+
+export interface ForNode {
+  type: 'For';
+  item: string;
+  collection: string;
+  body: UINode[];
 }
 
 export interface PropertyNode {
