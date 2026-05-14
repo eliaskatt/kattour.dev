@@ -4,7 +4,7 @@ import { browserRuntime } from './runtime';
 import { ComponentNode, ElementNode, ForNode, IfNode, ProgramNode, PropertyNode, UINode } from './ast';
 
 const HTML_TAGS: Record<string, string> = {
-  screen: 'main', column: 'div', row: 'div', text: 'p', title: 'h1', button: 'button', input: 'input', image: 'img', card: 'section'
+  screen: 'main', column: 'div', row: 'div', text: 'p', title: 'h1', button: 'button', input: 'input', image: 'img', card: 'section', link: 'a'
 };
 
 interface CompileContext { ast: ProgramNode; components: Map<string, ComponentNode>; state: RuntimeScope; }
@@ -14,6 +14,7 @@ export function compile(source: string): string {
   const states = ast.body.filter(node => node.type === 'State');
   const computed = ast.body.filter(node => node.type === 'Computed');
   const effects = ast.body.filter(node => node.type === 'Effect');
+  const routes = ast.body.filter(node => node.type === 'Route');
   const theme = ast.body.find(node => node.type === 'Theme');
   const view = ast.body.find(node => node.type === 'View');
   const components = new Map<string, ComponentNode>();
@@ -31,6 +32,7 @@ export function compile(source: string): string {
     ? theme.tokens.map((token: PropertyNode) => `--k-${token.key}: ${token.value};`).join('\n')
     : '--k-primary: #111827;\n--k-radius: 14px;';
   const html = view ? view.body.map(node => renderNode(node, ctx, {})).join('\n') : '<main></main>';
+  const routeMap = Object.fromEntries(routes.map(route => [route.path, route.body.map(node => renderNode(node, ctx, {})).join('\n')]));
 
   return `<!DOCTYPE html>
 <html>
@@ -47,14 +49,16 @@ body { margin: 0; padding: 0; background: #f8fafc; color: #0f172a; font-family: 
 .k-card { background: white; border: 1px solid #e5e7eb; border-radius: calc(var(--k-radius) * 1px); padding: 24px; box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08); }
 button { border: none; background: var(--k-primary); color: white; padding: 12px 18px; border-radius: calc(var(--k-radius) * 1px); cursor: pointer; }
 input { border: 1px solid #d1d5db; border-radius: calc(var(--k-radius) * 1px); padding: 12px 14px; font: inherit; }
+a { color: var(--k-primary); cursor: pointer; text-decoration: none; font-weight: 700; }
 </style>
 </head>
 <body>
-${html}
+<div id="kattour-root">${html}</div>
 <script>
 window.__KATTOUR_STATE__ = ${JSON.stringify(state)};
 window.__KATTOUR_COMPUTED__ = ${JSON.stringify(computedMap)};
 window.__KATTOUR_EFFECTS__ = ${JSON.stringify(effectList)};
+window.__KATTOUR_ROUTES__ = ${JSON.stringify(routeMap)};
 ${browserRuntime}
 </script>
 </body>
@@ -93,7 +97,13 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Runtime
     attrs.push(`data-k-bind="${escapeHtml(binding.state)}"`);
     if (binding.property === 'value') attrs.push(`value="${escapeHtml(String(evaluateExpression(binding.state, ctx.state, scope) ?? ''))}"`);
   }
-  for (const property of element.properties) attrs.push(`${property.key}="${escapeHtml(property.value)}"`);
+  for (const property of element.properties) {
+    if (element.name === 'link' && property.key === 'to') {
+      attrs.push(`href="${escapeHtml(property.value)}" data-k-link="${escapeHtml(property.value)}"`);
+      continue;
+    }
+    attrs.push(`${property.key}="${escapeHtml(property.value)}"`);
+  }
   let content = '';
   if (element.label) content += `<span data-k-text="${escapeHtml(element.label)}">${escapeHtml(interpolateTemplate(element.label, ctx.state, scope))}</span>`;
   content += element.children.map(child => renderNode(child, ctx, scope)).join('');
