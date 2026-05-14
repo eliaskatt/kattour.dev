@@ -49,6 +49,7 @@ export interface ElementNode {
   label?: string;
   properties: PropertyNode[];
   events: EventNode[];
+  bindings: BindingNode[];
   children: UINode[];
 }
 
@@ -74,4 +75,9 @@ export interface PropertyNode {
 export interface EventNode {
   name: string;
   action: string;
+}
+
+export interface BindingNode {
+  property: string;
+  state: string;
 }
