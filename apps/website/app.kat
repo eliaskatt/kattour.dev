@@ -6,6 +6,7 @@ theme {
 }
 
 state installs = "npm install -g kattour"
+state quickstart = "kattour create my-app"
 
 route "/" {
   screen {
@@ -24,11 +25,17 @@ route "/" {
         title "Install"
 
         text "$installs"
+
+        text "$quickstart"
       }
 
       row {
         link "Documentation" {
           to "/docs"
+        }
+
+        link "Examples" {
+          to "/examples"
         }
 
         link "Playground" {
@@ -53,9 +60,59 @@ route "/docs" {
       }
 
       card {
+        title "Computed values"
+
+        text "computed fullName = $firstName + \" \" + $lastName"
+      }
+
+      card {
         title "Routing"
 
-        text "route \"/dashboard\" { }"
+        text "route \"/dashboard\" { title \"Dashboard\" }"
+      }
+
+      card {
+        title "Effects"
+
+        text "effect counter { log \"changed\" }"
+      }
+
+      link "Back Home" {
+        to "/"
+      }
+    }
+  }
+}
+
+route "/examples" {
+  screen {
+    column {
+      title "Examples"
+
+      card {
+        title "Counter"
+
+        text "state count = 0"
+
+        text "button \"Count: $count\" { click count++ }"
+      }
+
+      card {
+        title "Two-way binding"
+
+        text "input { bind username }"
+      }
+
+      card {
+        title "Dynamic route"
+
+        text "route \"/user/:name\" { title \"$route.params.name\" }"
+      }
+
+      card {
+        title "Resource"
+
+        text "resource users { url \"https://api.example.com/users\" }"
       }
 
       link "Back Home" {
