@@ -24,23 +24,28 @@ interface CompileContext {
 export function compile(source: string): string {
   const ast = parse(source);
   const states = ast.body.filter(node => node.type === 'State');
+  const computed = ast.body.filter(node => node.type === 'Computed');
   const theme = ast.body.find(node => node.type === 'Theme');
   const view = ast.body.find(node => node.type === 'View');
   const components = new Map<string, ComponentNode>();
   const state = Object.fromEntries(states.map(s => [s.name, s.value]));
+  const computedMap = Object.fromEntries(computed.map(c => [c.name, c.expression]));
 
   for (const node of ast.body) {
     if (node.type === 'Component') components.set(node.name, node);
   }
 
-  const ctx: CompileContext = { ast, components, state };
+  const previewState = { ...state };
+  for (const [name, expression] of Object.entries(computedMap)) {
+    previewState[name] = interpolateComputed(String(expression), previewState);
+  }
+
+  const ctx: CompileContext = { ast, components, state: previewState };
   const cssVars = theme && theme.type === 'Theme'
     ? theme.tokens.map((token: PropertyNode) => `--k-${token.key}: ${token.value};`).join('\n')
     : '--k-primary: #111827;\n--k-radius: 14px;';
 
-  const html = view
-    ? view.body.map(node => renderNode(node, ctx, {})).join('\n')
-    : '<main></main>';
+  const html = view ? view.body.map(node => renderNode(node, ctx, {})).join('\n') : '<main></main>';
 
   return `<!DOCTYPE html>
 <html>
@@ -52,47 +57,20 @@ export function compile(source: string): string {
 :root {
 ${cssVars}
 }
-
-body {
-  margin: 0;
-  padding: 0;
-  background: #f8fafc;
-  color: #0f172a;
-  font-family: Inter, system-ui, sans-serif;
-}
-
+body { margin: 0; padding: 0; background: #f8fafc; color: #0f172a; font-family: Inter, system-ui, sans-serif; }
 .k-screen { min-height: 100vh; padding: 32px; }
 .k-column { display: flex; flex-direction: column; gap: 16px; }
 .k-row { display: flex; align-items: center; gap: 16px; }
-.k-card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: calc(var(--k-radius) * 1px);
-  padding: 24px;
-  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
-}
-
-button {
-  border: none;
-  background: var(--k-primary);
-  color: white;
-  padding: 12px 18px;
-  border-radius: calc(var(--k-radius) * 1px);
-  cursor: pointer;
-}
-
-input {
-  border: 1px solid #d1d5db;
-  border-radius: calc(var(--k-radius) * 1px);
-  padding: 12px 14px;
-  font: inherit;
-}
+.k-card { background: white; border: 1px solid #e5e7eb; border-radius: calc(var(--k-radius) * 1px); padding: 24px; box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08); }
+button { border: none; background: var(--k-primary); color: white; padding: 12px 18px; border-radius: calc(var(--k-radius) * 1px); cursor: pointer; }
+input { border: 1px solid #d1d5db; border-radius: calc(var(--k-radius) * 1px); padding: 12px 14px; font: inherit; }
 </style>
 </head>
 <body>
 ${html}
 <script>
 window.__KATTOUR_STATE__ = ${JSON.stringify(state)};
+window.__KATTOUR_COMPUTED__ = ${JSON.stringify(computedMap)};
 ${browserRuntime}
 </script>
 </body>
@@ -113,10 +91,7 @@ function renderIf(node: IfNode, ctx: CompileContext, scope: RuntimeScope): strin
 
 function renderFor(node: ForNode, ctx: CompileContext, scope: RuntimeScope): string {
   const collection = evaluateExpression(node.collection, ctx.state, scope);
-  const items = Array.isArray(collection)
-    ? collection
-    : String(collection ?? '').split(',').map(item => item.trim()).filter(Boolean);
-
+  const items = Array.isArray(collection) ? collection : String(collection ?? '').split(',').map(item => item.trim()).filter(Boolean);
   return items.map(item => {
     const nextScope = { ...scope, [node.item]: item };
     return node.body.map(child => renderNode(child, ctx, nextScope)).join('');
@@ -125,7 +100,6 @@ function renderFor(node: ForNode, ctx: CompileContext, scope: RuntimeScope): str
 
 function renderElement(element: ElementNode, ctx: CompileContext, scope: RuntimeScope): string {
   const component = ctx.components.get(element.name);
-
   if (component) {
     const nextScope = { ...scope };
     component.params.forEach((param, index) => {
@@ -136,7 +110,6 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Runtime
 
   const tag = HTML_TAGS[element.name] || 'div';
   const attrs: string[] = [];
-
   if (element.name === 'screen') attrs.push('class="k-screen"');
   if (element.name === 'column') attrs.push('class="k-column"');
   if (element.name === 'row') attrs.push('class="k-row"');
@@ -145,31 +118,29 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Runtime
   for (const event of element.events) {
     if (event.name === 'click') attrs.push(`data-k-click="${escapeHtml(event.action)}"`);
   }
-
   for (const binding of element.bindings) {
     attrs.push(`data-k-bind="${escapeHtml(binding.state)}"`);
     if (binding.property === 'value') attrs.push(`value="${escapeHtml(String(evaluateExpression(binding.state, ctx.state, scope) ?? ''))}"`);
   }
-
-  for (const property of element.properties) {
-    attrs.push(`${property.key}="${escapeHtml(property.value)}"`);
-  }
+  for (const property of element.properties) attrs.push(`${property.key}="${escapeHtml(property.value)}"`);
 
   let content = '';
-
   if (element.label) {
     content += `<span data-k-text="${escapeHtml(element.label)}">${escapeHtml(interpolateTemplate(element.label, ctx.state, scope))}</span>`;
   }
-
   content += element.children.map(child => renderNode(child, ctx, scope)).join('');
-
   return `<${tag} ${attrs.join(' ')}>${content}</${tag}>`;
 }
 
+function interpolateComputed(expression: string, state: RuntimeScope): string {
+  const parts = expression.split('+').map(part => part.trim()).filter(Boolean);
+  return parts.map(part => {
+    if (part.startsWith('"') && part.endsWith('"')) return part.slice(1, -1);
+    if (part.startsWith('$')) return String(evaluateExpression(part, state, {}) ?? '');
+    return String(evaluateExpression(part, state, {}) ?? '');
+  }).join('');
+}
+
 function escapeHtml(value: string): string {
-  return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;');
+  return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 }
