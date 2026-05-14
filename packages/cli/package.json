@@ -2,15 +2,22 @@
   "name": "@kattour/cli",
   "version": "0.1.0",
   "type": "module",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "bin": {
-    "kattour": "src/index.ts"
+    "kattour": "dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "echo build cli",
-    "typecheck": "echo typecheck cli"
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@kattour/compiler": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "latest"
   }
 }
