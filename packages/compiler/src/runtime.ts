@@ -3,15 +3,16 @@ const KattourRuntime = (() => {
   const state = window.__KATTOUR_STATE__ || {};
   const computed = window.__KATTOUR_COMPUTED__ || {};
   const effects = window.__KATTOUR_EFFECTS__ || [];
+  const routes = window.__KATTOUR_ROUTES__ || {};
   const dependencies = new Map();
   const effectRuns = new Map();
 
   function getPath(path, source = state) {
-    return path.split('.').reduce((value, part) => value && value[part], source);
+    return String(path).split('.').reduce((value, part) => value && value[part], source);
   }
 
   function setPath(path, value, source = state) {
-    const parts = path.split('.');
+    const parts = String(path).split('.');
     const last = parts.pop();
     let target = source;
     for (const part of parts) {
@@ -59,6 +60,10 @@ const KattourRuntime = (() => {
     dependencies.get(key).add(updater);
   }
 
+  function resetHydrationDeps() {
+    dependencies.clear();
+  }
+
   function hydrateTextNode(node) {
     const template = node.dataset.kText;
     const update = () => { node.textContent = interpolate(template); };
@@ -87,15 +92,14 @@ const KattourRuntime = (() => {
       if (action.name === 'log') console.log(interpolate(action.value));
       if (action.name === 'warn') console.warn(interpolate(action.value));
       if (action.name === 'error') console.error(interpolate(action.value));
+      if (action.name === 'go') navigate(interpolate(action.value));
     }
   }
 
   function runEffects(changedKey, initial = false) {
     for (const effect of effects) {
       const deps = effect.dependencies || [];
-      if (initial || deps.some(dep => dep === changedKey || dep.startsWith(changedKey + '.') || changedKey.startsWith(dep + '.'))) {
-        runEffect(effect, changedKey, initial);
-      }
+      if (initial || deps.some(dep => dep === changedKey || dep.startsWith(changedKey + '.') || changedKey.startsWith(dep + '.'))) runEffect(effect, changedKey, initial);
     }
   }
 
@@ -121,11 +125,57 @@ const KattourRuntime = (() => {
     notify(path);
   }
 
-  function hydrate() {
+  function routePatternToRegex(pattern) {
+    const names = [];
+    const escaped = pattern
+      .replace(/\//g, '\\/')
+      .replace(/:([a-zA-Z0-9_]+)/g, (_, name) => {
+        names.push(name);
+        return '([^/]+)';
+      });
+    return { regex: new RegExp('^' + escaped + '$'), names };
+  }
+
+  function matchRoute(pathname) {
+    if (routes[pathname]) return { html: routes[pathname], params: {}, pattern: pathname };
+    for (const [pattern, html] of Object.entries(routes)) {
+      const { regex, names } = routePatternToRegex(pattern);
+      const match = pathname.match(regex);
+      if (!match) continue;
+      const params = {};
+      names.forEach((name, index) => params[name] = decodeURIComponent(match[index + 1]));
+      return { html, params, pattern };
+    }
+    return null;
+  }
+
+  function renderRoute(pathname = window.location.pathname) {
+    const root = document.getElementById('kattour-root');
+    if (!root || Object.keys(routes).length === 0) return false;
+    const route = matchRoute(pathname) || matchRoute('/') || null;
+    if (!route) return false;
+    setPath('route.path', pathname);
+    setPath('route.pattern', route.pattern);
+    setPath('route.params', route.params);
+    root.innerHTML = route.html;
+    hydrate(false);
+    return true;
+  }
+
+  function navigate(path, options = {}) {
+    const target = String(path || '/');
+    if (!options.replace) window.history.pushState({}, '', target);
+    else window.history.replaceState({}, '', target);
+    renderRoute(window.location.pathname);
+    runEffects('route.path', false);
+  }
+
+  function hydrate(runInitialEffects = true) {
     recompute();
+    resetHydrationDeps();
     document.querySelectorAll('[data-k-text]').forEach(hydrateTextNode);
     document.querySelectorAll('[data-k-bind]').forEach(hydrateBoundInput);
-    runEffects('*', true);
+    if (runInitialEffects) runEffects('*', true);
   }
 
   document.addEventListener('input', (event) => {
@@ -135,6 +185,13 @@ const KattourRuntime = (() => {
   });
 
   document.addEventListener('click', (event) => {
+    const link = event.target.closest('[data-k-link]');
+    if (link) {
+      event.preventDefault();
+      navigate(link.dataset.kLink);
+      return;
+    }
+
     const target = event.target.closest('[data-k-click]');
     const action = target && target.dataset.kClick;
     if (!action) return;
@@ -146,11 +203,29 @@ const KattourRuntime = (() => {
       const key = action.replace('--', '').trim();
       setState(key, Number(getPath(key) || 0) - 1);
     }
+    if (action.startsWith('go ')) navigate(interpolate(action.slice(3).trim()));
+    if (action.startsWith('go(') && action.endsWith(')')) navigate(interpolate(action.slice(3, -1).trim().replace(/^"|"$/g, '')));
   });
 
-  return { hydrate, getState: () => state, setState, runEffects };
+  window.addEventListener('popstate', () => {
+    renderRoute(window.location.pathname);
+    runEffects('route.path', false);
+  });
+
+  return {
+    hydrate,
+    getState: () => state,
+    setState,
+    runEffects,
+    navigate,
+    matchRoute,
+    renderRoute,
+    preloadRoute: (path) => Promise.resolve(routes[path] || null),
+    ssrRoute: (path) => (matchRoute(path) || {}).html || ''
+  };
 })();
 
-KattourRuntime.hydrate();
+if (Object.keys(window.__KATTOUR_ROUTES__ || {}).length > 0) KattourRuntime.renderRoute(window.location.pathname);
+else KattourRuntime.hydrate();
 window.KattourRuntime = KattourRuntime;
 `;
