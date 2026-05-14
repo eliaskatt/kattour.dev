@@ -9,6 +9,7 @@ export type StatementNode =
   | PageNode
   | StateNode
   | ComputedNode
+  | ResourceNode
   | EffectNode
   | ThemeNode
   | RouteNode
@@ -21,6 +22,13 @@ export type UINode = ElementNode | IfNode | ForNode;
 export interface PageNode { type: 'Page'; name: string; }
 export interface StateNode { type: 'State'; name: string; value: KattourValue; }
 export interface ComputedNode { type: 'Computed'; name: string; expression: string; }
+
+export interface ResourceNode {
+  type: 'Resource';
+  name: string;
+  url: string;
+  method: string;
+}
 
 export interface EffectNode {
   type: 'Effect';
