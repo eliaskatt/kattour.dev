@@ -3,6 +3,8 @@ export interface ProgramNode {
   body: StatementNode[];
 }
 
+export type KattourValue = string | number | boolean | KattourValue[] | Record<string, KattourValue>;
+
 export type StatementNode =
   | PageNode
   | StateNode
@@ -21,7 +23,7 @@ export interface PageNode {
 export interface StateNode {
   type: 'State';
   name: string;
-  value: string | number | boolean;
+  value: KattourValue;
 }
 
 export interface ThemeNode {
