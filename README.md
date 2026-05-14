@@ -2,7 +2,37 @@
 
 Kattour is an experimental programming language and platform focused on building modern user interfaces with clarity, speed, and a clean developer experience.
 
-This repository originally began as the public website for Kattour. It is now being upgraded into a real language platform with a formal architecture, a compiler pipeline, a runtime, a playground, and structured documentation.
+This repository is being upgraded into a real language platform with a compiler pipeline, runtime, CLI, playground, official website, and structured documentation.
+
+## Official preview
+
+GitHub Pages preview:
+
+```text
+https://eliaskatt.github.io/kattour.dev/
+```
+
+Deployment source:
+
+```text
+gh-pages branch
+```
+
+If the page does not show yet, enable GitHub Pages in repository settings:
+
+```text
+Settings → Pages → Build and deployment → Deploy from a branch → gh-pages / root
+```
+
+## Current workflow policy
+
+To avoid email spam while the compiler is still under heavy development:
+
+- `deploy-pages.yml` runs on push and deploys only the static official website.
+- `check-compiler.yml` is manual only.
+- `release.yml` is manual only.
+
+This keeps the public website stable while the language core evolves.
 
 ## Direction
 
@@ -48,7 +78,7 @@ specs/
 
 ## Current phase
 
-The current phase focuses on replacing the static showcase structure with a maintainable product architecture while preserving the visual identity of Kattour.
+The current phase focuses on making Kattour publicly visible first, then stabilizing the compiler and playground without breaking deployment.
 
 ## Author
 
