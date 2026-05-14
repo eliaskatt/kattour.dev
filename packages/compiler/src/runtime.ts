@@ -1,6 +1,7 @@
 export const browserRuntime = `
 const KattourRuntime = (() => {
   const state = window.__KATTOUR_STATE__ || {};
+  const computed = window.__KATTOUR_COMPUTED__ || {};
   const dependencies = new Map();
 
   function getPath(path, source = state) {
@@ -20,6 +21,13 @@ const KattourRuntime = (() => {
     target[last] = value;
   }
 
+  function interpolate(template) {
+    return template.replace(/\\$([a-zA-Z0-9_.]+)/g, (_, key) => {
+      const value = getPath(key);
+      return value === undefined || value === null ? '' : String(value);
+    });
+  }
+
   function keysFromTemplate(template) {
     const keys = new Set();
     template.replace(/\\$([a-zA-Z0-9_.]+)/g, (_, key) => {
@@ -29,11 +37,23 @@ const KattourRuntime = (() => {
     return [...keys];
   }
 
-  function interpolate(template) {
-    return template.replace(/\\$([a-zA-Z0-9_.]+)/g, (_, key) => {
-      const value = getPath(key);
-      return value === undefined || value === null ? '' : String(value);
-    });
+  function evaluateComputed(expression) {
+    return expression
+      .split('+')
+      .map(part => part.trim())
+      .filter(Boolean)
+      .map(part => {
+        if (part.startsWith('"') && part.endsWith('"')) return part.slice(1, -1);
+        if (part.startsWith('$')) return getPath(part.slice(1)) ?? '';
+        return part;
+      })
+      .join('');
+  }
+
+  function recompute() {
+    for (const [key, expression] of Object.entries(computed)) {
+      setPath(key, evaluateComputed(expression));
+    }
   }
 
   function registerDependency(key, updater) {
@@ -66,12 +86,20 @@ const KattourRuntime = (() => {
   }
 
   function notify(key) {
+    recompute();
+
     const affected = new Set();
 
     for (const [dependency, updaters] of dependencies.entries()) {
       if (dependency === key || dependency.startsWith(key + '.') || key.startsWith(dependency + '.')) {
         for (const updater of updaters) affected.add(updater);
       }
+    }
+
+    for (const computedKey of Object.keys(computed)) {
+      const updaters = dependencies.get(computedKey);
+      if (!updaters) continue;
+      for (const updater of updaters) affected.add(updater);
     }
 
     for (const updater of affected) updater();
@@ -83,6 +111,7 @@ const KattourRuntime = (() => {
   }
 
   function hydrate() {
+    recompute();
     document.querySelectorAll('[data-k-text]').forEach(hydrateTextNode);
     document.querySelectorAll('[data-k-bind]').forEach(hydrateBoundInput);
   }
