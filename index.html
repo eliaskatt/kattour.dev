@@ -1,15 +1,111 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Kattour – Clarity-first UI Language</title><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Kattour is a clarity-first declarative UI language for building modern interfaces with less boilerplate."><script src="https://cdn.tailwindcss.com"></script><style>.glow-text{-webkit-text-fill-color:transparent}.glass{background:rgba(17,24,39,.62);backdrop-filter:blur(18px)}</style></head><body class="bg-gray-950 text-gray-300 font-sans leading-relaxed overflow-x-hidden"><div class="fixed inset-0 -z-10"><div class="absolute left-[-10%] top-[-20%] h-96 w-96 rounded-full bg-indigo-600/20 blur-3xl"></div><div class="absolute right-[-10%] top-[10%] h-96 w-96 rounded-full bg-purple-600/20 blur-3xl"></div><div class="absolute bottom-[-20%] left-[25%] h-96 w-96 rounded-full bg-red-600/10 blur-3xl"></div></div><header class="sticky top-0 z-50 border-b border-gray-800/80 glass"><nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between items-center h-16"><a href="index.html" class="flex items-center gap-3"><img src="assets/images/logo.png" alt="Kattour Logo" class="w-9 h-9 rounded-lg"><h1 class="text-2xl font-bold tracking-wide text-white">Kattour</h1></a><a href="playground/index.html" class="md:hidden bg-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-bold">Play</a><div class="hidden md:flex items-center space-x-6 text-sm font-medium"><a href="index.html" class="text-indigo-400 font-bold">Home</a><a href="docs/index.html" class="text-gray-300 hover:text-white transition">Docs</a><a href="examples/index.html" class="text-gray-300 hover:text-white transition">Examples</a><a href="templates/index.html" class="text-gray-300 hover:text-white transition">Templates</a><a href="showcase/index.html" class="text-gray-300 hover:text-white transition">Showcase</a><a href="components/index.html" class="text-gray-300 hover:text-white transition">Components</a><a href="playground/index.html" class="text-gray-300 hover:text-white transition">Playground</a><a href="https://github.com/eliaskatt/kattour.dev" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg transition">GitHub</a></div></div><div class="md:hidden grid grid-cols-4 gap-2 pb-3 text-center text-xs font-bold"><a href="docs/index.html" class="bg-gray-900 border border-gray-800 rounded-lg px-2 py-2">Docs</a><a href="examples/index.html" class="bg-gray-900 border border-gray-800 rounded-lg px-2 py-2">Examples</a><a href="templates/index.html" class="bg-gray-900 border border-gray-800 rounded-lg px-2 py-2">Templates</a><a href="playground/index.html" class="bg-indigo-600 rounded-lg px-2 py-2 text-white">Play</a></div></nav></header><main class="max-w-7xl mx-auto px-6 py-20 sm:py-28 space-y-24"><section class="grid lg:grid-cols-2 gap-12 items-center"><div><div class="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-2 text-sm text-indigo-300 mb-7">Alpha framework preview · compiler, runtime, CLI, routing</div><h2 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[0.95]">Build UIs with <span class="glow-text bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-red-400">clarity</span>.</h2><p class="mt-6 text-lg sm:text-xl text-gray-400 max-w-2xl">Kattour is a declarative UI language designed to make interfaces readable first — with state, computed values, effects, routing, hydration, and compiler-first development built into the platform.</p><div class="mt-9 flex flex-wrap gap-4"><a href="playground/index.html" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-lg shadow-lg font-semibold transition">Open Playground →</a><a href="examples/index.html" class="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold border border-gray-700 transition">View Examples</a><a href="templates/index.html" class="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold border border-gray-700 transition">Browse Templates</a><a href="site/index.html" class="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold border border-gray-700 transition">Site Map</a></div></div><div class="glass border border-gray-800 rounded-2xl p-5 shadow-2xl shadow-indigo-950/30"><div class="flex gap-2 mb-4"><span class="w-3 h-3 rounded-full bg-red-400"></span><span class="w-3 h-3 rounded-full bg-yellow-400"></span><span class="w-3 h-3 rounded-full bg-green-400"></span></div><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-x-auto"><code><span class="text-red-400">page</span> Home
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kattour – Build UIs with Clarity</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    .glow-text { -webkit-text-fill-color: transparent; }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-300 font-sans leading-relaxed">
+  <header x-data="{ open: false }" class="bg-gray-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-3">
+          <a href="index.html" class="flex items-center gap-3">
+            <img src="assets/images/logo.png" alt="Kattour Logo" class="w-9 h-9" />
+            <h1 class="text-2xl font-bold tracking-wide text-white">Kattour</h1>
+          </a>
+        </div>
+        <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+          <a href="index.html" class="text-indigo-400 font-bold">Home</a>
+          <a href="docs.html" class="text-gray-300 hover:text-white transition">Docs</a>
+          <a href="examples.html" class="text-gray-300 hover:text-white transition">Examples</a>
+          <a href="modules.html" class="text-gray-300 hover:text-white transition">Modules</a>
+          <a href="mobile.html" class="text-gray-300 hover:text-white transition">Mobile</a>
+          <a href="playground.html" class="text-gray-300 hover:text-white transition">Playground</a>
+        </div>
+        <div class="md:hidden">
+          <button @click="open = !open" class="text-gray-300 hover:text-white focus:outline-none">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div x-show="open" @click.away="open = false" class="md:hidden">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="index.html" class="text-indigo-400 block px-3 py-2 rounded-md text-base font-bold">Home</a>
+        <a href="docs.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Docs</a>
+        <a href="examples.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Examples</a>
+        <a href="modules.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Modules</a>
+        <a href="mobile.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Mobile</a>
+        <a href="playground.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Playground</a>
+      </div>
+    </div>
+  </header>
 
-<span class="text-red-400">state</span> count = 0
-<span class="text-red-400">computed</span> label = <span class="text-green-400">"Count: "</span> + $count
+  <main class="max-w-6xl mx-auto px-6 py-20 sm:py-28 space-y-20">
+    <section class="text-center">
+      <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+        Create <span class="glow-text bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Stunning Interfaces</span> with Clarity
+      </h2>
+      <p class="mt-6 text-lg text-gray-400 max-w-3xl mx-auto">Kattour is a declarative, minimal, YAML-inspired programming language for designing modern user interfaces quickly and clearly.</p>
+      <div class="mt-8 flex justify-center gap-4">
+        <a href="docs.html" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-lg shadow-lg font-semibold transition">Start Building →</a>
+        <a href="examples.html" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition">View Examples</a>
+      </div>
+    </section>
 
-<span class="text-purple-400">route</span> <span class="text-green-400">"/"</span> {
-  screen {
-    column {
-      title <span class="text-green-400">"Hello Kattour"</span>
-      button <span class="text-green-400">"$label"</span> {
-        click count++
-      }
-    }
-  }
-}</code></pre></div></section><section class="grid md:grid-cols-3 gap-8"><a href="examples/index.html" class="bg-gray-900/70 p-6 rounded-xl border border-gray-800 hover:border-indigo-500 transition"><div class="h-12 w-12 flex items-center justify-center rounded-lg bg-indigo-500 text-white">⚡</div><h3 class="mt-5 text-lg font-semibold text-white">Examples Gallery</h3><p class="mt-2 text-sm text-gray-400">Real product-style examples: dashboard, delivery, AI chat and more.</p></a><a href="playground/index.html" class="bg-gray-900/70 p-6 rounded-xl border border-gray-800 hover:border-purple-500 transition"><div class="h-12 w-12 flex items-center justify-center rounded-lg bg-purple-500 text-white">⌘</div><h3 class="mt-5 text-lg font-semibold text-white">Live Playground</h3><p class="mt-2 text-sm text-gray-400">Edit Kattour code, see preview, AST, diagnostics and generated HTML.</p></a><a href="docs/index.html" class="bg-gray-900/70 p-6 rounded-xl border border-gray-800 hover:border-red-500 transition"><div class="h-12 w-12 flex items-center justify-center rounded-lg bg-red-500 text-white">◆</div><h3 class="mt-5 text-lg font-semibold text-white">Documentation</h3><p class="mt-2 text-sm text-gray-400">Syntax, state, routes, components, effects, resources and compiler design.</p></a></section><section class="grid md:grid-cols-3 gap-8"><a href="showcase/index.html" class="bg-gray-900/70 p-6 rounded-xl border border-gray-800 hover:border-cyan-500 transition"><h3 class="text-lg font-semibold text-white">Showcase</h3><p class="mt-2 text-sm text-gray-400">Production-style app previews.</p></a><a href="components/index.html" class="bg-gray-900/70 p-6 rounded-xl border border-gray-800 hover:border-cyan-500 transition"><h3 class="text-lg font-semibold text-white">Components</h3><p class="mt-2 text-sm text-gray-400">Reusable UI library.</p></a><a href="install/index.html" class="bg-gray-900/70 p-6 rounded-xl border border-gray-800 hover:border-cyan-500 transition"><h3 class="text-lg font-semibold text-white">Install</h3><p class="mt-2 text-sm text-gray-400">CLI setup and deployment.</p></a></section></main><footer class="border-t border-gray-800 mt-20 py-8 text-center text-sm text-gray-500"><p>© 2026 Kattour. Built with clarity by Elias Kattour.</p></footer></body></html>
+    <section>
+      <div class="grid md:grid-cols-3 gap-8 text-center">
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-500 text-white">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-white">Fast Prototyping</h3>
+          <p class="mt-2 text-sm text-gray-400">Blazing fast prototyping for websites and apps with a minimal learning curve.</p>
+        </div>
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-500 text-white">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-white">Lightweight Syntax</h3>
+          <p class="mt-2 text-sm text-gray-400">A clean syntax focused on UI logic. No need to write HTML, CSS, or JS.</p>
+        </div>
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-500 text-white">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.667 0l3.181-3.183m-4.991-2.691v4.992" /></svg>
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-white">Built-in Logic</h3>
+          <p class="mt-2 text-sm text-gray-400">Built-in, simple support for conditions, loops, and data handling.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid md:grid-cols-2 gap-8 items-center bg-gray-800/50 p-8 rounded-xl border border-gray-700">
+      <div>
+        <h3 class="text-2xl font-bold text-white mb-4">🧠 What does it look like?</h3>
+        <p class="text-gray-400 mb-4">Write UI descriptions that are easy to read and understand, just like plain text.</p>
+      </div>
+      <pre class="bg-gray-900 rounded-lg p-4 text-sm overflow-x-auto"><code><span class="text-red-400">data:</span>
+  <span class="text-yellow-400">user:</span> <span class="text-green-400">"Elias"</span>
+
+<span class="text-purple-400">if</span> <span class="text-gray-300">user:</span>
+  <span class="text-blue-400">text:</span>
+    <span class="text-yellow-400">content:</span> <span class="text-green-400">"Welcome, $user"</span>
+
+<span class="text-blue-400">button:</span>
+  <span class="text-yellow-400">label:</span> <span class="text-green-400">"Logout"</span></code></pre>
+    </section>
+  </main>
+
+  <footer class="border-t border-gray-800 mt-20 py-8 text-center text-sm text-gray-500">
+    <p>© 2025 Kattour. Crafted with passion by Elias.</p>
+  </footer>
+</body>
+</html>
