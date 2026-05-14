@@ -1,0 +1,80 @@
+page KattourPlayground
+
+theme {
+  primary "#cb0606"
+  radius 16
+}
+
+state code = "button \"Hello\" { click counter++ }"
+state counter = 0
+
+computed preview = "Counter: " + $counter
+
+route "/" {
+  screen {
+    column {
+      title "Kattour Playground"
+
+      text "Experiment with Kattour in realtime."
+
+      card {
+        title "Editor"
+
+        input {
+          bind code
+          placeholder "Write Kattour code"
+        }
+      }
+
+      card {
+        title "Preview"
+
+        text "$preview"
+
+        button "Increment" {
+          click counter++
+        }
+      }
+
+      row {
+        link "Examples" {
+          to "/examples"
+        }
+
+        link "Website" {
+          to "/website"
+        }
+      }
+    }
+  }
+}
+
+route "/examples" {
+  screen {
+    column {
+      title "Examples"
+
+      card {
+        title "Routing"
+
+        text "route \"/dashboard\" { title \"Dashboard\" }"
+      }
+
+      card {
+        title "State"
+
+        text "state counter = 0"
+      }
+
+      card {
+        title "Effects"
+
+        text "effect counter { log \"changed\" }"
+      }
+
+      link "Back" {
+        to "/"
+      }
+    }
+  }
+}
