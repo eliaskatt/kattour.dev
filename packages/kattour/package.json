@@ -8,6 +8,10 @@
   "files": [
     "bin"
   ],
+  "scripts": {
+    "build": "node ./scripts/verify-bin.mjs",
+    "typecheck": "node ./scripts/verify-bin.mjs"
+  },
   "dependencies": {
     "@kattour/cli": "workspace:*"
   }
