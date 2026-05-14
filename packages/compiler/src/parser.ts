@@ -1,52 +1,130 @@
+import { ProgramNode, ElementNode } from './ast';
 import { tokenize, Token } from './tokenizer';
-
-export interface ProgramNode {
-  type: 'Program';
-  body: any[];
-}
 
 export function parse(source: string): ProgramNode {
   const tokens = tokenize(source);
   let current = 0;
 
-  function peek(): Token {
-    return tokens[current];
+  function peek(offset = 0): Token {
+    return tokens[current + offset];
   }
 
   function consume(): Token {
     return tokens[current++];
   }
 
+  function match(value: string): boolean {
+    return peek().value === value;
+  }
+
+  function skipNewlines() {
+    while (peek().type === 'newline') consume();
+  }
+
+  function parseElement(): ElementNode {
+    const name = consume().value;
+
+    let label: string | undefined;
+
+    if (peek().type === 'string') {
+      label = consume().value;
+    }
+
+    const element: ElementNode = {
+      type: 'Element',
+      name,
+      label,
+      properties: [],
+      children: []
+    };
+
+    skipNewlines();
+
+    if (match('{')) {
+      consume();
+
+      while (!match('}') && peek().type !== 'eof') {
+        skipNewlines();
+
+        if (peek().type === 'identifier' && peek(1).type !== 'brace_open') {
+          const key = consume().value;
+          const value = consume().value;
+
+          element.properties.push({
+            key,
+            value
+          });
+
+          skipNewlines();
+          continue;
+        }
+
+        if (peek().type === 'identifier') {
+          element.children.push(parseElement());
+          skipNewlines();
+          continue;
+        }
+
+        consume();
+      }
+
+      consume();
+    }
+
+    return element;
+  }
+
   const body: any[] = [];
 
   while (peek().type !== 'eof') {
-    const token = peek();
+    skipNewlines();
 
-    if (token.type === 'newline') {
+    if (match('page')) {
       consume();
-      continue;
-    }
-
-    if (token.value === 'page') {
-      consume();
-      const name = consume();
       body.push({
-        type: 'PageDeclaration',
-        name: name.value
+        type: 'Page',
+        name: consume().value
       });
       continue;
     }
 
-    if (token.value === 'state') {
+    if (match('state')) {
       consume();
-      const key = consume();
+      const name = consume().value;
       consume();
-      const value = consume();
+      const value = consume().value;
 
       body.push({
-        type: 'StateDeclaration',
-        key: key.value,
-        value: value.value
+        type: 'State',
+        name,
+        value
+      });
+
+      continue;
+    }
+
+    if (match('view')) {
+      consume();
+      consume();
+
+      const children: ElementNode[] = [];
+
+      while (!match('}') && peek().type !== 'eof') {
+        skipNewlines();
+
+        if (peek().type === 'identifier') {
+          children.push(parseElement());
+          continue;
+        }
+
+        consume();
+      }
+
+      consume();
+
+      body.push({
+        type: 'View',
+        body: children
       });
 
       continue;
