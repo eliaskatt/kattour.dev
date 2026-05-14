@@ -9,6 +9,7 @@ export type StatementNode =
   | PageNode
   | StateNode
   | ComputedNode
+  | EffectNode
   | ThemeNode
   | ComponentNode
   | ViewNode
@@ -31,6 +32,17 @@ export interface ComputedNode {
   type: 'Computed';
   name: string;
   expression: string;
+}
+
+export interface EffectNode {
+  type: 'Effect';
+  dependencies: string[];
+  body: EffectActionNode[];
+}
+
+export interface EffectActionNode {
+  name: string;
+  value: string;
 }
 
 export interface ThemeNode {
