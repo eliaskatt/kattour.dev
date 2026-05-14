@@ -1,0 +1,31 @@
+page BindingDemo
+
+theme {
+  primary "#cb0606"
+  radius 16
+}
+
+state username = "Elias"
+state message = "Kattour"
+
+view {
+  screen {
+    column {
+      title "Two-way Binding"
+
+      text "Hello $username"
+
+      input {
+        bind username
+        placeholder "Type your name"
+      }
+
+      text "Message: $message"
+
+      input {
+        bind message
+        placeholder "Write anything"
+      }
+    }
+  }
+}
