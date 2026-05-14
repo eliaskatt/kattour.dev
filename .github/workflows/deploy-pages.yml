@@ -39,6 +39,7 @@ jobs:
           cp -R themes dist/themes || true
           cp -R community dist/community || true
           cp -R site dist/site || true
+          cp -R vscode dist/vscode || true
           touch dist/.nojekyll
           echo "kattour-pages-ok" > dist/status.txt
 
