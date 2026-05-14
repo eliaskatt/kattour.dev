@@ -32,6 +32,7 @@ jobs:
           cp -R docs dist/docs || true
           cp -R showcase dist/showcase || true
           cp -R components dist/components || true
+          cp -R modules dist/modules || true
           cp -R install dist/install || true
           cp -R roadmap dist/roadmap || true
           cp -R integrations dist/integrations || true
