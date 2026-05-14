@@ -5,18 +5,9 @@ export function parse(source: string): ProgramNode {
   const tokens = tokenize(source);
   let current = 0;
 
-  function peek(offset = 0): Token {
-    return tokens[current + offset];
-  }
-
-  function consume(): Token {
-    return tokens[current++];
-  }
-
-  function match(value: string): boolean {
-    return peek().value === value;
-  }
-
+  function peek(offset = 0): Token { return tokens[current + offset]; }
+  function consume(): Token { return tokens[current++]; }
+  function match(value: string): boolean { return peek().value === value; }
   function expect(value: string) {
     if (!match(value)) {
       const token = peek();
@@ -24,10 +15,7 @@ export function parse(source: string): ProgramNode {
     }
     consume();
   }
-
-  function skipNewlines() {
-    while (peek().type === 'newline' || peek().type === 'comma') consume();
-  }
+  function skipNewlines() { while (peek().type === 'newline' || peek().type === 'comma') consume(); }
 
   function parseValue(): KattourValue {
     skipNewlines();
@@ -42,9 +30,7 @@ export function parse(source: string): ProgramNode {
 
   function parseExpressionUntilLine(): string {
     const parts: string[] = [];
-    while (peek().type !== 'newline' && peek().type !== 'eof' && peek().type !== 'brace_close') {
-      parts.push(consume().value);
-    }
+    while (peek().type !== 'newline' && peek().type !== 'eof' && peek().type !== 'brace_close') parts.push(consume().value);
     return parts.join(' ').trim();
   }
 
@@ -123,47 +109,28 @@ export function parse(source: string): ProgramNode {
   function parseElement(): ElementNode {
     const name = consume().value;
     let label: string | undefined;
-
     if (peek().type === 'string' || peek().type === 'identifier') {
-      if (peek(1).type === 'brace_open' || peek(1).type === 'newline' || peek(1).type === 'brace_close') {
-        label = consume().value;
-      }
+      if (peek(1).type === 'brace_open' || peek(1).type === 'newline' || peek(1).type === 'brace_close') label = consume().value;
     }
-
-    const element: ElementNode = {
-      type: 'Element',
-      name,
-      label,
-      properties: [],
-      events: [],
-      bindings: [],
-      children: []
-    };
-
+    const element: ElementNode = { type: 'Element', name, label, properties: [], events: [], bindings: [], children: [] };
     skipNewlines();
-
     if (match('{')) {
       consume();
       while (!match('}') && peek().type !== 'eof') {
         skipNewlines();
         if (match('}')) break;
-
         if (peek().value === 'click') {
           consume();
-          const action = parseExpressionUntilLine();
-          element.events.push({ name: 'click', action });
+          element.events.push({ name: 'click', action: parseExpressionUntilLine() });
           skipNewlines();
           continue;
         }
-
         if (peek().value === 'bind') {
           consume();
-          const state = consume().value.replace(/^\$/, '');
-          element.bindings.push({ property: 'value', state });
+          element.bindings.push({ property: 'value', state: consume().value.replace(/^\$/, '') });
           skipNewlines();
           continue;
         }
-
         if (peek().type === 'identifier' && peek(1).type !== 'brace_open') {
           const key = consume().value;
           const value = consume().value;
@@ -171,7 +138,6 @@ export function parse(source: string): ProgramNode {
           skipNewlines();
           continue;
         }
-
         if (peek().type === 'identifier') {
           element.children.push(parseUINode());
           skipNewlines();
@@ -184,81 +150,59 @@ export function parse(source: string): ProgramNode {
     return element;
   }
 
-  const body: any[] = [];
+  function parseEffect() {
+    consume();
+    const dependencies: string[] = [];
+    while (peek().type === 'identifier' && peek(1).type !== 'brace_open') dependencies.push(consume().value.replace(/^\$/, ''));
+    expect('{');
+    const actions = [];
+    while (!match('}') && peek().type !== 'eof') {
+      skipNewlines();
+      if (match('}')) break;
+      const name = consume().value;
+      const value = parseExpressionUntilLine();
+      actions.push({ name, value });
+      skipNewlines();
+    }
+    expect('}');
+    return { type: 'Effect', dependencies, body: actions };
+  }
 
+  const body: any[] = [];
   while (peek().type !== 'eof') {
     skipNewlines();
     if (peek().type === 'eof') break;
-
-    if (match('page')) {
-      consume();
-      body.push({ type: 'Page', name: consume().value });
-      continue;
-    }
-
+    if (match('page')) { consume(); body.push({ type: 'Page', name: consume().value }); continue; }
     if (match('theme')) {
-      consume();
-      expect('{');
+      consume(); expect('{');
       const themeTokens = [];
       while (!match('}') && peek().type !== 'eof') {
         skipNewlines();
         if (peek().type === 'identifier') {
           const key = consume().value;
-          const value = String(parseValue());
-          themeTokens.push({ key, value });
+          themeTokens.push({ key, value: String(parseValue()) });
           continue;
         }
         consume();
       }
-      expect('}');
-      body.push({ type: 'Theme', tokens: themeTokens });
-      continue;
+      expect('}'); body.push({ type: 'Theme', tokens: themeTokens }); continue;
     }
-
-    if (match('state')) {
-      consume();
-      const name = consume().value;
-      expect('=');
-      const value = parseValue();
-      body.push({ type: 'State', name, value });
-      continue;
-    }
-
-    if (match('computed')) {
-      consume();
-      const name = consume().value;
-      expect('=');
-      const expression = parseExpressionUntilLine();
-      body.push({ type: 'Computed', name, expression });
-      continue;
-    }
-
+    if (match('state')) { consume(); const name = consume().value; expect('='); body.push({ type: 'State', name, value: parseValue() }); continue; }
+    if (match('computed')) { consume(); const name = consume().value; expect('='); body.push({ type: 'Computed', name, expression: parseExpressionUntilLine() }); continue; }
+    if (match('effect')) { body.push(parseEffect()); continue; }
     if (match('component')) {
-      consume();
-      const name = consume().value;
-      const params: string[] = [];
+      consume(); const name = consume().value; const params: string[] = [];
       if (peek().type === 'paren_open') {
         consume();
         while (peek().type !== 'paren_close' && peek().type !== 'eof') {
-          if (peek().type === 'identifier') {
-            params.push(consume().value);
-            continue;
-          }
+          if (peek().type === 'identifier') { params.push(consume().value); continue; }
           consume();
         }
         expect(')');
       }
-      const children = parseBlock();
-      body.push({ type: 'Component', name, params, body: children });
-      continue;
+      body.push({ type: 'Component', name, params, body: parseBlock() }); continue;
     }
-
-    if (match('view')) {
-      consume();
-      body.push({ type: 'View', body: parseBlock() });
-      continue;
-    }
-
+    if (match('view')) { consume(); body.push({ type: 'View', body: parseBlock() }); continue; }
     consume();
   }
   return { type: 'Program', body };
