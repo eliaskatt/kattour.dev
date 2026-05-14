@@ -1,5 +1,5 @@
 import { parse } from './parser';
-import { ComponentNode, ElementNode, ProgramNode, PropertyNode } from './ast';
+import { ComponentNode, ElementNode, ForNode, IfNode, ProgramNode, PropertyNode, UINode } from './ast';
 
 const HTML_TAGS: Record<string, string> = {
   screen: 'main',
@@ -16,6 +16,7 @@ const HTML_TAGS: Record<string, string> = {
 interface CompileContext {
   ast: ProgramNode;
   components: Map<string, ComponentNode>;
+  state: Record<string, string | number | boolean>;
 }
 
 export function compile(source: string): string {
@@ -24,6 +25,7 @@ export function compile(source: string): string {
   const theme = ast.body.find(node => node.type === 'Theme');
   const view = ast.body.find(node => node.type === 'View');
   const components = new Map<string, ComponentNode>();
+  const state = Object.fromEntries(states.map(s => [s.name, s.value]));
 
   for (const node of ast.body) {
     if (node.type === 'Component') {
@@ -31,13 +33,13 @@ export function compile(source: string): string {
     }
   }
 
-  const ctx: CompileContext = { ast, components };
+  const ctx: CompileContext = { ast, components, state };
   const cssVars = theme && theme.type === 'Theme'
     ? theme.tokens.map((token: PropertyNode) => `--k-${token.key}: ${token.value};`).join('\n')
     : '--k-primary: #111827;\n--k-radius: 14px;';
 
   const html = view
-    ? view.body.map(element => renderElement(element, ctx, {})).join('\n')
+    ? view.body.map(node => renderNode(node, ctx, {})).join('\n')
     : '<main></main>';
 
   return `<!DOCTYPE html>
@@ -97,7 +99,7 @@ button {
 <body>
 ${html}
 <script>
-const state = ${JSON.stringify(Object.fromEntries(states.map(s => [s.name, s.value])))};
+const state = ${JSON.stringify(state)};
 
 function updateBindings() {
   document.querySelectorAll('[data-k-text]').forEach((node) => {
@@ -134,6 +136,30 @@ updateBindings();
 </html>`;
 }
 
+function renderNode(node: UINode, ctx: CompileContext, scope: Record<string, string>): string {
+  if (node.type === 'If') return renderIf(node, ctx, scope);
+  if (node.type === 'For') return renderFor(node, ctx, scope);
+  return renderElement(node, ctx, scope);
+}
+
+function renderIf(node: IfNode, ctx: CompileContext, scope: Record<string, string>): string {
+  const value = resolveValue(node.condition, ctx, scope);
+  const activeBody = Boolean(value) && value !== 'false' ? node.then : node.else;
+  return activeBody.map(child => renderNode(child, ctx, scope)).join('');
+}
+
+function renderFor(node: ForNode, ctx: CompileContext, scope: Record<string, string>): string {
+  const collection = resolveValue(node.collection, ctx, scope);
+  const items = Array.isArray(collection)
+    ? collection
+    : String(collection ?? '').split(',').map(item => item.trim()).filter(Boolean);
+
+  return items.map(item => {
+    const nextScope = { ...scope, [node.item]: String(item) };
+    return node.body.map(child => renderNode(child, ctx, nextScope)).join('');
+  }).join('');
+}
+
 function renderElement(element: ElementNode, ctx: CompileContext, scope: Record<string, string>): string {
   const component = ctx.components.get(element.name);
 
@@ -142,11 +168,11 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Record<
 
     component.params.forEach((param, index) => {
       if (index === 0 && element.label) {
-        nextScope[param] = element.label;
+        nextScope[param] = resolveTemplate(element.label, ctx, scope);
       }
     });
 
-    return component.body.map(child => renderElement(child, ctx, nextScope)).join('');
+    return component.body.map(child => renderNode(child, ctx, nextScope)).join('');
   }
 
   const tag = HTML_TAGS[element.name] || 'div';
@@ -170,16 +196,29 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Record<
   let content = '';
 
   if (element.label) {
-    content += `<span data-k-text="${resolveTemplate(element.label, scope)}">${resolveTemplate(element.label, scope)}</span>`;
+    const label = resolveTemplate(element.label, ctx, scope);
+    content += `<span data-k-text="${escapeHtml(label)}">${escapeHtml(label)}</span>`;
   }
 
-  content += element.children.map(child => renderElement(child, ctx, scope)).join('');
+  content += element.children.map(child => renderNode(child, ctx, scope)).join('');
 
   return `<${tag} ${attrs.join(' ')}>${content}</${tag}>`;
 }
 
-function resolveTemplate(value: string, scope: Record<string, string>): string {
+function resolveValue(name: string, ctx: CompileContext, scope: Record<string, string>) {
+  return scope[name] ?? ctx.state[name];
+}
+
+function resolveTemplate(value: string, ctx: CompileContext, scope: Record<string, string>): string {
   return value.replace(/\$([a-zA-Z0-9_]+)/g, (match, key) => {
-    return scope[key] ?? match;
+    return String(resolveValue(key, ctx, scope) ?? match);
   });
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
 }
