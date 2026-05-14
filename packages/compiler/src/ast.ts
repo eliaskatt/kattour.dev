@@ -8,6 +8,7 @@ export type KattourValue = string | number | boolean | KattourValue[] | Record<s
 export type StatementNode =
   | PageNode
   | StateNode
+  | ComputedNode
   | ThemeNode
   | ComponentNode
   | ViewNode
@@ -24,6 +25,12 @@ export interface StateNode {
   type: 'State';
   name: string;
   value: KattourValue;
+}
+
+export interface ComputedNode {
+  type: 'Computed';
+  name: string;
+  expression: string;
 }
 
 export interface ThemeNode {
