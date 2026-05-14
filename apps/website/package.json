@@ -1,10 +1,18 @@
 {
   "name": "@kattour/website",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "echo website app scaffolded",
-    "build": "echo build website",
-    "typecheck": "echo typecheck website"
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "react": "latest",
+    "react-dom": "latest",
+    "vite": "latest",
+    "typescript": "latest",
+    "@vitejs/plugin-react": "latest"
   }
 }
