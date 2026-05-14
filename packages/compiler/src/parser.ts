@@ -40,6 +40,14 @@ export function parse(source: string): ProgramNode {
     return token.value;
   }
 
+  function parseExpressionUntilLine(): string {
+    const parts: string[] = [];
+    while (peek().type !== 'newline' && peek().type !== 'eof' && peek().type !== 'brace_close') {
+      parts.push(consume().value);
+    }
+    return parts.join(' ').trim();
+  }
+
   function parseArrayValue(): KattourValue[] {
     expect('[');
     const values: KattourValue[] = [];
@@ -142,7 +150,7 @@ export function parse(source: string): ProgramNode {
 
         if (peek().value === 'click') {
           consume();
-          const action = consume().value;
+          const action = parseExpressionUntilLine();
           element.events.push({ name: 'click', action });
           skipNewlines();
           continue;
@@ -181,11 +189,13 @@ export function parse(source: string): ProgramNode {
   while (peek().type !== 'eof') {
     skipNewlines();
     if (peek().type === 'eof') break;
+
     if (match('page')) {
       consume();
       body.push({ type: 'Page', name: consume().value });
       continue;
     }
+
     if (match('theme')) {
       consume();
       expect('{');
@@ -204,6 +214,7 @@ export function parse(source: string): ProgramNode {
       body.push({ type: 'Theme', tokens: themeTokens });
       continue;
     }
+
     if (match('state')) {
       consume();
       const name = consume().value;
@@ -212,6 +223,16 @@ export function parse(source: string): ProgramNode {
       body.push({ type: 'State', name, value });
       continue;
     }
+
+    if (match('computed')) {
+      consume();
+      const name = consume().value;
+      expect('=');
+      const expression = parseExpressionUntilLine();
+      body.push({ type: 'Computed', name, expression });
+      continue;
+    }
+
     if (match('component')) {
       consume();
       const name = consume().value;
@@ -231,11 +252,13 @@ export function parse(source: string): ProgramNode {
       body.push({ type: 'Component', name, params, body: children });
       continue;
     }
+
     if (match('view')) {
       consume();
       body.push({ type: 'View', body: parseBlock() });
       continue;
     }
+
     consume();
   }
   return { type: 'Program', body };
