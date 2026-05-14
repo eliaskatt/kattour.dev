@@ -25,11 +25,19 @@ jobs:
           mkdir -p dist
           cp apps/website/static/index.html dist/index.html
           cp apps/website/static/index.html dist/404.html
-          if [ -d assets ]; then cp -R assets dist/assets; fi
-          if [ -d examples ]; then cp -R examples dist/examples; fi
-          if [ -d playground ]; then cp -R playground dist/playground; fi
-          if [ -d templates ]; then cp -R templates dist/templates; fi
-          if [ -d docs ]; then cp -R docs dist/docs; fi
+          cp -R assets dist/assets || true
+          cp -R examples dist/examples || true
+          cp -R playground dist/playground || true
+          cp -R templates dist/templates || true
+          cp -R docs dist/docs || true
+          cp -R showcase dist/showcase || true
+          cp -R components dist/components || true
+          cp -R install dist/install || true
+          cp -R roadmap dist/roadmap || true
+          cp -R integrations dist/integrations || true
+          cp -R benchmarks dist/benchmarks || true
+          cp -R themes dist/themes || true
+          cp -R community dist/community || true
           touch dist/.nojekyll
           echo "kattour-pages-ok" > dist/status.txt
 
