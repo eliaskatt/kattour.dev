@@ -4,21 +4,30 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+
       - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-      - run: pnpm install
+
+      - run: pnpm install --frozen-lockfile=false
+
+      - run: pnpm --filter @kattour/compiler build
+
+      - run: pnpm --filter @kattour/cli build
+
       - run: pnpm --filter @kattour/website build
+
       - run: cp apps/website/dist/index.html apps/website/dist/404.html
+
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ github.token }}
