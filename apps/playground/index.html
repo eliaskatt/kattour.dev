@@ -4,12 +4,142 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kattour Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface2: #1a1a1d;
+      --border: #2a2a2e;
+      --text: #e8e8f0;
+      --muted: #888899;
+      --accent: #7c6af7;
+      --accent-dim: rgba(124,106,247,0.15);
+      --green: #3ecf8e;
+      --red: #ff4455;
+    }
+    html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow: hidden; }
+
+    #app { display: flex; flex-direction: column; height: 100vh; }
+
+    header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 0 20px; height: 52px;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .logo { font-size: 15px; font-weight: 700; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .logo-badge { font-size: 10px; font-weight: 600; background: var(--accent-dim); color: var(--accent); padding: 2px 6px; border-radius: 4px; }
+    nav { display: flex; gap: 4px; margin-left: auto; }
+    nav a { font-size: 13px; color: var(--muted); text-decoration: none; padding: 4px 10px; border-radius: 6px; transition: color .15s, background .15s; }
+    nav a:hover { color: var(--text); background: var(--surface2); }
+
+    .workspace { display: flex; flex: 1; overflow: hidden; }
+
+    .sidebar {
+      width: 220px; flex-shrink: 0;
+      background: var(--surface); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .sidebar-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 14px 16px 8px; }
+    .example-list { overflow-y: auto; flex: 1; padding: 0 8px 8px; }
+    .example-item {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 10px; border-radius: 6px; border: none;
+      background: none; color: var(--muted); font-size: 13px; cursor: pointer;
+      transition: color .15s, background .15s;
+    }
+    .example-item:hover { color: var(--text); background: var(--surface2); }
+    .example-item.active { color: var(--accent); background: var(--accent-dim); }
+    .example-category { font-size: 11px; font-weight: 600; color: var(--border); padding: 12px 10px 4px; text-transform: uppercase; letter-spacing: .07em; }
+
+    .editor-pane {
+      flex: 1; display: flex; flex-direction: column; min-width: 0;
+      border-right: 1px solid var(--border);
+    }
+    .pane-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0 16px; height: 40px; flex-shrink: 0;
+      background: var(--surface2); border-bottom: 1px solid var(--border);
+      font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+    }
+    .pane-header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    #editor {
+      flex: 1; resize: none; border: none; outline: none;
+      background: var(--bg); color: var(--text);
+      font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.65;
+      padding: 20px; tab-size: 2; caret-color: var(--accent);
+    }
+
+    .preview-pane { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+    .preview-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--surface2); flex-shrink: 0; }
+    .tab-btn {
+      padding: 0 18px; height: 40px; border: none; background: none;
+      color: var(--muted); font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; cursor: pointer; transition: color .15s; border-bottom: 2px solid transparent;
+    }
+    .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+    #preview-frame { flex: 1; border: none; background: #fff; display: block; }
+    #output-panel { flex: 1; overflow: auto; background: var(--bg); padding: 20px; display: none; }
+    #output-panel pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; color: var(--text); white-space: pre-wrap; }
+    #ast-panel { flex: 1; overflow: auto; background: var(--bg); padding: 20px; display: none; }
+    #ast-panel pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; color: var(--muted); white-space: pre-wrap; }
+
+    .statusbar {
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 16px; height: 28px; flex-shrink: 0;
+      background: var(--surface); border-top: 1px solid var(--border);
+      font-size: 11px; color: var(--muted);
+    }
+    .status-ok { color: var(--green); }
+    .status-err { color: var(--red); }
+    .statusbar-right { margin-left: auto; }
+  </style>
 </head>
 <body>
-  <main>
-    <h1>Kattour Playground</h1>
-    <p>This is the new playground shell for the real Kattour compile flow.</p>
-    <p>Next step: wire editor input, diagnostics, and HTML preview.</p>
-  </main>
+<div id="app">
+  <header>
+    <a class="logo" href="/">Kattour <span>Playground</span></a>
+    <span class="logo-badge">BETA</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/docs">Docs</a>
+      <a href="/examples">Examples</a>
+    </nav>
+  </header>
+
+  <div class="workspace">
+    <aside class="sidebar">
+      <div class="sidebar-title">Examples</div>
+      <div class="example-list" id="example-list"></div>
+    </aside>
+
+    <div class="editor-pane">
+      <div class="pane-header"><span class="dot"></span> app.kat</div>
+      <textarea id="editor" spellcheck="false" autocomplete="off" autocorrect="off"></textarea>
+    </div>
+
+    <div class="preview-pane">
+      <div class="preview-tabs">
+        <button class="tab-btn active" data-tab="preview">Preview</button>
+        <button class="tab-btn" data-tab="html">HTML</button>
+        <button class="tab-btn" data-tab="ast">AST</button>
+      </div>
+      <iframe id="preview-frame"></iframe>
+      <div id="output-panel"><pre id="output-code"></pre></div>
+      <div id="ast-panel"><pre id="ast-code"></pre></div>
+    </div>
+  </div>
+
+  <div class="statusbar">
+    <span id="status-msg" class="status-ok">Ready</span>
+    <span class="statusbar-right" id="status-info">Kattour Compiler</span>
+  </div>
+</div>
+<script type="module" src="/src/main.ts"></script>
 </body>
 </html>
