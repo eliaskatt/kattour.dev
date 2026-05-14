@@ -1,10 +1,11 @@
 export type RuntimeScope = Record<string, unknown>;
 
 export function evaluateExpression(expression: string, state: RuntimeScope, scope: RuntimeScope = {}): unknown {
-  const clean = expression.trim();
+  const clean = expression.trim().replace(/^\$/, '');
 
   if (clean === 'true') return true;
   if (clean === 'false') return false;
+  if (clean === 'null') return null;
 
   if (/^-?\d+(\.\d+)?$/.test(clean)) {
     return Number(clean);
@@ -32,7 +33,7 @@ export function evaluateExpression(expression: string, state: RuntimeScope, scop
 export function interpolateTemplate(template: string, state: RuntimeScope, scope: RuntimeScope = {}): string {
   return template.replace(/\$([a-zA-Z0-9_.]+)/g, (match, key) => {
     const value = getPath(key, scope) ?? getPath(key, state);
-    return value === undefined || value === null ? match : String(value);
+    return stringifyTemplateValue(value, match);
   });
 }
 
@@ -48,4 +49,11 @@ export function getPath(path: string, source: RuntimeScope): unknown {
   }
 
   return value;
+}
+
+export function stringifyTemplateValue(value: unknown, fallback = ''): string {
+  if (value === undefined || value === null) return fallback;
+  if (Array.isArray(value)) return value.join(', ');
+  if (typeof value === 'object') return JSON.stringify(value);
+  return String(value);
 }
