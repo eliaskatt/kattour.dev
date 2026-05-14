@@ -22,7 +22,6 @@ export function parse(source: string): ProgramNode {
       const token = peek();
       throw new Error(`Expected '${value}' at ${token.line}:${token.column}, got '${token.value}'`);
     }
-
     consume();
   }
 
@@ -32,30 +31,24 @@ export function parse(source: string): ProgramNode {
 
   function parseValue(): KattourValue {
     skipNewlines();
-
     if (peek().type === 'bracket_open') return parseArrayValue();
     if (peek().type === 'brace_open') return parseObjectValue();
-
     const token = consume();
-
     if (token.type === 'number') return Number(token.value);
     if (token.value === 'true') return true;
     if (token.value === 'false') return false;
-
     return token.value;
   }
 
   function parseArrayValue(): KattourValue[] {
     expect('[');
     const values: KattourValue[] = [];
-
     while (!match(']') && peek().type !== 'eof') {
       skipNewlines();
       if (match(']')) break;
       values.push(parseValue());
       skipNewlines();
     }
-
     expect(']');
     return values;
   }
@@ -63,19 +56,14 @@ export function parse(source: string): ProgramNode {
   function parseObjectValue(): Record<string, KattourValue> {
     expect('{');
     const object: Record<string, KattourValue> = {};
-
     while (!match('}') && peek().type !== 'eof') {
       skipNewlines();
       if (match('}')) break;
-
       const key = consume().value;
-
       if (match(':')) consume();
-
       object[key] = parseValue();
       skipNewlines();
     }
-
     expect('}');
     return object;
   }
@@ -83,20 +71,15 @@ export function parse(source: string): ProgramNode {
   function parseBlock(): UINode[] {
     expect('{');
     const nodes: UINode[] = [];
-
     while (!match('}') && peek().type !== 'eof') {
       skipNewlines();
-
       if (match('}')) break;
-
       if (peek().type === 'identifier') {
         nodes.push(parseUINode());
         continue;
       }
-
       consume();
     }
-
     expect('}');
     return nodes;
   }
@@ -112,14 +95,11 @@ export function parse(source: string): ProgramNode {
     const condition = consume().value;
     const thenBody = parseBlock();
     let elseBody: UINode[] = [];
-
     skipNewlines();
-
     if (match('else')) {
       consume();
       elseBody = parseBlock();
     }
-
     return { type: 'If', condition, then: thenBody, else: elseBody };
   }
 
@@ -129,7 +109,6 @@ export function parse(source: string): ProgramNode {
     expect('in');
     const collection = consume().value;
     const body = parseBlock();
-
     return { type: 'For', item, collection, body };
   }
 
@@ -149,6 +128,7 @@ export function parse(source: string): ProgramNode {
       label,
       properties: [],
       events: [],
+      bindings: [],
       children: []
     };
 
@@ -156,16 +136,22 @@ export function parse(source: string): ProgramNode {
 
     if (match('{')) {
       consume();
-
       while (!match('}') && peek().type !== 'eof') {
         skipNewlines();
-
         if (match('}')) break;
 
         if (peek().value === 'click') {
           consume();
           const action = consume().value;
           element.events.push({ name: 'click', action });
+          skipNewlines();
+          continue;
+        }
+
+        if (peek().value === 'bind') {
+          consume();
+          const state = consume().value.replace(/^\$/, '');
+          element.bindings.push({ property: 'value', state });
           skipNewlines();
           continue;
         }
@@ -183,13 +169,10 @@ export function parse(source: string): ProgramNode {
           skipNewlines();
           continue;
         }
-
         consume();
       }
-
       expect('}');
     }
-
     return element;
   }
 
@@ -197,38 +180,30 @@ export function parse(source: string): ProgramNode {
 
   while (peek().type !== 'eof') {
     skipNewlines();
-
     if (peek().type === 'eof') break;
-
     if (match('page')) {
       consume();
       body.push({ type: 'Page', name: consume().value });
       continue;
     }
-
     if (match('theme')) {
       consume();
       expect('{');
       const themeTokens = [];
-
       while (!match('}') && peek().type !== 'eof') {
         skipNewlines();
-
         if (peek().type === 'identifier') {
           const key = consume().value;
           const value = String(parseValue());
           themeTokens.push({ key, value });
           continue;
         }
-
         consume();
       }
-
       expect('}');
       body.push({ type: 'Theme', tokens: themeTokens });
       continue;
     }
-
     if (match('state')) {
       consume();
       const name = consume().value;
@@ -237,40 +212,31 @@ export function parse(source: string): ProgramNode {
       body.push({ type: 'State', name, value });
       continue;
     }
-
     if (match('component')) {
       consume();
       const name = consume().value;
       const params: string[] = [];
-
       if (peek().type === 'paren_open') {
         consume();
-
         while (peek().type !== 'paren_close' && peek().type !== 'eof') {
           if (peek().type === 'identifier') {
             params.push(consume().value);
             continue;
           }
-
           consume();
         }
-
         expect(')');
       }
-
       const children = parseBlock();
       body.push({ type: 'Component', name, params, body: children });
       continue;
     }
-
     if (match('view')) {
       consume();
       body.push({ type: 'View', body: parseBlock() });
       continue;
     }
-
     consume();
   }
-
   return { type: 'Program', body };
 }
