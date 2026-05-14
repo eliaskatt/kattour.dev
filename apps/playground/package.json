@@ -1,10 +1,15 @@
 {
   "name": "@kattour/playground",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "echo playground app scaffolded",
-    "build": "echo build playground",
-    "typecheck": "echo typecheck playground"
+    "dev": "kattour dev app.kat",
+    "build": "kattour build app.kat",
+    "preview": "npx serve dist"
+  },
+  "dependencies": {
+    "@kattour/cli": "workspace:*",
+    "@kattour/compiler": "workspace:*"
   }
 }
