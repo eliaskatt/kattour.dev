@@ -25,6 +25,10 @@ jobs:
           mkdir -p dist
           cp apps/website/static/index.html dist/index.html
           cp apps/website/static/index.html dist/404.html
+          if [ -d assets ]; then cp -R assets dist/assets; fi
+          if [ -d examples ]; then cp -R examples dist/examples; fi
+          if [ -d playground ]; then cp -R playground dist/playground; fi
+          if [ -d templates ]; then cp -R templates dist/templates; fi
           touch dist/.nojekyll
           echo "kattour-pages-ok" > dist/status.txt
 
