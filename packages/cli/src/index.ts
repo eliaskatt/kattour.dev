@@ -152,5 +152,6 @@ Commands:
 
 function fail(message: string): never {
   console.error(message);
-  process.exit(1);
+  process.exit(1) as never;
+  throw new Error(message);
 }

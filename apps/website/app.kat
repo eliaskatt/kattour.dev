@@ -2,142 +2,723 @@ page KattourWebsite
 
 theme {
   primary "#cb0606"
-  radius 18
+  radius 16
 }
 
-state installs = "npm install -g kattour"
-state quickstart = "kattour create my-app"
+// ── Shared Components ───────────────────────────────────────────────────────
+
+component NavBar {
+  nav {
+    title "Kattour"
+    link "Docs" { to "/docs" }
+    link "Examples" { to "/examples" }
+    link "Templates" { to "/templates" }
+    link "Install" { to "/install" }
+    link "Community" { to "/community" }
+    link "Playground →" { to "/playground" }
+  }
+}
+
+component SiteFooter {
+  footer {
+    text "© 2025 Kattour Language Platform. Built with Kattour."
+    row {
+      link "GitHub" { to "https://github.com/eliaskatt/kattour.dev" }
+      link "Docs" { to "/docs" }
+      link "Examples" { to "/examples" }
+      link "Templates" { to "/templates" }
+      link "Install" { to "/install" }
+    }
+  }
+}
+
+// ── Home ────────────────────────────────────────────────────────────────────
 
 route "/" {
   screen {
-    column {
-      title "Kattour"
+    NavBar
 
-      text "The clarity-first UI language"
+    hero {
+      eyebrow "Clarity-first UI language"
+      title "Build interfaces with Kattour — not scattered layers"
+      subtitle "Kattour is an experimental language platform for building modern user interfaces. One language, one file, one clear mental model."
+      button "Get Started" { click go "/install" }
+      button "Explore Examples" { click go "/examples" }
+    }
 
-      card {
-        title "Build production apps with absurd simplicity"
+    section {
+      eyebrow "Why Kattour"
+      title "A cleaner way to think about UI"
+      subtitle "Every major framework adds complexity. Kattour removes it."
 
-        text "Web, mobile, desktop, SSR, routing, state, hydration, and reactivity built directly into the language."
-      }
-
-      card {
-        title "Install"
-
-        text "$installs"
-
-        text "$quickstart"
-      }
-
-      row {
-        link "Documentation" {
-          to "/docs"
+      features {
+        feature "Declarative by design" {
+          badge "Core"
+          body "Describe what you want, not how to build it. Kattour reads like a design spec — structured, intention-revealing, human-first."
         }
-
-        link "Examples" {
-          to "/examples"
+        feature "Real compiler pipeline" {
+          badge "Architecture"
+          body "A full tokenizer, parser, AST generator, diagnostics engine, and HTML renderer. Not templates — actual compilation."
         }
-
-        link "Playground" {
-          to "/playground"
+        feature "State built in" {
+          badge "Reactive"
+          body "state, computed, and effect are first-class language keywords. No external store, no boilerplate, no ceremony."
+        }
+        feature "Routing as language" {
+          badge "Platform"
+          body "Routes are a language construct, not a library add-on. Define your entire app structure directly in Kattour."
+        }
+        feature "Component model" {
+          badge "Reusable"
+          body "Define reusable components with parameters. Compose UIs like building blocks — readable, predictable, maintainable."
+        }
+        feature "Every surface" {
+          badge "Future"
+          body "Designed with web, mobile, desktop, and SSR in mind. One language for every surface you build on."
         }
       }
     }
+
+    section {
+      eyebrow "Syntax"
+      title "Clean. Readable. Intentional."
+
+      split {
+        column {
+          heading "Write once, render anywhere"
+          text "Kattour syntax is designed around clarity. Each keyword maps directly to a UI concept — no ceremony, no boilerplate."
+          text "Screens, columns, rows, cards, buttons, and inputs are all built in. State is declared with one word. Routes are first-class."
+          row {
+            badge "Minimal"
+            badge "Expressive"
+            badge "Typed"
+          }
+          button "Read the Docs" { click go "/docs" }
+        }
+
+        codeblock "page Dashboard\n\ntheme {\n  primary \"#cb0606\"\n  radius 16\n}\n\nstate count = 0\nstate user = \"Elias\"\ncomputed greeting = \"Hello, \" + $user\n\nroute \"/\" {\n  screen {\n    column {\n      title \"$greeting\"\n\n      card {\n        text \"Sessions: $count\"\n        row {\n          button \"Add\" { click count++ }\n          button \"Sub\" { click count-- }\n        }\n      }\n\n      link \"Sign out\" { to \"/logout\" }\n    }\n  }\n}"
+      }
+    }
+
+    section {
+      eyebrow "Quick Start"
+      title "Up and running in minutes"
+
+      grid {
+        card {
+          heading "1. Install"
+          text "Install the Kattour CLI globally."
+          codeblock "npm install -g kattour"
+        }
+        card {
+          heading "2. Create"
+          text "Scaffold a new Kattour project."
+          codeblock "kattour create my-app"
+        }
+        card {
+          heading "3. Dev"
+          text "Start the dev server with live reload."
+          codeblock "cd my-app\nkattour dev"
+        }
+      }
+    }
+
+    section {
+      eyebrow "Roadmap"
+      title "Where we are heading"
+
+      grid {
+        card {
+          badge "Done"
+          heading "Phase 1 — Language Direction"
+          text "Defined syntax, semantics, grammar rules, and architecture. Language specification complete."
+        }
+        card {
+          badge "Done"
+          heading "Phase 2 — Compiler Foundation"
+          text "Full tokenizer, parser, AST, diagnostics engine, and HTML renderer. Core pipeline working."
+        }
+        card {
+          badge "Active"
+          heading "Phase 3 — Playground"
+          text "Real parsing flow with live preview, inline diagnostics, and editor integration."
+        }
+        card {
+          badge "Next"
+          heading "Phase 4 — Component System"
+          text "Props, layout primitives, conditions, loops, richer state, and comprehensive documentation."
+        }
+        card {
+          badge "Planned"
+          heading "Phase 5 — Ecosystem"
+          text "Formatter, linter, type system, package registry, and a proper release process."
+        }
+        card {
+          badge "Planned"
+          heading "Phase 6 — Editor Tooling"
+          text "VS Code extension, language server protocol, autocomplete, inline diagnostics."
+        }
+      }
+    }
+
+    section {
+      eyebrow "Built with Kattour"
+      title "This website is Kattour"
+
+      highlight {
+        split {
+          column {
+            heading "Dogfooding from day one"
+            text "Every page of this website — including the one you are reading now — is defined in a single app.kat file and rendered by the Kattour compiler."
+            text "The nav, sections, feature cards, code blocks, and footer are all Kattour language constructs. No HTML written by hand."
+            button "View source on GitHub" { click go "https://github.com/eliaskatt/kattour.dev" }
+          }
+          column {
+            codeblock "// This website in Kattour\npage KattourWebsite\n\ncomponent NavBar {\n  nav {\n    title \"Kattour\"\n    link \"Docs\" { to \"/docs\" }\n    link \"Examples\" { to \"/examples\" }\n  }\n}\n\nroute \"/\" {\n  screen {\n    NavBar\n    hero {\n      eyebrow \"Clarity-first\"\n      title \"Build with Kattour\"\n      button \"Get Started\"\n    }\n    SiteFooter\n  }\n}"
+          }
+        }
+      }
+    }
+
+    SiteFooter
   }
 }
+
+// ── Docs ────────────────────────────────────────────────────────────────────
 
 route "/docs" {
   screen {
-    column {
-      title "Documentation"
+    NavBar
 
-      text "Kattour syntax is designed for humans first."
+    section {
+      eyebrow "Documentation"
+      title "Language Reference"
+      subtitle "Everything you need to build with Kattour."
+    }
 
-      card {
-        title "Reactive state"
+    section {
+      title "Top-level declarations"
 
-        text "state counter = 0"
-      }
-
-      card {
-        title "Computed values"
-
-        text "computed fullName = $firstName + \" \" + $lastName"
-      }
-
-      card {
-        title "Routing"
-
-        text "route \"/dashboard\" { title \"Dashboard\" }"
-      }
-
-      card {
-        title "Effects"
-
-        text "effect counter { log \"changed\" }"
-      }
-
-      link "Back Home" {
-        to "/"
+      grid {
+        card {
+          heading "page"
+          text "Declares the top-level page name."
+          codeblock "page MyApp"
+        }
+        card {
+          heading "theme"
+          text "Sets global design tokens used across the app."
+          codeblock "theme {\n  primary \"#cb0606\"\n  radius 16\n}"
+        }
+        card {
+          heading "state"
+          text "Declares a reactive state variable with an initial value."
+          codeblock "state count = 0\nstate name = \"Kattour\"\nstate user = { name: \"Elias\" }"
+        }
+        card {
+          heading "computed"
+          text "Derives a value from state. Re-evaluates when dependencies change."
+          codeblock "computed label = \"Hello \" + $name\ncomputed double = $count + $count"
+        }
+        card {
+          heading "effect"
+          text "Runs side effects when listed state dependencies change."
+          codeblock "effect count {\n  log \"count changed to $count\"\n}"
+        }
+        card {
+          heading "resource"
+          text "Declares a remote data source that can be fetched."
+          codeblock "resource users {\n  url \"https://api.example.com/users\"\n  method \"GET\"\n}"
+        }
       }
     }
+
+    section {
+      title "Structure"
+
+      grid {
+        card {
+          heading "route"
+          text "Defines a URL route. Routes form the navigation structure of your app."
+          codeblock "route \"/\" {\n  screen {\n    text \"Home\"\n  }\n}\n\nroute \"/about\" {\n  screen {\n    text \"About\"\n  }\n}"
+        }
+        card {
+          heading "component"
+          text "Defines a reusable UI component that can be used anywhere in the app."
+          codeblock "component Header {\n  column {\n    title \"My App\"\n    text \"Welcome\"\n  }\n}\n\n// usage:\nroute \"/\" {\n  screen { Header }\n}"
+        }
+        card {
+          heading "view"
+          text "A single root view without routing. Use for simple one-page apps."
+          codeblock "view {\n  screen {\n    column {\n      title \"Hello\"\n    }\n  }\n}"
+        }
+      }
+    }
+
+    section {
+      title "Layout elements"
+
+      split {
+        column {
+          card {
+            heading "screen"
+            text "The top-level container for a route. Fills the viewport."
+            codeblock "screen {\n  column { ... }\n}"
+          }
+          card {
+            heading "column"
+            text "Stacks children vertically with consistent spacing."
+            codeblock "column {\n  text \"First\"\n  text \"Second\"\n  text \"Third\"\n}"
+          }
+          card {
+            heading "row"
+            text "Aligns children horizontally with consistent spacing."
+            codeblock "row {\n  button \"Cancel\"\n  button \"Submit\"\n}"
+          }
+        }
+        column {
+          card {
+            heading "card"
+            text "A bordered surface container for grouped content."
+            codeblock "card {\n  heading \"Title\"\n  text \"Content here\"\n  button \"Action\"\n}"
+          }
+          card {
+            heading "split"
+            text "Two-column layout for side-by-side content."
+            codeblock "split {\n  column { text \"Left\" }\n  column { text \"Right\" }\n}"
+          }
+          card {
+            heading "grid"
+            text "Three-column grid layout for cards and features."
+            codeblock "grid {\n  card { text \"One\" }\n  card { text \"Two\" }\n  card { text \"Three\" }\n}"
+          }
+        }
+      }
+    }
+
+    section {
+      title "Content elements"
+
+      grid {
+        card {
+          heading "title"
+          text "Large primary heading. Supports state interpolation."
+          codeblock "title \"Welcome, $name\""
+        }
+        card {
+          heading "text"
+          text "Standard paragraph text. Supports state interpolation."
+          codeblock "text \"Count is: $count\""
+        }
+        card {
+          heading "button"
+          text "Interactive button. Accepts click event handlers."
+          codeblock "button \"Add\" { click count++ }\nbutton \"Go\" { click go \"/home\" }"
+        }
+        card {
+          heading "input"
+          text "Text input. Use bind to connect it to a state variable."
+          codeblock "input {\n  bind name\n  placeholder \"Your name\"\n}"
+        }
+        card {
+          heading "link"
+          text "Navigation link. Use to for the destination route."
+          codeblock "link \"Back Home\" { to \"/\" }\nlink \"GitHub\" { to \"https://github.com\" }"
+        }
+        card {
+          heading "image"
+          text "Image element with alt text."
+          codeblock "image \"/logo.png\" { alt \"Kattour Logo\" }"
+        }
+      }
+    }
+
+    section {
+      title "Events"
+
+      grid {
+        card {
+          heading "click"
+          text "Fires when the element is clicked."
+          codeblock "button \"Add\" { click count++ }\nbutton \"Sub\" { click count-- }\nbutton \"Home\" { click go \"/\" }"
+        }
+        card {
+          heading "bind"
+          text "Two-way binding between an input and a state variable."
+          codeblock "input { bind username }\n// $username updates as the user types"
+        }
+        card {
+          heading "go"
+          text "Navigates to a route programmatically."
+          codeblock "button \"Dashboard\" { click go \"/dashboard\" }\nbutton \"Docs\" { click go \"/docs\" }"
+        }
+      }
+    }
+
+    SiteFooter
   }
 }
+
+// ── Examples ─────────────────────────────────────────────────────────────────
 
 route "/examples" {
   screen {
-    column {
-      title "Examples"
+    NavBar
 
-      card {
-        title "Counter"
+    section {
+      eyebrow "Examples"
+      title "Kattour in action"
+      subtitle "Real apps written in Kattour. Copy and run them instantly."
+    }
 
-        text "state count = 0"
+    section {
+      title "Beginner"
 
-        text "button \"Count: $count\" { click count++ }"
-      }
-
-      card {
-        title "Two-way binding"
-
-        text "input { bind username }"
-      }
-
-      card {
-        title "Dynamic route"
-
-        text "route \"/user/:name\" { title \"$route.params.name\" }"
-      }
-
-      card {
-        title "Resource"
-
-        text "resource users { url \"https://api.example.com/users\" }"
-      }
-
-      link "Back Home" {
-        to "/"
+      grid {
+        card {
+          heading "Hello World"
+          text "The simplest possible Kattour app."
+          codeblock "page Hello\n\nview {\n  screen {\n    column {\n      title \"Hello, Kattour!\"\n      text \"Welcome to the clarity-first UI language.\"\n    }\n  }\n}"
+        }
+        card {
+          heading "Counter"
+          text "Reactive state with increment and decrement."
+          codeblock "page Counter\nstate count = 0\n\nview {\n  screen {\n    column {\n      title \"Counter: $count\"\n      row {\n        button \"Add\" { click count++ }\n        button \"Sub\" { click count-- }\n      }\n    }\n  }\n}"
+        }
+        card {
+          heading "Reactive Input"
+          text "Two-way binding between input and state."
+          codeblock "page Bio\nstate name = \"World\"\ncomputed greeting = \"Hello, \" + $name\n\nview {\n  screen {\n    column {\n      title \"$greeting\"\n      input {\n        bind name\n        placeholder \"Enter your name\"\n      }\n    }\n  }\n}"
+        }
       }
     }
+
+    section {
+      title "Intermediate"
+
+      grid {
+        card {
+          heading "Login Form"
+          text "A complete login screen with two-way binding."
+          codeblock "page Login\nstate email = \"\"\nstate password = \"\"\n\nview {\n  screen {\n    column {\n      title \"Sign In\"\n      text \"Welcome back.\"\n      input {\n        bind email\n        placeholder \"Email address\"\n      }\n      input {\n        bind password\n        placeholder \"Password\"\n      }\n      button \"Continue\"\n      link \"Forgot password?\" { to \"/reset\" }\n    }\n  }\n}"
+        }
+        card {
+          heading "Multi-Route App"
+          text "Full app with client-side routing."
+          codeblock "page MyApp\n\nroute \"/\" {\n  screen {\n    column {\n      title \"Home\"\n      text \"Welcome to MyApp.\"\n      row {\n        link \"About\" { to \"/about\" }\n        link \"Contact\" { to \"/contact\" }\n      }\n    }\n  }\n}\n\nroute \"/about\" {\n  screen {\n    column {\n      title \"About\"\n      text \"This app is built with Kattour.\"\n      link \"Back\" { to \"/\" }\n    }\n  }\n}"
+        }
+        card {
+          heading "Dashboard"
+          text "Stats cards with computed values."
+          codeblock "page Dashboard\nstate sessions = 142\nstate users = 38\nstate revenue = 5600\ncomputed label = \"Active users: \" + $users\n\nroute \"/\" {\n  screen {\n    column {\n      title \"Dashboard\"\n      text \"$label\"\n      grid {\n        card { text \"Sessions: $sessions\" }\n        card { text \"Users: $users\" }\n        card { text \"Revenue: $revenue\" }\n      }\n      link \"Log out\" { to \"/login\" }\n    }\n  }\n}"
+        }
+      }
+    }
+
+    section {
+      title "Advanced"
+
+      grid {
+        card {
+          heading "Component Library"
+          text "Reusable components across multiple routes."
+          codeblock "page App\n\ncomponent Header {\n  column {\n    title \"My App\"\n    row {\n      link \"Home\" { to \"/\" }\n      link \"Settings\" { to \"/settings\" }\n    }\n  }\n}\n\ncomponent Footer {\n  text \"© 2025 My App\"\n}\n\nroute \"/\" {\n  screen {\n    Header\n    card { text \"Welcome home!\" }\n    Footer\n  }\n}\n\nroute \"/settings\" {\n  screen {\n    Header\n    card { text \"Settings page\" }\n    Footer\n  }\n}"
+        }
+        card {
+          heading "Computed State"
+          text "Derived values that update automatically."
+          codeblock "page Store\nstate price = 100\nstate qty = 3\ncomputed total = $price + $qty\ncomputed label = \"Total: $\" + $total\n\nview {\n  screen {\n    column {\n      title \"Order Summary\"\n      card {\n        text \"Price: $price\"\n        text \"Quantity: $qty\"\n        text \"$label\"\n      }\n      row {\n        button \"+1\" { click qty++ }\n        button \"-1\" { click qty-- }\n      }\n    }\n  }\n}"
+        }
+        card {
+          heading "Effects"
+          text "Side effects that run on state change."
+          codeblock "page Tracker\nstate page = 1\n\neffect page {\n  log \"Navigated to page $page\"\n}\n\nview {\n  screen {\n    column {\n      title \"Page $page\"\n      row {\n        button \"Prev\" { click page-- }\n        button \"Next\" { click page++ }\n      }\n    }\n  }\n}"
+        }
+      }
+    }
+
+    SiteFooter
   }
 }
 
-route "/playground" {
+// ── Templates ─────────────────────────────────────────────────────────────────
+
+route "/templates" {
   screen {
-    column {
-      title "Playground"
+    NavBar
 
-      text "Realtime compiler preview coming next."
+    section {
+      eyebrow "Templates"
+      title "Ready-made Kattour starters"
+      subtitle "Complete, production-ready templates you can copy and adapt."
+    }
 
-      card {
-        title "Example"
+    section {
+      title "App templates"
 
-        text "button \"Click\" { click counter++ }"
-      }
-
-      link "Back Home" {
-        to "/"
+      grid {
+        card {
+          badge "Free"
+          heading "Landing Page"
+          text "Hero section, features grid, pricing table, testimonials, CTA block, and footer."
+          row {
+            badge "Minimal"
+            badge "Responsive"
+          }
+          button "Use Template" { click go "/examples" }
+        }
+        card {
+          badge "Free"
+          heading "SaaS Dashboard"
+          text "Sidebar navigation, stats cards, data table, chart placeholders, and profile menu."
+          row {
+            badge "Multi-route"
+            badge "State"
+          }
+          button "Use Template" { click go "/examples" }
+        }
+        card {
+          badge "Free"
+          heading "Authentication Flow"
+          text "Login, register, forgot password, and reset password screens with form validation."
+          row {
+            badge "Multi-route"
+            badge "Forms"
+          }
+          button "Use Template" { click go "/examples" }
+        }
+        card {
+          badge "Free"
+          heading "Blog Platform"
+          text "Post listing, single post view, tag filtering, and pagination."
+          row {
+            badge "Routing"
+            badge "Dynamic"
+          }
+          button "Use Template" { click go "/examples" }
+        }
+        card {
+          badge "Free"
+          heading "E-commerce"
+          text "Product listing, product detail, shopping cart, checkout, and confirmation."
+          row {
+            badge "State"
+            badge "Multi-route"
+          }
+          button "Use Template" { click go "/examples" }
+        }
+        card {
+          badge "Free"
+          heading "Developer Portfolio"
+          text "Projects showcase, about page, tech stack section, and contact form."
+          row {
+            badge "Minimal"
+            badge "Components"
+          }
+          button "Use Template" { click go "/examples" }
+        }
       }
     }
+
+    section {
+      title "UI kit templates"
+
+      grid {
+        card {
+          badge "Free"
+          heading "Form Components"
+          text "Text inputs, selects, checkboxes, radio buttons, textarea, and validation states."
+          button "Use Template" { click go "/examples" }
+        }
+        card {
+          badge "Free"
+          heading "Navigation Patterns"
+          text "Top nav, sidebar nav, breadcrumbs, tabs, and mobile menu."
+          button "Use Template" { click go "/examples" }
+        }
+        card {
+          badge "Free"
+          heading "Card Layouts"
+          text "Feature cards, pricing cards, profile cards, stat cards, and media cards."
+          button "Use Template" { click go "/examples" }
+        }
+      }
+    }
+
+    SiteFooter
+  }
+}
+
+// ── Install ──────────────────────────────────────────────────────────────────
+
+route "/install" {
+  screen {
+    NavBar
+
+    section {
+      eyebrow "Installation"
+      title "Get started with Kattour"
+      subtitle "From zero to running app in under two minutes."
+    }
+
+    section {
+      title "Requirements"
+
+      grid {
+        card {
+          heading "Node.js"
+          text "Version 18 or later. Download from nodejs.org."
+          codeblock "node --version\n// v18.0.0 or higher"
+        }
+        card {
+          heading "Package manager"
+          text "npm (included with Node), pnpm, or yarn."
+          codeblock "npm --version\n// 9.0.0 or higher"
+        }
+        card {
+          heading "Terminal"
+          text "Any terminal works: bash, zsh, PowerShell, or Windows Terminal."
+          codeblock "// macOS, Linux, or Windows"
+        }
+      }
+    }
+
+    section {
+      title "Install"
+
+      split {
+        column {
+          card {
+            heading "Global install"
+            text "Install the Kattour CLI globally with npm."
+            codeblock "npm install -g kattour"
+          }
+          card {
+            heading "Verify installation"
+            codeblock "kattour --version\n// kattour 0.1.0"
+          }
+          card {
+            heading "Create a new project"
+            codeblock "kattour create my-app\ncd my-app"
+          }
+          card {
+            heading "Start the dev server"
+            codeblock "kattour dev app.kat\n// Kattour dev: http://localhost:5179"
+          }
+          card {
+            heading "Build for production"
+            codeblock "kattour build app.kat\n// Output: dist/index.html"
+          }
+        }
+        column {
+          card {
+            heading "Your first app.kat"
+            text "After running kattour create, your project contains this starter file."
+            codeblock "page Home\n\ntheme {\n  primary \"#cb0606\"\n  radius 16\n}\n\nstate count = 0\nstate user = { name: \"Elias\" }\n\nview {\n  screen {\n    column {\n      title \"Hello $user.name\"\n      text \"Count: $count\"\n      button \"Add\" { click count++ }\n    }\n  }\n}"
+          }
+          card {
+            heading "Project structure"
+            codeblock "my-app/\n  app.kat         // Your app source\n  package.json    // Project config\n  dist/           // Build output\n    index.html    // Compiled HTML"
+          }
+        }
+      }
+    }
+
+    section {
+      title "CLI commands"
+
+      grid {
+        card {
+          heading "kattour create"
+          text "Scaffolds a new Kattour project with a starter app.kat."
+          codeblock "kattour create my-app"
+        }
+        card {
+          heading "kattour dev"
+          text "Starts a dev server with live reload on file changes."
+          codeblock "kattour dev app.kat\n// Default port: 5179"
+        }
+        card {
+          heading "kattour build"
+          text "Compiles your app.kat to a static index.html in the dist folder."
+          codeblock "kattour build app.kat"
+        }
+      }
+    }
+
+    SiteFooter
+  }
+}
+
+// ── Community ─────────────────────────────────────────────────────────────────
+
+route "/community" {
+  screen {
+    NavBar
+
+    section {
+      eyebrow "Community"
+      title "Join the Kattour community"
+      subtitle "Kattour is open source and community-driven. Help shape the language."
+    }
+
+    section {
+      features {
+        feature "GitHub" {
+          badge "Open Source"
+          body "Explore the source code, report issues, submit pull requests, and contribute to the language itself."
+          link "Visit GitHub →" { to "https://github.com/eliaskatt/kattour.dev" }
+        }
+        feature "Discussions" {
+          badge "Community"
+          body "Join language design discussions, share ideas for new features, ask questions, and connect with other builders."
+          link "Open Discussions →" { to "https://github.com/eliaskatt/kattour.dev/discussions" }
+        }
+        feature "Issues" {
+          badge "Contribute"
+          body "Report bugs, suggest improvements, propose new syntax, or help improve the documentation."
+          link "Open Issues →" { to "https://github.com/eliaskatt/kattour.dev/issues" }
+        }
+      }
+    }
+
+    section {
+      title "Ways to contribute"
+
+      grid {
+        card {
+          heading "Language design"
+          text "Have ideas for new syntax, keywords, or semantics? Open a discussion and shape the language."
+          button "Discuss" { click go "https://github.com/eliaskatt/kattour.dev/discussions" }
+        }
+        card {
+          heading "Compiler contributions"
+          text "Help build the tokenizer, parser, AST, or renderer. All TypeScript, well-structured, open to contribution."
+          button "Contribute" { click go "https://github.com/eliaskatt/kattour.dev" }
+        }
+        card {
+          heading "Documentation"
+          text "Improve language reference, write tutorials, add examples, or translate docs."
+          button "Edit Docs" { click go "https://github.com/eliaskatt/kattour.dev" }
+        }
+        card {
+          heading "Build with Kattour"
+          text "Build something with Kattour and share it. Your feedback directly shapes the language roadmap."
+          button "Get Started" { click go "/install" }
+        }
+        card {
+          heading "Report bugs"
+          text "Found something broken? Open an issue with a minimal reproduction case."
+          button "Report" { click go "https://github.com/eliaskatt/kattour.dev/issues" }
+        }
+        card {
+          heading "Spread the word"
+          text "Star the repo, share with your network, and help Kattour grow."
+          button "Star on GitHub" { click go "https://github.com/eliaskatt/kattour.dev" }
+        }
+      }
+    }
+
+    SiteFooter
   }
 }
