@@ -25,6 +25,11 @@ jobs:
           mkdir -p dist
           cp apps/website/static/index.html dist/index.html
           cp apps/website/static/index.html dist/404.html
+          cp modules.html dist/modules.html || true
+          cp docs.html dist/docs.html || true
+          cp examples.html dist/examples.html || true
+          cp mobile.html dist/mobile.html || true
+          cp playground.html dist/playground.html || true
           cp -R assets dist/assets || true
           cp -R examples dist/examples || true
           cp -R playground dist/playground || true
