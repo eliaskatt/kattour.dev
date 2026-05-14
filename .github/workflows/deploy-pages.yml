@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - claude/develop-kattour-project-0twsk
   workflow_dispatch:
 
 permissions:
