@@ -1,12 +1,39 @@
 page LogicDemo
 
-state loggedIn = true
-state username = "Elias"
-state products = "Pizza,Burger,Sushi"
+theme {
+  primary "#cb0606"
+  radius 18
+}
 
-component ProductCard(name) {
+state loggedIn = true
+
+state user = {
+  name: "Elias"
+  role: "Founder"
+}
+
+state products = [
+  {
+    name: "Pizza"
+    price: 12
+  }
+
+  {
+    name: "Burger"
+    price: 10
+  }
+
+  {
+    name: "Sushi"
+    price: 18
+  }
+]
+
+component ProductCard(product) {
   card {
-    text "$name"
+    title "$product.name"
+
+    text "$product.price €"
 
     button "Order" {
       click orders++
@@ -19,14 +46,16 @@ view {
     column {
 
       if loggedIn {
-        title "Welcome $username"
+        title "Welcome $user.name"
+
+        text "Role: $user.role"
       }
       else {
         title "Please Login"
       }
 
-      for item in products {
-        ProductCard item
+      for product in products {
+        ProductCard product
       }
     }
   }
