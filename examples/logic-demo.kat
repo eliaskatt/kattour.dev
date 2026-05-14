@@ -1,0 +1,33 @@
+page LogicDemo
+
+state loggedIn = true
+state username = "Elias"
+state products = "Pizza,Burger,Sushi"
+
+component ProductCard(name) {
+  card {
+    text "$name"
+
+    button "Order" {
+      click orders++
+    }
+  }
+}
+
+view {
+  screen {
+    column {
+
+      if loggedIn {
+        title "Welcome $username"
+      }
+      else {
+        title "Please Login"
+      }
+
+      for item in products {
+        ProductCard item
+      }
+    }
+  }
+}
