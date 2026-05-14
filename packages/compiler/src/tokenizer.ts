@@ -13,97 +13,130 @@ export type TokenType =
 export interface Token {
   type: TokenType;
   value: string;
+  line: number;
+  column: number;
 }
 
 export function tokenize(source: string): Token[] {
   const tokens: Token[] = [];
   let current = 0;
+  let line = 1;
+  let column = 1;
+
+  function push(type: TokenType, value: string, tokenLine = line, tokenColumn = column) {
+    tokens.push({ type, value, line: tokenLine, column: tokenColumn });
+  }
+
+  function advance(): string {
+    const char = source[current++];
+
+    if (char === '\n') {
+      line++;
+      column = 1;
+    } else {
+      column++;
+    }
+
+    return char;
+  }
 
   while (current < source.length) {
     const char = source[current];
 
     if (char === ' ' || char === '\t' || char === '\r') {
-      current++;
+      advance();
+      continue;
+    }
+
+    if (char === '/' && source[current + 1] === '/') {
+      while (current < source.length && source[current] !== '\n') advance();
       continue;
     }
 
     if (char === '\n') {
-      tokens.push({ type: 'newline', value: '\n' });
-      current++;
+      push('newline', '\n');
+      advance();
       continue;
     }
 
     if (char === '{') {
-      tokens.push({ type: 'brace_open', value: char });
-      current++;
+      push('brace_open', char);
+      advance();
       continue;
     }
 
     if (char === '}') {
-      tokens.push({ type: 'brace_close', value: char });
-      current++;
+      push('brace_close', char);
+      advance();
       continue;
     }
 
     if (char === '(') {
-      tokens.push({ type: 'paren_open', value: char });
-      current++;
+      push('paren_open', char);
+      advance();
       continue;
     }
 
     if (char === ')') {
-      tokens.push({ type: 'paren_close', value: char });
-      current++;
+      push('paren_close', char);
+      advance();
       continue;
     }
 
     if (char === '"') {
+      const startLine = line;
+      const startColumn = column;
       let value = '';
-      current++;
+      advance();
 
       while (source[current] !== '"' && current < source.length) {
-        value += source[current];
-        current++;
+        value += advance();
       }
 
-      current++;
-      tokens.push({ type: 'string', value });
+      if (source[current] !== '"') {
+        throw new Error(`Unterminated string at ${startLine}:${startColumn}`);
+      }
+
+      advance();
+      push('string', value, startLine, startColumn);
       continue;
     }
 
     if (/\d/.test(char)) {
+      const startLine = line;
+      const startColumn = column;
       let value = '';
 
       while (/\d/.test(source[current])) {
-        value += source[current];
-        current++;
+        value += advance();
       }
 
-      tokens.push({ type: 'number', value });
+      push('number', value, startLine, startColumn);
       continue;
     }
 
     if (/[=+\-*/]/.test(char)) {
-      tokens.push({ type: 'operator', value: char });
-      current++;
+      push('operator', char);
+      advance();
       continue;
     }
 
     if (/[a-zA-Z_$]/.test(char)) {
+      const startLine = line;
+      const startColumn = column;
       let value = '';
 
       while (/[a-zA-Z0-9_$.]/.test(source[current])) {
-        value += source[current];
-        current++;
+        value += advance();
       }
 
-      tokens.push({ type: 'identifier', value });
+      push('identifier', value, startLine, startColumn);
       continue;
     }
 
-    throw new Error(`Unexpected character: ${char}`);
+    throw new Error(`Unexpected character '${char}' at ${line}:${column}`);
   }
 
-  tokens.push({ type: 'eof', value: '' });
+  push('eof', '');
   return tokens;
 }
