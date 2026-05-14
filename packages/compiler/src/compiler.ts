@@ -1,4 +1,5 @@
 import { parse } from './parser';
+import { evaluateExpression, interpolateTemplate, RuntimeScope } from './expression';
 import { ComponentNode, ElementNode, ForNode, IfNode, ProgramNode, PropertyNode, UINode } from './ast';
 
 const HTML_TAGS: Record<string, string> = {
@@ -16,7 +17,7 @@ const HTML_TAGS: Record<string, string> = {
 interface CompileContext {
   ast: ProgramNode;
   components: Map<string, ComponentNode>;
-  state: Record<string, string | number | boolean>;
+  state: RuntimeScope;
 }
 
 export function compile(source: string): string {
@@ -25,7 +26,7 @@ export function compile(source: string): string {
   const theme = ast.body.find(node => node.type === 'Theme');
   const view = ast.body.find(node => node.type === 'View');
   const components = new Map<string, ComponentNode>();
-  const state = Object.fromEntries(states.map(s => [s.name, s.value]));
+  const state = Object.fromEntries(states.map(s => [s.name, normalizeStateValue(s.value)]));
 
   for (const node of ast.body) {
     if (node.type === 'Component') {
@@ -105,10 +106,14 @@ function updateBindings() {
   document.querySelectorAll('[data-k-text]').forEach((node) => {
     const template = node.dataset.kText;
 
-    node.textContent = template.replace(/\\$([a-zA-Z0-9_]+)/g, (_, key) => {
-      return state[key] ?? '';
+    node.textContent = template.replace(/\\$([a-zA-Z0-9_.]+)/g, (_, key) => {
+      return getPath(key, state) ?? '';
     });
   });
+}
+
+function getPath(path, source) {
+  return path.split('.').reduce((value, part) => value && value[part], source);
 }
 
 document.addEventListener('click', (event) => {
@@ -136,31 +141,31 @@ updateBindings();
 </html>`;
 }
 
-function renderNode(node: UINode, ctx: CompileContext, scope: Record<string, string>): string {
+function renderNode(node: UINode, ctx: CompileContext, scope: RuntimeScope): string {
   if (node.type === 'If') return renderIf(node, ctx, scope);
   if (node.type === 'For') return renderFor(node, ctx, scope);
   return renderElement(node, ctx, scope);
 }
 
-function renderIf(node: IfNode, ctx: CompileContext, scope: Record<string, string>): string {
-  const value = resolveValue(node.condition, ctx, scope);
+function renderIf(node: IfNode, ctx: CompileContext, scope: RuntimeScope): string {
+  const value = evaluateExpression(node.condition, ctx.state, scope);
   const activeBody = Boolean(value) && value !== 'false' ? node.then : node.else;
   return activeBody.map(child => renderNode(child, ctx, scope)).join('');
 }
 
-function renderFor(node: ForNode, ctx: CompileContext, scope: Record<string, string>): string {
-  const collection = resolveValue(node.collection, ctx, scope);
+function renderFor(node: ForNode, ctx: CompileContext, scope: RuntimeScope): string {
+  const collection = evaluateExpression(node.collection, ctx.state, scope);
   const items = Array.isArray(collection)
     ? collection
     : String(collection ?? '').split(',').map(item => item.trim()).filter(Boolean);
 
   return items.map(item => {
-    const nextScope = { ...scope, [node.item]: String(item) };
+    const nextScope = { ...scope, [node.item]: item };
     return node.body.map(child => renderNode(child, ctx, nextScope)).join('');
   }).join('');
 }
 
-function renderElement(element: ElementNode, ctx: CompileContext, scope: Record<string, string>): string {
+function renderElement(element: ElementNode, ctx: CompileContext, scope: RuntimeScope): string {
   const component = ctx.components.get(element.name);
 
   if (component) {
@@ -168,7 +173,7 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Record<
 
     component.params.forEach((param, index) => {
       if (index === 0 && element.label) {
-        nextScope[param] = resolveTemplate(element.label, ctx, scope);
+        nextScope[param] = interpolateTemplate(element.label, ctx.state, scope);
       }
     });
 
@@ -185,19 +190,19 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Record<
 
   for (const event of element.events) {
     if (event.name === 'click') {
-      attrs.push(`data-k-click="${event.action}"`);
+      attrs.push(`data-k-click="${escapeHtml(event.action)}"`);
     }
   }
 
   for (const property of element.properties) {
-    attrs.push(`${property.key}="${property.value}"`);
+    attrs.push(`${property.key}="${escapeHtml(property.value)}"`);
   }
 
   let content = '';
 
   if (element.label) {
-    const label = resolveTemplate(element.label, ctx, scope);
-    content += `<span data-k-text="${escapeHtml(label)}">${escapeHtml(label)}</span>`;
+    const template = interpolateTemplate(element.label, ctx.state, scope);
+    content += `<span data-k-text="${escapeHtml(template)}">${escapeHtml(template)}</span>`;
   }
 
   content += element.children.map(child => renderNode(child, ctx, scope)).join('');
@@ -205,14 +210,11 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Record<
   return `<${tag} ${attrs.join(' ')}>${content}</${tag}>`;
 }
 
-function resolveValue(name: string, ctx: CompileContext, scope: Record<string, string>) {
-  return scope[name] ?? ctx.state[name];
-}
-
-function resolveTemplate(value: string, ctx: CompileContext, scope: Record<string, string>): string {
-  return value.replace(/\$([a-zA-Z0-9_]+)/g, (match, key) => {
-    return String(resolveValue(key, ctx, scope) ?? match);
-  });
+function normalizeStateValue(value: string | number | boolean): unknown {
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  if (typeof value === 'string' && /^-?\d+(\.\d+)?$/.test(value)) return Number(value);
+  return value;
 }
 
 function escapeHtml(value: string): string {
