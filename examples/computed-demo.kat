@@ -1,0 +1,32 @@
+page ComputedDemo
+
+state firstName = "Elias"
+state lastName = "Kattour"
+state clicks = 0
+
+computed fullName = $firstName + " " + $lastName
+computed score = $clicks + 10
+
+view {
+  screen {
+    column {
+      title "$fullName"
+
+      text "Score: $score"
+
+      input {
+        bind firstName
+        placeholder "First name"
+      }
+
+      input {
+        bind lastName
+        placeholder "Last name"
+      }
+
+      button "Increase" {
+        click clicks++
+      }
+    }
+  }
+}
