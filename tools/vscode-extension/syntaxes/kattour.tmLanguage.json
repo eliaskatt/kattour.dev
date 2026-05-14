@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Kattour",
+  "scopeName": "source.kattour",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#keywords" },
+    { "include": "#numbers" },
+    { "include": "#variables" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        { "name": "comment.line.double-slash.kattour", "match": "//.*$" },
+        { "name": "comment.block.kattour", "begin": "/\\*", "end": "\\*/" }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        { "name": "string.quoted.double.kattour", "begin": "\"", "end": "\"", "patterns": [{ "name": "variable.other.interpolation.kattour", "match": "\\$[a-zA-Z_][a-zA-Z0-9_\.]*" }] }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        { "name": "keyword.control.kattour", "match": "\\b(page|route|state|computed|component|effect|if|else|for|in|return)\\b" },
+        { "name": "support.function.kattour", "match": "\\b(section|column|row|grid|card|title|text|button|input|form|navbar|sidebar|item|link|badge|alert|tabs|tab|table|row|stats|stat|pricing|price|feature|template)\\b" },
+        { "name": "keyword.operator.kattour", "match": "\\b(click|submit|change|hover|mount)\\b" }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        { "name": "constant.numeric.kattour", "match": "\\b[0-9]+(\\.[0-9]+)?\\b" }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        { "name": "variable.other.kattour", "match": "\\$[a-zA-Z_][a-zA-Z0-9_\.]*" }
+      ]
+    }
+  }
+}
