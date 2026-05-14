@@ -1,5 +1,6 @@
 import { parse } from './parser';
 import { evaluateExpression, interpolateTemplate, RuntimeScope } from './expression';
+import { browserRuntime } from './runtime';
 import { ComponentNode, ElementNode, ForNode, IfNode, ProgramNode, PropertyNode, UINode } from './ast';
 
 const HTML_TAGS: Record<string, string> = {
@@ -26,12 +27,10 @@ export function compile(source: string): string {
   const theme = ast.body.find(node => node.type === 'Theme');
   const view = ast.body.find(node => node.type === 'View');
   const components = new Map<string, ComponentNode>();
-  const state = Object.fromEntries(states.map(s => [s.name, normalizeStateValue(s.value)]));
+  const state = Object.fromEntries(states.map(s => [s.name, s.value]));
 
   for (const node of ast.body) {
-    if (node.type === 'Component') {
-      components.set(node.name, node);
-    }
+    if (node.type === 'Component') components.set(node.name, node);
   }
 
   const ctx: CompileContext = { ast, components, state };
@@ -62,23 +61,9 @@ body {
   font-family: Inter, system-ui, sans-serif;
 }
 
-.k-screen {
-  min-height: 100vh;
-  padding: 32px;
-}
-
-.k-column {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.k-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
+.k-screen { min-height: 100vh; padding: 32px; }
+.k-column { display: flex; flex-direction: column; gap: 16px; }
+.k-row { display: flex; align-items: center; gap: 16px; }
 .k-card {
   background: white;
   border: 1px solid #e5e7eb;
@@ -95,47 +80,20 @@ button {
   border-radius: calc(var(--k-radius) * 1px);
   cursor: pointer;
 }
+
+input {
+  border: 1px solid #d1d5db;
+  border-radius: calc(var(--k-radius) * 1px);
+  padding: 12px 14px;
+  font: inherit;
+}
 </style>
 </head>
 <body>
 ${html}
 <script>
-const state = ${JSON.stringify(state)};
-
-function updateBindings() {
-  document.querySelectorAll('[data-k-text]').forEach((node) => {
-    const template = node.dataset.kText;
-
-    node.textContent = template.replace(/\\$([a-zA-Z0-9_.]+)/g, (_, key) => {
-      return getPath(key, state) ?? '';
-    });
-  });
-}
-
-function getPath(path, source) {
-  return path.split('.').reduce((value, part) => value && value[part], source);
-}
-
-document.addEventListener('click', (event) => {
-  const target = event.target.closest('[data-k-click]');
-  const action = target && target.dataset.kClick;
-
-  if (!action) return;
-
-  if (action.endsWith('++')) {
-    const key = action.replace('++', '').trim();
-    state[key] = Number(state[key] || 0) + 1;
-  }
-
-  if (action.endsWith('--')) {
-    const key = action.replace('--', '').trim();
-    state[key] = Number(state[key] || 0) - 1;
-  }
-
-  updateBindings();
-});
-
-updateBindings();
+window.__KATTOUR_STATE__ = ${JSON.stringify(state)};
+${browserRuntime}
 </script>
 </body>
 </html>`;
@@ -170,13 +128,9 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Runtime
 
   if (component) {
     const nextScope = { ...scope };
-
     component.params.forEach((param, index) => {
-      if (index === 0 && element.label) {
-        nextScope[param] = interpolateTemplate(element.label, ctx.state, scope);
-      }
+      if (index === 0 && element.label) nextScope[param] = evaluateExpression(element.label, ctx.state, scope);
     });
-
     return component.body.map(child => renderNode(child, ctx, nextScope)).join('');
   }
 
@@ -189,9 +143,12 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Runtime
   if (element.name === 'card') attrs.push('class="k-card"');
 
   for (const event of element.events) {
-    if (event.name === 'click') {
-      attrs.push(`data-k-click="${escapeHtml(event.action)}"`);
-    }
+    if (event.name === 'click') attrs.push(`data-k-click="${escapeHtml(event.action)}"`);
+  }
+
+  for (const binding of element.bindings) {
+    attrs.push(`data-k-bind="${escapeHtml(binding.state)}"`);
+    if (binding.property === 'value') attrs.push(`value="${escapeHtml(String(evaluateExpression(binding.state, ctx.state, scope) ?? ''))}"`);
   }
 
   for (const property of element.properties) {
@@ -201,20 +158,12 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Runtime
   let content = '';
 
   if (element.label) {
-    const template = interpolateTemplate(element.label, ctx.state, scope);
-    content += `<span data-k-text="${escapeHtml(template)}">${escapeHtml(template)}</span>`;
+    content += `<span data-k-text="${escapeHtml(element.label)}">${escapeHtml(interpolateTemplate(element.label, ctx.state, scope))}</span>`;
   }
 
   content += element.children.map(child => renderNode(child, ctx, scope)).join('');
 
   return `<${tag} ${attrs.join(' ')}>${content}</${tag}>`;
-}
-
-function normalizeStateValue(value: string | number | boolean): unknown {
-  if (value === 'true') return true;
-  if (value === 'false') return false;
-  if (typeof value === 'string' && /^-?\d+(\.\d+)?$/.test(value)) return Number(value);
-  return value;
 }
 
 function escapeHtml(value: string): string {
