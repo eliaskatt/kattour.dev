@@ -1,4 +1,4 @@
-import { ProgramNode, ElementNode } from './ast';
+import { ProgramNode, UINode, ElementNode } from './ast';
 import { tokenize, Token } from './tokenizer';
 
 export function parse(source: string): ProgramNode {
@@ -17,17 +17,90 @@ export function parse(source: string): ProgramNode {
     return peek().value === value;
   }
 
+  function expect(value: string) {
+    if (!match(value)) {
+      const token = peek();
+      throw new Error(`Expected '${value}' at ${token.line}:${token.column}, got '${token.value}'`);
+    }
+
+    consume();
+  }
+
   function skipNewlines() {
     while (peek().type === 'newline') consume();
   }
 
+  function parseBlock(): UINode[] {
+    expect('{');
+    const nodes: UINode[] = [];
+
+    while (!match('}') && peek().type !== 'eof') {
+      skipNewlines();
+
+      if (match('}')) break;
+
+      if (peek().type === 'identifier') {
+        nodes.push(parseUINode());
+        continue;
+      }
+
+      consume();
+    }
+
+    expect('}');
+    return nodes;
+  }
+
+  function parseUINode(): UINode {
+    if (match('if')) return parseIf();
+    if (match('for')) return parseFor();
+    return parseElement();
+  }
+
+  function parseIf(): UINode {
+    consume();
+    const condition = consume().value;
+    const thenBody = parseBlock();
+    let elseBody: UINode[] = [];
+
+    skipNewlines();
+
+    if (match('else')) {
+      consume();
+      elseBody = parseBlock();
+    }
+
+    return {
+      type: 'If',
+      condition,
+      then: thenBody,
+      else: elseBody
+    };
+  }
+
+  function parseFor(): UINode {
+    consume();
+    const item = consume().value;
+    expect('in');
+    const collection = consume().value;
+    const body = parseBlock();
+
+    return {
+      type: 'For',
+      item,
+      collection,
+      body
+    };
+  }
+
   function parseElement(): ElementNode {
     const name = consume().value;
-
     let label: string | undefined;
 
-    if (peek().type === 'string') {
-      label = consume().value;
+    if (peek().type === 'string' || peek().type === 'identifier') {
+      if (peek(1).type === 'brace_open' || peek(1).type === 'newline' || peek(1).type === 'brace_close') {
+        label = consume().value;
+      }
     }
 
     const element: ElementNode = {
@@ -47,6 +120,8 @@ export function parse(source: string): ProgramNode {
       while (!match('}') && peek().type !== 'eof') {
         skipNewlines();
 
+        if (match('}')) break;
+
         if (peek().value === 'click') {
           consume();
           const action = consume().value;
@@ -64,17 +139,13 @@ export function parse(source: string): ProgramNode {
           const key = consume().value;
           const value = consume().value;
 
-          element.properties.push({
-            key,
-            value
-          });
-
+          element.properties.push({ key, value });
           skipNewlines();
           continue;
         }
 
         if (peek().type === 'identifier') {
-          element.children.push(parseElement());
+          element.children.push(parseUINode());
           skipNewlines();
           continue;
         }
@@ -82,7 +153,7 @@ export function parse(source: string): ProgramNode {
         consume();
       }
 
-      consume();
+      expect('}');
     }
 
     return element;
@@ -93,22 +164,18 @@ export function parse(source: string): ProgramNode {
   while (peek().type !== 'eof') {
     skipNewlines();
 
+    if (peek().type === 'eof') break;
+
     if (match('page')) {
       consume();
-
-      body.push({
-        type: 'Page',
-        name: consume().value
-      });
-
+      body.push({ type: 'Page', name: consume().value });
       continue;
     }
 
     if (match('theme')) {
       consume();
-      consume();
-
-      const tokens = [];
+      expect('{');
+      const themeTokens = [];
 
       while (!match('}') && peek().type !== 'eof') {
         skipNewlines();
@@ -116,49 +183,36 @@ export function parse(source: string): ProgramNode {
         if (peek().type === 'identifier') {
           const key = consume().value;
           const value = consume().value;
-
-          tokens.push({ key, value });
+          themeTokens.push({ key, value });
           continue;
         }
 
         consume();
       }
 
-      consume();
-
-      body.push({
-        type: 'Theme',
-        tokens
-      });
-
+      expect('}');
+      body.push({ type: 'Theme', tokens: themeTokens });
       continue;
     }
 
     if (match('state')) {
       consume();
       const name = consume().value;
-      consume();
+      expect('=');
       const value = consume().value;
-
-      body.push({
-        type: 'State',
-        name,
-        value
-      });
-
+      body.push({ type: 'State', name, value });
       continue;
     }
 
     if (match('component')) {
       consume();
-
       const name = consume().value;
       const params: string[] = [];
 
       if (peek().type === 'paren_open') {
         consume();
 
-        while (peek().type !== 'paren_close') {
+        while (peek().type !== 'paren_close' && peek().type !== 'eof') {
           if (peek().type === 'identifier') {
             params.push(consume().value);
             continue;
@@ -167,68 +221,22 @@ export function parse(source: string): ProgramNode {
           consume();
         }
 
-        consume();
+        expect(')');
       }
 
-      consume();
-
-      const children: ElementNode[] = [];
-
-      while (!match('}') && peek().type !== 'eof') {
-        skipNewlines();
-
-        if (peek().type === 'identifier') {
-          children.push(parseElement());
-          continue;
-        }
-
-        consume();
-      }
-
-      consume();
-
-      body.push({
-        type: 'Component',
-        name,
-        params,
-        body: children
-      });
-
+      const children = parseBlock();
+      body.push({ type: 'Component', name, params, body: children });
       continue;
     }
 
     if (match('view')) {
       consume();
-      consume();
-
-      const children: ElementNode[] = [];
-
-      while (!match('}') && peek().type !== 'eof') {
-        skipNewlines();
-
-        if (peek().type === 'identifier') {
-          children.push(parseElement());
-          continue;
-        }
-
-        consume();
-      }
-
-      consume();
-
-      body.push({
-        type: 'View',
-        body: children
-      });
-
+      body.push({ type: 'View', body: parseBlock() });
       continue;
     }
 
     consume();
   }
 
-  return {
-    type: 'Program',
-    body
-  };
+  return { type: 'Program', body };
 }
