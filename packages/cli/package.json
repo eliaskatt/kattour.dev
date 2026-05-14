@@ -11,13 +11,14 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && node ./scripts/make-bin-executable.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@kattour/compiler": "workspace:*"
   },
   "devDependencies": {
+    "@types/node": "latest",
     "typescript": "latest"
   }
 }
