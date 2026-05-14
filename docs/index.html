@@ -1,20 +1,36 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Kattour Docs</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-gray-950 text-white min-h-screen font-sans"><header class="border-b border-gray-800 bg-gray-950/80 backdrop-blur sticky top-0"><div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"><a href="../index.html" class="flex items-center gap-3"><img src="../assets/images/logo.png" class="w-9 h-9 rounded-lg"><span class="text-2xl font-bold">Kattour Docs</span></a><nav class="hidden md:flex gap-6 text-gray-300"><a href="../examples/">Examples</a><a href="../templates/">Templates</a><a href="../playground/">Playground</a></nav></div></header><main class="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-[280px_1fr] gap-10"><aside class="space-y-2 text-sm text-gray-300"><a class="block bg-indigo-600 text-white px-4 py-3 rounded-xl" href="#start">Getting Started</a><a class="block hover:bg-gray-900 px-4 py-3 rounded-xl" href="#syntax">Syntax</a><a class="block hover:bg-gray-900 px-4 py-3 rounded-xl" href="#state">State</a><a class="block hover:bg-gray-900 px-4 py-3 rounded-xl" href="#routing">Routing</a><a class="block hover:bg-gray-900 px-4 py-3 rounded-xl" href="#effects">Effects</a></aside><section class="space-y-12"><div><h1 class="text-6xl font-black tracking-tight">Documentation</h1><p class="text-gray-400 text-xl mt-5 max-w-3xl">Learn Kattour from zero to production UI. The docs are being built as interactive pages with live examples.</p></div><article id="start" class="bg-gray-900/70 border border-gray-800 rounded-3xl p-8"><h2 class="text-3xl font-bold mb-4">Getting Started</h2><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-x-auto text-indigo-300">npm install -g kattour
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Kattour Docs</title><link rel="stylesheet" href="../assets/css/kattour-site.css"><style>.docs-layout{display:grid;grid-template-columns:280px 1fr;gap:32px}.docs-aside{position:sticky;top:96px;height:max-content;border:1px solid var(--line);background:rgba(15,23,42,.82);border-radius:24px;padding:14px}.docs-aside a{display:block;color:#cbd5e1;text-decoration:none;font-weight:800;padding:12px 14px;border-radius:14px;font-size:14px}.docs-aside a:hover{background:#111827;color:#fff}.docs-block{scroll-margin-top:100px}.docs-block h2{font-size:34px;letter-spacing:-.05em;margin:0 0 12px}.docs-block p{color:var(--muted);line-height:1.7}.docs-columns{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:900px){.docs-layout,.docs-columns{grid-template-columns:1fr}.docs-aside{position:static}}</style></head><body><header class="kt-header"><div class="kt-shell"><nav class="kt-nav"><a href="../index.html" class="kt-brand"><img src="../assets/images/logo.png"><span>Kattour Docs</span></a><div class="kt-links"><a href="../examples/index.html">Examples</a><a href="../components/index.html">Components</a><a href="../templates/index.html">Templates</a><a href="../playground/index.html">Playground</a><a href="../install/index.html" class="kt-btn primary">Install</a></div></nav></div></header><main class="kt-shell"><section class="kt-hero"><div class="kt-kicker">Documentation Portal</div><h1 class="kt-title">Build with the new Kattour syntax.</h1><p class="kt-lead">A clean block-based language for describing interfaces, state, routing, components and product layouts. No YAML mode, no mixed syntax, no confusion.</p></section><section class="kt-section docs-layout"><aside class="docs-aside"><a href="#start">Getting Started</a><a href="#syntax">Core Syntax</a><a href="#layout">Layout</a><a href="#state">State</a><a href="#routing">Routing</a><a href="#components">Components</a><a href="#events">Events</a><a href="#patterns">Patterns</a></aside><div style="display:grid;gap:24px"><article id="start" class="kt-card docs-block"><div class="kt-card-body"><span class="kt-badge">Start</span><h2>Getting Started</h2><p>Install the CLI, create an app, and start the local dev renderer.</p><pre class="kt-code">npm install -g kattour
 kattour create my-app
 cd my-app
-kattour dev app.kat</pre></article><article id="syntax" class="bg-gray-900/70 border border-gray-800 rounded-3xl p-8"><h2 class="text-3xl font-bold mb-4">Syntax</h2><p class="text-gray-400 mb-5">Kattour is not YAML. It uses a clean block-based declarative syntax focused on UI intent.</p><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-x-auto text-green-300">page Home
+kattour dev app.kat</pre></div></article><article id="syntax" class="kt-card docs-block"><div class="kt-card-body"><span class="kt-badge">Language</span><h2>Core Syntax</h2><p>Kattour uses explicit blocks. Every file starts with a page, followed by state and routes.</p><pre class="kt-code">page Home
 
 route "/" {
   column {
-    title "Hello"
+    title "Hello Kattour"
+    text "Build readable UIs."
     button "Start"
   }
-}</pre></article><article id="state" class="bg-gray-900/70 border border-gray-800 rounded-3xl p-8"><h2 class="text-3xl font-bold mb-4">State</h2><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-x-auto text-green-300">state count = 0
+}</pre></div></article><article id="layout" class="kt-card docs-block"><div class="kt-card-body"><span class="kt-badge">Layout</span><h2>Layout Blocks</h2><p>Use section, column, grid, card and stack blocks to build structured product interfaces.</p><div class="docs-columns"><pre class="kt-code">section {
+  title "Features"
+  grid {
+    card "Fast"
+    card "Readable"
+    card "Typed"
+  }
+}</pre><div class="kt-mini"><h3>Layout mindset</h3><p>Describe intent, not DOM noise. The renderer decides the final optimized structure.</p></div></div></div></article><article id="state" class="kt-card docs-block"><div class="kt-card-body"><span class="kt-badge">Runtime</span><h2>State</h2><p>State defines values used by UI blocks. Computed values are derived from state.</p><pre class="kt-code">state count = 0
 computed label = "Count: " + $count
 
 button "$label" {
   click count++
-}</pre></article><article id="routing" class="bg-gray-900/70 border border-gray-800 rounded-3xl p-8"><h2 class="text-3xl font-bold mb-4">Routing</h2><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-x-auto text-green-300">route "/user/:name" {
-  title "$route.params.name"
-}</pre></article><article id="effects" class="bg-gray-900/70 border border-gray-800 rounded-3xl p-8"><h2 class="text-3xl font-bold mb-4">Effects</h2><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-x-auto text-green-300">effect username {
-  log "$username changed"
-}</pre></article></section></main></body></html>
+}</pre></div></article><article id="routing" class="kt-card docs-block"><div class="kt-card-body"><span class="kt-badge">App</span><h2>Routing</h2><p>Routes map URLs to UI blocks and expose dynamic route parameters.</p><pre class="kt-code">route "/user/:name" {
+  section {
+    title "$route.params.name"
+    text "User profile"
+  }
+}</pre></div></article><article id="components" class="kt-card docs-block"><div class="kt-card-body"><span class="kt-badge">Reuse</span><h2>Components</h2><p>Components are reusable blocks. They will become the foundation of the Kattour UI package system.</p><pre class="kt-code">component ProductCard(name, price) {
+  card "$name" {
+    text "$price"
+    button "Buy now"
+  }
+}</pre></div></article><article id="events" class="kt-card docs-block"><div class="kt-card-body"><span class="kt-badge">Interaction</span><h2>Events</h2><p>Events live inside interactive blocks and update state or trigger runtime effects.</p><pre class="kt-code">button "Add to cart" {
+  click cart.count++
+}</pre></div></article><article id="patterns" class="kt-card docs-block"><div class="kt-card-body"><span class="kt-badge">Product</span><h2>Common Patterns</h2><div class="kt-mini-grid"><div class="kt-mini"><h3>Dashboard</h3><p>Stats, tables and activity blocks.</p></div><div class="kt-mini"><h3>Commerce</h3><p>Product cards and checkout sections.</p></div><div class="kt-mini"><h3>AI App</h3><p>Chat messages and workspace layouts.</p></div><div class="kt-mini"><h3>Admin</h3><p>Sidebar shell and data screens.</p></div></div></div></article></div></section></main></body></html>
