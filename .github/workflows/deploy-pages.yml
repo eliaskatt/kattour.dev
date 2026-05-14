@@ -29,6 +29,7 @@ jobs:
           if [ -d examples ]; then cp -R examples dist/examples; fi
           if [ -d playground ]; then cp -R playground dist/playground; fi
           if [ -d templates ]; then cp -R templates dist/templates; fi
+          if [ -d docs ]; then cp -R docs dist/docs; fi
           touch dist/.nojekyll
           echo "kattour-pages-ok" > dist/status.txt
 
