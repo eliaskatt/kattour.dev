@@ -33,18 +33,18 @@ jobs:
 
       - name: Publish compiler
         working-directory: packages/compiler
-        run: npm publish --access public --provenance
+        run: pnpm publish --access public --provenance --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish CLI
         working-directory: packages/cli
-        run: npm publish --access public --provenance
+        run: pnpm publish --access public --provenance --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish kattour meta package
         working-directory: packages/kattour
-        run: npm publish --access public --provenance
+        run: pnpm publish --access public --provenance --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
