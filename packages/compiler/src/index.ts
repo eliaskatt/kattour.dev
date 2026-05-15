@@ -4,4 +4,5 @@ export * from './expression';
 export * from './parser';
 export * from './analyzer';
 export * from './html';
+export * from './builtins';
 export * from './compiler';
