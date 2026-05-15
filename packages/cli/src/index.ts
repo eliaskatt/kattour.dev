@@ -4,35 +4,54 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import process from 'node:process';
-import { compile } from '../../compiler/src/index';
+
+type KattourCompiler = {
+  compile: (source: string) => string;
+};
 
 const args = process.argv.slice(2);
 const command = args[0];
 
-if (!command) {
-  printHelp();
-  process.exit(0);
+void main();
+
+async function main() {
+  if (!command) {
+    printHelp();
+    process.exit(0);
+  }
+
+  if (command === 'build') {
+    await build(args[1] || 'app.kat');
+  } else if (command === 'dev') {
+    await dev(args[1] || 'app.kat');
+  } else if (command === 'create') {
+    create(args[1] || 'my-kattour-app');
+  } else {
+    console.error(`Unknown command: ${command}`);
+    printHelp();
+    process.exit(1);
+  }
 }
 
-if (command === 'build') {
-  build(args[1] || 'app.kat');
-} else if (command === 'dev') {
-  dev(args[1] || 'app.kat');
-} else if (command === 'create') {
-  create(args[1] || 'my-kattour-app');
-} else {
-  console.error(`Unknown command: ${command}`);
-  printHelp();
-  process.exit(1);
+async function loadCompiler(): Promise<KattourCompiler> {
+  const compiler = await import('@kattour/compiler');
+  const api = compiler as unknown as Partial<KattourCompiler>;
+
+  if (typeof api.compile !== 'function') {
+    fail('Installed @kattour/compiler does not export compile().');
+  }
+
+  return api as KattourCompiler;
 }
 
-function build(entry: string) {
+async function build(entry: string) {
   const input = path.resolve(process.cwd(), entry);
 
   if (!fs.existsSync(input)) {
     fail(`File not found: ${input}`);
   }
 
+  const { compile } = await loadCompiler();
   const source = fs.readFileSync(input, 'utf-8');
   const html = compile(source);
   const outDir = path.resolve(process.cwd(), 'dist');
@@ -43,7 +62,7 @@ function build(entry: string) {
   console.log(`Kattour built: ${path.join(outDir, 'index.html')}`);
 }
 
-function dev(entry: string) {
+async function dev(entry: string) {
   const input = path.resolve(process.cwd(), entry);
   const port = Number(process.env.PORT || 5179);
 
@@ -51,6 +70,7 @@ function dev(entry: string) {
     fail(`File not found: ${input}`);
   }
 
+  const { compile } = await loadCompiler();
   const clients = new Set<http.ServerResponse>();
 
   const server = http.createServer((req, res) => {
