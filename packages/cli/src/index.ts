@@ -34,11 +34,13 @@ function build(entry: string) {
   }
 
   const source = fs.readFileSync(input, 'utf-8');
-  const html = compile(source);
+  const baseDir = path.dirname(input);
+  const html = embedLocalAssets(compile(source), baseDir);
   const outDir = path.resolve(process.cwd(), 'dist');
 
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, 'index.html'), html);
+  fs.writeFileSync(path.join(outDir, '404.html'), html);
 
   console.log(`Kattour built: ${path.join(outDir, 'index.html')}`);
 }
@@ -150,7 +152,37 @@ Commands:
   kattour build <file>`);
 }
 
+function embedLocalAssets(html: string, baseDir: string): string {
+  const MIME: Record<string, string> = {
+    '.svg':  'image/svg+xml',
+    '.png':  'image/png',
+    '.jpg':  'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif':  'image/gif',
+    '.webp': 'image/webp',
+  };
+  function embed(src: string): string | null {
+    if (src.startsWith('data:') || src.startsWith('http') || src.startsWith('//')) return null;
+    const abs = path.resolve(baseDir, src);
+    const ext = path.extname(abs).toLowerCase();
+    if (!MIME[ext] || !fs.existsSync(abs)) return null;
+    const data = fs.readFileSync(abs);
+    return `data:${MIME[ext]};base64,${data.toString('base64')}`;
+  }
+  // Match both plain src="..." and JSON-escaped src=\"...\"
+  return html
+    .replace(/src="([^"]+)"/g, (match, src) => {
+      const uri = embed(src);
+      return uri ? `src="${uri}"` : match;
+    })
+    .replace(/src=\\"([^"\\]+)\\"/g, (match, src) => {
+      const uri = embed(src);
+      return uri ? `src=\\"${uri}\\"` : match;
+    });
+}
+
 function fail(message: string): never {
   console.error(message);
-  process.exit(1);
+  process.exit(1) as never;
+  throw new Error(message);
 }

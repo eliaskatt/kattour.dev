@@ -1,7 +1,6 @@
 {
   "name": "@kattour/cli",
   "version": "0.1.0",
-  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
@@ -18,7 +17,7 @@
     "@kattour/compiler": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "latest",
+    "@types/node": "^25.8.0",
     "typescript": "latest"
   }
 }

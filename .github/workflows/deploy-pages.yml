@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - claude/develop-kattour-project-0twsk
   workflow_dispatch:
 
 permissions:
@@ -20,49 +21,39 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Prepare static site
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile=false
+
+      - name: Build compiler
+        run: pnpm --filter @kattour/compiler build
+
+      - name: Build CLI
+        run: pnpm --filter @kattour/cli build
+
+      - name: Build website
         run: |
-          mkdir -p dist
+          cd apps/website
+          node ../../packages/cli/dist/index.js build app.kat
 
-          # Restore the legacy root website as the primary public website.
-          cp index.html dist/index.html || true
-          cp index.html dist/404.html || true
-          cp modules.html dist/modules.html || true
-          cp docs.html dist/docs.html || true
-          cp examples.html dist/examples.html || true
-          cp mobile.html dist/mobile.html || true
-          cp playground.html dist/playground.html || true
+      - name: Build playground
+        run: pnpm --filter @kattour/playground build
 
-          # Keep assets and optional newer sections available without replacing the legacy pages.
-          cp -R assets dist/assets || true
-          cp -R examples dist/examples || true
-          cp -R playground dist/playground || true
-          cp -R templates dist/templates || true
-          cp -R docs dist/docs || true
-          cp -R showcase dist/showcase || true
-          cp -R components dist/components || true
-          cp -R modules dist/modules || true
-          cp -R install dist/install || true
-          cp -R roadmap dist/roadmap || true
-          cp -R integrations dist/integrations || true
-          cp -R benchmarks dist/benchmarks || true
-          cp -R themes dist/themes || true
-          cp -R community dist/community || true
-          cp -R site dist/site || true
-          cp -R vscode dist/vscode || true
-
-          # Keep the old visual design, but modernize the visible Kattour code snippets.
-          if [ -f dist/modules.html ]; then
-            sed -i 's#</body>#<script src="assets/js/kattour-modern-code.js"></script></body>#' dist/modules.html
-          fi
-          if [ -f dist/index.html ]; then
-            sed -i 's#</body>#<script src="assets/js/kattour-modern-code.js"></script></body>#' dist/index.html
-          fi
-
+      - name: Assemble dist
+        run: |
+          mkdir -p dist/playground
+          cp apps/website/dist/index.html dist/index.html
+          cp apps/website/dist/index.html dist/404.html
+          cp -r apps/playground/dist/. dist/playground/
           touch dist/.nojekyll
-          echo "kattour-legacy-design-modern-code" > dist/status.txt
 
-      - name: Deploy to GitHub Pages branch
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ github.token }}

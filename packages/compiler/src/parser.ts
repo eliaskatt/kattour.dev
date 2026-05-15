@@ -5,8 +5,9 @@ export function parse(source: string): ProgramNode {
   const tokens = tokenize(source);
   let current = 0;
 
-  function peek(offset = 0): Token { return tokens[current + offset]; }
-  function consume(): Token { return tokens[current++]; }
+  const EOF_TOKEN: Token = { type: 'eof', value: '', line: 0, column: 0 };
+  function peek(offset = 0): Token { return tokens[current + offset] ?? EOF_TOKEN; }
+  function consume(): Token { return tokens[current] ? tokens[current++] : EOF_TOKEN; }
   function match(value: string): boolean { return peek().value === value; }
   function expect(value: string) {
     if (!match(value)) {
@@ -100,11 +101,15 @@ export function parse(source: string): ProgramNode {
     return { type: 'For', item, collection, body };
   }
 
+  const PROPERTY_KEYS = new Set(['to', 'placeholder', 'alt', 'method', 'url', 'type', 'src', 'href', 'class', 'id', 'variant', 'style', 'target', 'language', 'in']);
+
   function parseElement(): ElementNode {
     const name = consume().value;
     let label: string | undefined;
-    if (peek().type === 'string' || peek().type === 'identifier') {
-      if (peek(1).type === 'brace_open' || peek(1).type === 'newline' || peek(1).type === 'brace_close') label = consume().value;
+    if (peek().type === 'string') {
+      if (peek(1).type === 'brace_open' || peek(1).type === 'newline' || peek(1).type === 'brace_close' || peek(1).type === 'eof') label = consume().value;
+    } else if (peek().type === 'identifier' && PROPERTY_KEYS.has(peek().value) === false) {
+      if (peek(1).type === 'brace_open' || peek(1).type === 'newline' || peek(1).type === 'brace_close' || peek(1).type === 'eof') label = consume().value;
     }
     const element: ElementNode = { type: 'Element', name, label, properties: [], events: [], bindings: [], children: [] };
     skipNewlines();
@@ -115,7 +120,7 @@ export function parse(source: string): ProgramNode {
         if (match('}')) break;
         if (peek().value === 'click') { consume(); element.events.push({ name: 'click', action: parseExpressionUntilLine() }); skipNewlines(); continue; }
         if (peek().value === 'bind') { consume(); element.bindings.push({ property: 'value', state: consume().value.replace(/^\$/, '') }); skipNewlines(); continue; }
-        if (peek().type === 'identifier' && peek(1).type !== 'brace_open') {
+        if (peek().type === 'identifier' && PROPERTY_KEYS.has(peek().value) && peek(1).type !== 'brace_open') {
           const key = consume().value;
           const value = consume().value;
           element.properties.push({ key, value });
@@ -184,6 +189,7 @@ export function parse(source: string): ProgramNode {
       const themeTokens: PropertyNode[] = [];
       while (!match('}') && peek().type !== 'eof') {
         skipNewlines();
+        if (match('}')) break;
         if (peek().type === 'identifier') { const key = consume().value; themeTokens.push({ key, value: String(parseValue()) }); continue; }
         consume();
       }

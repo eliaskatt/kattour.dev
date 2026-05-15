@@ -1,0 +1,108 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="40" fill="#0A0F1E"/>
+  <circle cx="1050" cy="100" r="260" fill="#14B8A6" fill-opacity="0.22"/>
+  <circle cx="150" cy="720" r="220" fill="#0D9488" fill-opacity="0.18"/>
+
+  <rect x="90" y="90" width="1020" height="620" rx="28" fill="#0F1629" stroke="#1E2A45" stroke-width="4"/>
+
+  <!-- Top nav -->
+  <rect x="90" y="90" width="1020" height="56" rx="28" fill="#111827"/>
+  <!-- Nav logo -->
+  <rect x="125" y="109" width="120" height="18" rx="9" fill="#14B8A6"/>
+  <!-- Nav links -->
+  <rect x="580" y="112" width="60" height="12" rx="6" fill="#374151"/>
+  <rect x="660" y="112" width="60" height="12" rx="6" fill="#374151"/>
+  <rect x="740" y="112" width="60" height="12" rx="6" fill="#374151"/>
+  <!-- CTA button -->
+  <rect x="960" y="107" width="120" height="32" rx="16" fill="#14B8A6"/>
+
+  <!-- Hero section -->
+  <rect x="120" y="175" width="460" height="240" rx="20" fill="#0B1220"/>
+  <!-- Hero avatar circle -->
+  <circle cx="200" cy="260" r="50" fill="#14B8A6" fill-opacity="0.2" stroke="#14B8A6" stroke-width="2"/>
+  <circle cx="200" cy="260" r="30" fill="#14B8A6" fill-opacity="0.3"/>
+  <!-- Hero text lines -->
+  <rect x="270" y="220" width="280" height="24" rx="12" fill="#1F2937"/>
+  <rect x="270" y="256" width="220" height="16" rx="8" fill="#1F2937"/>
+  <rect x="270" y="284" width="200" height="12" rx="6" fill="#1F2937"/>
+  <rect x="270" y="310" width="160" height="12" rx="6" fill="#1F2937"/>
+  <!-- Tech stack pills -->
+  <rect x="270" y="340" width="70" height="22" rx="11" fill="#14B8A6" fill-opacity="0.25" stroke="#14B8A6" stroke-width="1"/>
+  <rect x="350" y="340" width="70" height="22" rx="11" fill="#1F2937"/>
+  <rect x="430" y="340" width="70" height="22" rx="11" fill="#1F2937"/>
+  <!-- Hero headline -->
+  <rect x="270" y="195" width="200" height="20" rx="10" fill="#14B8A6"/>
+
+  <!-- Stats strip -->
+  <rect x="600" y="175" width="490" height="100" rx="20" fill="#0B1220" stroke="#1E2A45" stroke-width="2"/>
+  <rect x="630" y="200" width="80" height="24" rx="8" fill="#14B8A6"/>
+  <rect x="630" y="234" width="100" height="12" rx="6" fill="#1F2937"/>
+  <rect x="780" y="200" width="80" height="24" rx="8" fill="#14B8A6"/>
+  <rect x="780" y="234" width="100" height="12" rx="6" fill="#1F2937"/>
+  <rect x="930" y="200" width="80" height="24" rx="8" fill="#14B8A6"/>
+  <rect x="930" y="234" width="100" height="12" rx="6" fill="#1F2937"/>
+
+  <!-- Skills chart -->
+  <rect x="600" y="295" width="490" height="120" rx="20" fill="#0B1220" stroke="#1E2A45" stroke-width="2"/>
+  <rect x="630" y="315" width="100" height="14" rx="7" fill="#374151"/>
+  <!-- Skill bars -->
+  <rect x="630" y="342" width="420" height="8" rx="4" fill="#1F2937"/>
+  <rect x="630" y="342" width="350" height="8" rx="4" fill="#14B8A6" fill-opacity="0.8"/>
+  <rect x="630" y="360" width="420" height="8" rx="4" fill="#1F2937"/>
+  <rect x="630" y="360" width="280" height="8" rx="4" fill="#14B8A6" fill-opacity="0.6"/>
+  <rect x="630" y="378" width="420" height="8" rx="4" fill="#1F2937"/>
+  <rect x="630" y="378" width="390" height="8" rx="4" fill="#14B8A6" fill-opacity="0.9"/>
+
+  <!-- Project cards row -->
+  <rect x="120" y="440" width="300" height="240" rx="20" fill="#111827" stroke="#1E2A45" stroke-width="2"/>
+  <rect x="440" y="440" width="300" height="240" rx="20" fill="#111827" stroke="#1E2A45" stroke-width="2"/>
+  <rect x="760" y="440" width="310" height="240" rx="20" fill="#111827" stroke="#1E2A45" stroke-width="2"/>
+
+  <!-- Project card image areas -->
+  <rect x="120" y="440" width="300" height="130" rx="20" fill="#0B1220"/>
+  <rect x="440" y="440" width="300" height="130" rx="20" fill="#0B1220"/>
+  <rect x="760" y="440" width="310" height="130" rx="20" fill="#0B1220"/>
+
+  <!-- Project card image decorations -->
+  <rect x="145" y="460" width="250" height="90" rx="12" fill="#14B8A6" fill-opacity="0.08"/>
+  <rect x="465" y="460" width="250" height="90" rx="12" fill="#14B8A6" fill-opacity="0.08"/>
+  <rect x="785" y="460" width="260" height="90" rx="12" fill="#14B8A6" fill-opacity="0.08"/>
+
+  <!-- Card browser bar simulation -->
+  <rect x="145" y="460" width="250" height="18" rx="6" fill="#14B8A6" fill-opacity="0.2"/>
+  <circle cx="158" cy="469" r="4" fill="#14B8A6" fill-opacity="0.6"/>
+  <circle cx="172" cy="469" r="4" fill="#14B8A6" fill-opacity="0.4"/>
+  <circle cx="186" cy="469" r="4" fill="#14B8A6" fill-opacity="0.3"/>
+
+  <rect x="465" y="460" width="250" height="18" rx="6" fill="#14B8A6" fill-opacity="0.2"/>
+  <circle cx="478" cy="469" r="4" fill="#14B8A6" fill-opacity="0.6"/>
+  <circle cx="492" cy="469" r="4" fill="#14B8A6" fill-opacity="0.4"/>
+  <circle cx="506" cy="469" r="4" fill="#14B8A6" fill-opacity="0.3"/>
+
+  <rect x="785" y="460" width="260" height="18" rx="6" fill="#14B8A6" fill-opacity="0.2"/>
+  <circle cx="798" cy="469" r="4" fill="#14B8A6" fill-opacity="0.6"/>
+  <circle cx="812" cy="469" r="4" fill="#14B8A6" fill-opacity="0.4"/>
+  <circle cx="826" cy="469" r="4" fill="#14B8A6" fill-opacity="0.3"/>
+
+  <!-- Tech tag on card -->
+  <rect x="140" y="580" width="70" height="20" rx="10" fill="#14B8A6" fill-opacity="0.25" stroke="#14B8A6" stroke-width="1"/>
+  <rect x="460" y="580" width="70" height="20" rx="10" fill="#14B8A6" fill-opacity="0.25" stroke="#14B8A6" stroke-width="1"/>
+  <rect x="780" y="580" width="70" height="20" rx="10" fill="#14B8A6" fill-opacity="0.25" stroke="#14B8A6" stroke-width="1"/>
+
+  <!-- Card title and desc -->
+  <rect x="140" y="610" width="200" height="14" rx="7" fill="#374151"/>
+  <rect x="140" y="632" width="260" height="10" rx="5" fill="#1F2937"/>
+  <rect x="140" y="650" width="230" height="10" rx="5" fill="#1F2937"/>
+
+  <rect x="460" y="610" width="200" height="14" rx="7" fill="#374151"/>
+  <rect x="460" y="632" width="260" height="10" rx="5" fill="#1F2937"/>
+  <rect x="460" y="650" width="230" height="10" rx="5" fill="#1F2937"/>
+
+  <rect x="780" y="610" width="200" height="14" rx="7" fill="#374151"/>
+  <rect x="780" y="632" width="270" height="10" rx="5" fill="#1F2937"/>
+  <rect x="780" y="650" width="240" height="10" rx="5" fill="#1F2937"/>
+
+  <text x="200" y="230" fill="#14B8A6" font-size="14" font-family="Arial" font-weight="600">Hi, I'm</text>
+  <text x="270" y="218" fill="#fff" font-size="36" font-family="Arial" font-weight="700">Developer Portfolio</text>
+  <text x="270" y="252" fill="#94A3B8" font-size="20" font-family="Arial">Projects • Skills • Contact</text>
+</svg>

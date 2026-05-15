@@ -117,7 +117,12 @@ export function tokenize(source: string): Token[] {
       let value = '';
       advance();
 
-      while (source[current] !== '"' && current < source.length) {
+      while (current < source.length && source[current] !== '"') {
+        if (source[current] === '\\' && current + 1 < source.length) {
+          value += advance();
+          value += advance();
+          continue;
+        }
         value += advance();
       }
 
@@ -140,6 +145,20 @@ export function tokenize(source: string): Token[] {
       }
 
       push('number', value, startLine, startColumn);
+      continue;
+    }
+
+    if (char === '+' && source[current + 1] === '+') {
+      push('operator', '++');
+      advance();
+      advance();
+      continue;
+    }
+
+    if (char === '-' && source[current + 1] === '-') {
+      push('operator', '--');
+      advance();
+      advance();
       continue;
     }
 
