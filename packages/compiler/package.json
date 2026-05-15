@@ -1,17 +1,33 @@
 {
   "name": "@kattour/compiler",
-  "version": "0.1.0",
+  "version": "1.1.0",
+  "description": "Compiler-first UI language engine for Kattour: parser, analyzer, secure renderer, built-in modules and diagnostics.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build && pnpm typecheck"
   },
+  "keywords": [
+    "kattour",
+    "compiler",
+    "ui-language",
+    "declarative-ui",
+    "dashboard",
+    "admin-panel",
+    "static-site"
+  ],
+  "license": "MIT",
   "devDependencies": {
     "typescript": "latest"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
