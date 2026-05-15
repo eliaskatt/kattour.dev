@@ -1,6 +1,7 @@
 {
   "name": "@kattour/cli",
-  "version": "0.1.0",
+  "version": "1.1.0",
+  "description": "Kattour command-line interface for compiling, checking and building Kattour UI projects.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,17 +9,31 @@
     "kattour": "dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && node ./scripts/make-bin-executable.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build && pnpm typecheck"
   },
+  "keywords": [
+    "kattour",
+    "cli",
+    "ui-language",
+    "compiler",
+    "dashboard",
+    "admin-panel"
+  ],
+  "license": "MIT",
   "dependencies": {
-    "@kattour/compiler": "workspace:*"
+    "@kattour/compiler": "1.1.0"
   },
   "devDependencies": {
     "@types/node": "latest",
     "typescript": "latest"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
