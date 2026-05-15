@@ -34,20 +34,14 @@ jobs:
       - name: Typecheck packages
         run: pnpm -r typecheck
 
-      - name: Publish compiler
+      - name: Publish compiler with npm trusted publishing
         working-directory: packages/compiler
         run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish CLI
+      - name: Publish CLI with npm trusted publishing
         working-directory: packages/cli
         run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish kattour meta package
+      - name: Publish kattour meta package with npm trusted publishing
         working-directory: packages/kattour
         run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
