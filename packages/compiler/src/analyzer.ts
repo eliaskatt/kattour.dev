@@ -8,6 +8,7 @@ import {
   StatementNode,
   UINode
 } from './ast';
+import { isBuiltinModule } from './builtins';
 
 export interface AnalysisResult {
   diagnostics: Diagnostic[];
@@ -49,10 +50,12 @@ export function analyze(ast: ProgramNode): AnalysisResult {
     }
     if (node.type === 'Component') {
       if (components.has(node.name)) diag('DUPLICATE_COMPONENT', `Duplicate component '${node.name}'.`, node);
+      if (isBuiltinModule(node.name)) diag('BUILTIN_NAME_SHADOWED', `Component '${node.name}' shadows a built-in module.`, node, 'Use another name or intentionally override it.', 'warning');
       components.set(node.name, node);
     }
     if (node.type === 'Module') {
       if (modules.has(node.name)) diag('DUPLICATE_MODULE', `Duplicate module '${node.name}'.`, node);
+      if (isBuiltinModule(node.name)) diag('BUILTIN_NAME_SHADOWED', `Module '${node.name}' shadows a built-in module.`, node, 'Use another name or intentionally override it.', 'warning');
       modules.set(node.name, node);
     }
     if (node.type === 'Route') routes.push(node);
@@ -93,8 +96,8 @@ export function analyze(ast: ProgramNode): AnalysisResult {
   }
 
   function walkElement(node: ElementNode) {
-    if (!BUILTIN_ELEMENTS.has(node.name) && !components.has(node.name) && !modules.has(node.name)) {
-      diag('UNKNOWN_ELEMENT', `Unknown element/component '${node.name}'.`, node, 'Define it with component/module or use a built-in element.', 'warning');
+    if (!BUILTIN_ELEMENTS.has(node.name) && !components.has(node.name) && !modules.has(node.name) && !isBuiltinModule(node.name)) {
+      diag('UNKNOWN_ELEMENT', `Unknown element/component/module '${node.name}'.`, node, 'Define it with component/module, use a built-in element, or use a built-in module name.', 'warning');
     }
 
     for (const event of node.events) {
