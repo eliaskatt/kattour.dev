@@ -7,6 +7,28 @@ const KattourRuntime = (() => {
   const dependencies = new Map();
   const effectRuns = new Map();
 
+  // Detect base path so routing works on GitHub Pages sub-paths like /kattour.dev/
+  const BASE = (() => {
+    const path = window.location.pathname;
+    const keys = Object.keys(routes).filter(k => k !== '/').sort((a, b) => b.length - a.length);
+    for (const route of keys) {
+      if (path === route) return '';
+      if (path.endsWith(route)) return path.slice(0, -route.length);
+    }
+    if ('/' in routes) return path === '/' ? '' : path.replace(/\\/$/, '');
+    return '';
+  })();
+
+  function stripBase(pathname) {
+    if (BASE && pathname.startsWith(BASE)) return pathname.slice(BASE.length) || '/';
+    return pathname;
+  }
+
+  function withBase(path) {
+    if (!path || !path.startsWith('/')) return path;
+    return BASE + path;
+  }
+
   function getPath(path, source = state) {
     return String(path).split('.').reduce((value, part) => value && value[part], source);
   }
@@ -128,7 +150,7 @@ const KattourRuntime = (() => {
   function routePatternToRegex(pattern) {
     const names = [];
     const escaped = pattern
-      .replace(/\//g, '\\/')
+      .replace(/\\//g, '\\\\/')
       .replace(/:([a-zA-Z0-9_]+)/g, (_, name) => {
         names.push(name);
         return '([^/]+)';
@@ -152,9 +174,10 @@ const KattourRuntime = (() => {
   function renderRoute(pathname = window.location.pathname) {
     const root = document.getElementById('kattour-root');
     if (!root || Object.keys(routes).length === 0) return false;
-    const route = matchRoute(pathname) || matchRoute('/') || null;
+    const stripped = stripBase(pathname);
+    const route = matchRoute(stripped) || matchRoute('/') || null;
     if (!route) return false;
-    setPath('route.path', pathname);
+    setPath('route.path', stripped);
     setPath('route.pattern', route.pattern);
     setPath('route.params', route.params);
     root.innerHTML = route.html;
@@ -163,7 +186,7 @@ const KattourRuntime = (() => {
   }
 
   function navigate(path, options = {}) {
-    const target = String(path || '/');
+    const target = withBase(String(path || '/'));
     if (!options.replace) window.history.pushState({}, '', target);
     else window.history.replaceState({}, '', target);
     renderRoute(window.location.pathname);

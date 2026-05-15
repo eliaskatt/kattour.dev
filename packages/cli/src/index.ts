@@ -39,6 +39,7 @@ function build(entry: string) {
 
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, 'index.html'), html);
+  fs.writeFileSync(path.join(outDir, '404.html'), html);
 
   console.log(`Kattour built: ${path.join(outDir, 'index.html')}`);
 }
