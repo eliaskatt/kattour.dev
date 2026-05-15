@@ -1,0 +1,149 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="40" fill="#0F172A"/>
+  <circle cx="1020" cy="90" r="240" fill="#64748B" fill-opacity="0.22"/>
+  <circle cx="180" cy="720" r="220" fill="#475569" fill-opacity="0.18"/>
+
+  <rect x="90" y="90" width="1020" height="620" rx="28" fill="#111827" stroke="#1F2937" stroke-width="4"/>
+
+  <!-- === TOP NAV === -->
+  <rect x="90" y="90" width="1020" height="60" rx="28" fill="#0B1220"/>
+  <!-- Logo -->
+  <rect x="120" y="108" width="130" height="24" rx="10" fill="#64748B" fill-opacity="0.5"/>
+  <rect x="128" y="114" width="80" height="12" rx="6" fill="#94A3B8"/>
+  <!-- Nav links -->
+  <rect x="380" y="112" width="70" height="16" rx="8" fill="#1F2937"/>
+  <rect x="468" y="112" width="70" height="16" rx="8" fill="#64748B" fill-opacity="0.4"/>
+  <rect x="556" y="112" width="70" height="16" rx="8" fill="#1F2937"/>
+  <rect x="644" y="112" width="70" height="16" rx="8" fill="#1F2937"/>
+  <!-- Active indicator under nav item -->
+  <rect x="468" y="146" width="70" height="3" rx="2" fill="#64748B"/>
+  <!-- Right side: search + avatar + notification -->
+  <rect x="820" y="108" width="140" height="30" rx="15" fill="#1F2937"/>
+  <circle cx="835" cy="123" r="7" fill="#374151"/>
+  <rect x="848" y="117" width="80" height="12" rx="6" fill="#374151"/>
+  <circle cx="998" cy="123" r="14" fill="#1F2937"/>
+  <circle cx="998" cy="123" r="6" fill="#64748B" fill-opacity="0.5"/>
+  <circle cx="1040" cy="123" r="14" fill="#64748B" fill-opacity="0.2"/>
+
+  <!-- Main content below top nav -->
+  <!-- === LEFT SIDEBAR === -->
+  <rect x="90" y="170" width="200" height="520" rx="0" fill="#0B1220"/>
+  <!-- Sidebar items with icons -->
+  <rect x="110" y="195" width="166" height="36" rx="10" fill="#64748B" fill-opacity="0.25"/>
+  <!-- active icon box -->
+  <rect x="118" y="203" width="20" height="20" rx="5" fill="#64748B"/>
+  <rect x="148" y="207" width="80" height="12" rx="6" fill="#94A3B8"/>
+
+  <rect x="118" y="244" width="20" height="20" rx="5" fill="#374151"/>
+  <rect x="148" y="248" width="100" height="12" rx="6" fill="#4B5563"/>
+  <rect x="118" y="276" width="20" height="20" rx="5" fill="#374151"/>
+  <rect x="148" y="280" width="80" height="12" rx="6" fill="#4B5563"/>
+  <rect x="118" y="308" width="20" height="20" rx="5" fill="#374151"/>
+  <rect x="148" y="312" width="90" height="12" rx="6" fill="#4B5563"/>
+
+  <!-- Section divider -->
+  <rect x="118" y="348" width="148" height="1" fill="#1F2937"/>
+  <rect x="118" y="360" width="60" height="10" rx="5" fill="#374151"/>
+
+  <rect x="118" y="382" width="20" height="20" rx="5" fill="#374151"/>
+  <rect x="148" y="386" width="110" height="12" rx="6" fill="#4B5563"/>
+  <rect x="118" y="414" width="20" height="20" rx="5" fill="#374151"/>
+  <rect x="148" y="418" width="70" height="12" rx="6" fill="#4B5563"/>
+  <rect x="118" y="446" width="20" height="20" rx="5" fill="#374151"/>
+  <rect x="148" y="450" width="95" height="12" rx="6" fill="#4B5563"/>
+
+  <!-- Section divider 2 -->
+  <rect x="118" y="490" width="148" height="1" fill="#1F2937"/>
+  <rect x="118" y="502" width="60" height="10" rx="5" fill="#374151"/>
+
+  <rect x="118" y="524" width="20" height="20" rx="5" fill="#374151"/>
+  <rect x="148" y="528" width="80" height="12" rx="6" fill="#4B5563"/>
+  <rect x="118" y="556" width="20" height="20" rx="5" fill="#374151"/>
+  <rect x="148" y="560" width="100" height="12" rx="6" fill="#4B5563"/>
+
+  <!-- Bottom user profile in sidebar -->
+  <rect x="110" y="650" width="166" height="50" rx="10" fill="#111827"/>
+  <circle cx="133" cy="675" r="14" fill="#374151"/>
+  <rect x="155" y="666" width="90" height="12" rx="6" fill="#374151"/>
+  <rect x="155" y="682" width="70" height="10" rx="5" fill="#1F2937"/>
+
+  <!-- Main content area -->
+  <!-- === TABS === -->
+  <rect x="310" y="175" width="780" height="50" rx="14" fill="#0B1220"/>
+  <!-- Tab items -->
+  <rect x="320" y="183" width="120" height="34" rx="10" fill="#64748B" fill-opacity="0.25"/>
+  <rect x="334" y="193" width="90" height="14" rx="7" fill="#94A3B8"/>
+  <!-- Tab underline indicator -->
+  <rect x="320" y="213" width="120" height="3" rx="2" fill="#64748B"/>
+
+  <rect x="450" y="190" width="110" height="20" rx="8" fill="#1F2937"/>
+  <rect x="464" y="196" width="80" height="8" rx="4" fill="#4B5563"/>
+
+  <rect x="570" y="190" width="110" height="20" rx="8" fill="#1F2937"/>
+  <rect x="584" y="196" width="80" height="8" rx="4" fill="#4B5563"/>
+
+  <rect x="690" y="190" width="110" height="20" rx="8" fill="#1F2937"/>
+  <rect x="704" y="196" width="80" height="8" rx="4" fill="#4B5563"/>
+
+  <!-- Content cards below tabs -->
+  <rect x="310" y="245" width="380" height="220" rx="16" fill="#0B1220" stroke="#1F2937" stroke-width="2"/>
+  <rect x="710" y="245" width="380" height="220" rx="16" fill="#0B1220" stroke="#1F2937" stroke-width="2"/>
+
+  <!-- Card content - breadcrumb pattern -->
+  <rect x="330" y="268" width="60" height="14" rx="7" fill="#374151"/>
+  <rect x="398" y="271" width="8" height="8" rx="2" fill="#374151"/>
+  <rect x="414" y="268" width="80" height="14" rx="7" fill="#374151"/>
+  <rect x="502" y="271" width="8" height="8" rx="2" fill="#374151"/>
+  <rect x="518" y="268" width="100" height="14" rx="7" fill="#64748B"/>
+
+  <!-- Breadcrumb in right card -->
+  <rect x="730" y="268" width="60" height="14" rx="7" fill="#374151"/>
+  <rect x="798" y="271" width="8" height="8" rx="2" fill="#374151"/>
+  <rect x="814" y="268" width="100" height="14" rx="7" fill="#64748B"/>
+
+  <!-- Content lines in left card -->
+  <rect x="330" y="300" width="340" height="16" rx="8" fill="#1F2937"/>
+  <rect x="330" y="326" width="320" height="12" rx="6" fill="#1F2937"/>
+  <rect x="330" y="346" width="300" height="12" rx="6" fill="#1F2937"/>
+  <rect x="330" y="366" width="280" height="12" rx="6" fill="#1F2937"/>
+
+  <!-- Action buttons in card -->
+  <rect x="330" y="400" width="110" height="36" rx="18" fill="#64748B" fill-opacity="0.3" stroke="#64748B" stroke-width="2"/>
+  <rect x="450" y="400" width="110" height="36" rx="18" fill="#1F2937"/>
+
+  <!-- Content in right card -->
+  <rect x="730" y="300" width="340" height="16" rx="8" fill="#1F2937"/>
+  <rect x="730" y="326" width="320" height="12" rx="6" fill="#1F2937"/>
+  <rect x="730" y="346" width="300" height="12" rx="6" fill="#1F2937"/>
+  <rect x="730" y="366" width="280" height="12" rx="6" fill="#1F2937"/>
+  <rect x="730" y="400" width="110" height="36" rx="18" fill="#64748B" fill-opacity="0.3" stroke="#64748B" stroke-width="2"/>
+
+  <!-- Bottom content row -->
+  <rect x="310" y="485" width="780" height="190" rx="16" fill="#0B1220" stroke="#1F2937" stroke-width="2"/>
+
+  <!-- Pagination / stepper nav in bottom section -->
+  <rect x="330" y="508" width="140" height="18" rx="9" fill="#374151"/>
+  <!-- Step indicators -->
+  <circle cx="370" cy="555" r="20" fill="#64748B" fill-opacity="0.3" stroke="#64748B" stroke-width="2"/>
+  <rect x="363" y="549" width="14" height="12" rx="4" fill="#94A3B8"/>
+  <rect x="390" y="551" width="60" height="8" rx="4" fill="#374151"/>
+  <rect x="390" y="563" width="40" height="6" rx="3" fill="#1F2937"/>
+
+  <rect x="470" y="553" width="60" height="4" rx="2" fill="#374151"/>
+
+  <circle cx="560" cy="555" r="20" fill="#64748B" fill-opacity="0.15" stroke="#374151" stroke-width="2"/>
+  <rect x="553" y="549" width="14" height="12" rx="4" fill="#374151"/>
+  <rect x="582" y="551" width="60" height="8" rx="4" fill="#374151"/>
+
+  <rect x="660" y="553" width="60" height="4" rx="2" fill="#374151"/>
+
+  <circle cx="750" cy="555" r="20" fill="#64748B" fill-opacity="0.15" stroke="#374151" stroke-width="2"/>
+  <rect x="743" y="549" width="14" height="12" rx="4" fill="#374151"/>
+
+  <!-- Nav arrows in bottom -->
+  <rect x="330" y="610" width="100" height="36" rx="18" fill="#1F2937"/>
+  <rect x="960" y="610" width="110" height="36" rx="18" fill="#64748B"/>
+
+  <text x="600" y="155" fill="#fff" font-size="38" font-family="Arial" font-weight="700" text-anchor="middle">Navigation Patterns</text>
+  <text x="600" y="183" fill="#94A3B8" font-size="20" font-family="Arial" text-anchor="middle">Top Nav • Sidebar • Tabs • Breadcrumbs</text>
+</svg>

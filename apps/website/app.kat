@@ -450,97 +450,134 @@ route "/templates" {
     section {
       eyebrow "Templates"
       title "Ready-made Kattour starters"
-      subtitle "Complete, production-ready templates you can copy and adapt."
+      subtitle "Copy any template into the Playground and customize it in seconds. Everything is open source."
     }
 
     section {
-      title "App templates"
+      title "Full Applications"
 
       grid {
-        card {
+        templatecard {
+          preview { src "assets/images/template-landing.svg" }
           badge "Free"
           heading "Landing Page"
-          text "Hero section, features grid, pricing table, testimonials, CTA block, and footer."
-          row {
-            badge "Minimal"
-            badge "Responsive"
-          }
-          button "Use Template" { click go "/examples" }
+          body "Hero section, feature grid, pricing table, testimonials, CTA, and footer. Mobile-first design."
+          tag "Minimal"
+          tag "Responsive"
+          button "Open in Playground" { variant primary  click go "/playground" }
         }
-        card {
+        templatecard {
+          preview { src "assets/images/template-saas.svg" }
           badge "Free"
           heading "SaaS Dashboard"
-          text "Sidebar navigation, stats cards, data table, chart placeholders, and profile menu."
-          row {
-            badge "Multi-route"
-            badge "State"
-          }
-          button "Use Template" { click go "/examples" }
+          body "Sidebar navigation, stat cards, data table with sorting, chart placeholders, and profile menu."
+          tag "Multi-route"
+          tag "State"
+          button "Open in Playground" { variant primary  click go "/playground" }
         }
-        card {
+        templatecard {
+          preview { src "assets/images/template-auth.svg" }
           badge "Free"
           heading "Authentication Flow"
-          text "Login, register, forgot password, and reset password screens with form validation."
-          row {
-            badge "Multi-route"
-            badge "Forms"
-          }
-          button "Use Template" { click go "/examples" }
+          body "Login, register, forgot password, and reset screens with reactive form validation."
+          tag "Multi-route"
+          tag "Forms"
+          button "Open in Playground" { variant primary  click go "/playground" }
         }
-        card {
+        templatecard {
+          preview { src "assets/images/template-blog.svg" }
           badge "Free"
           heading "Blog Platform"
-          text "Post listing, single post view, tag filtering, and pagination."
-          row {
-            badge "Routing"
-            badge "Dynamic"
-          }
-          button "Use Template" { click go "/examples" }
+          body "Post listing with featured images, single post view, tag filtering, and pagination."
+          tag "Routing"
+          tag "Dynamic"
+          button "Open in Playground" { variant primary  click go "/playground" }
         }
-        card {
+        templatecard {
+          preview { src "assets/images/template-ecommerce.svg" }
           badge "Free"
-          heading "E-commerce"
-          text "Product listing, product detail, shopping cart, checkout, and confirmation."
-          row {
-            badge "State"
-            badge "Multi-route"
-          }
-          button "Use Template" { click go "/examples" }
+          heading "E-commerce Store"
+          body "Product grid, detail page, shopping cart with quantity controls, checkout, and order confirmation."
+          tag "State"
+          tag "Multi-route"
+          button "Open in Playground" { variant primary  click go "/playground" }
         }
-        card {
+        templatecard {
+          preview { src "assets/images/template-portfolio.svg" }
           badge "Free"
           heading "Developer Portfolio"
-          text "Projects showcase, about page, tech stack section, and contact form."
-          row {
-            badge "Minimal"
-            badge "Components"
-          }
-          button "Use Template" { click go "/examples" }
+          body "Projects showcase, about section, tech stack cards, and contact form. Clean and minimal."
+          tag "Minimal"
+          tag "Components"
+          button "Open in Playground" { variant primary  click go "/playground" }
         }
       }
     }
 
     section {
-      title "UI kit templates"
+      title "Industry Templates"
 
       grid {
-        card {
+        templatecard {
+          preview { src "assets/images/template-dashboard.svg" }
+          badge "Free"
+          heading "Analytics Dashboard"
+          body "Real-time charts, KPI cards, date range picker, filterable data table, and export controls."
+          tag "Charts"
+          tag "State"
+          button "Open in Playground" { variant primary  click go "/playground" }
+        }
+        templatecard {
+          preview { src "assets/images/template-ai.svg" }
+          badge "Free"
+          heading "AI Workspace"
+          body "Chat interface, agent management, memory viewer, workflow builder, and model selector."
+          tag "Chat"
+          tag "State"
+          button "Open in Playground" { variant primary  click go "/playground" }
+        }
+        templatecard {
+          preview { src "assets/images/template-delivery.svg" }
+          badge "Free"
+          heading "Delivery Platform"
+          body "Restaurant listing, cart flow, live order tracking, driver map, and rating screen."
+          tag "Multi-route"
+          tag "Real-time"
+          button "Open in Playground" { variant primary  click go "/playground" }
+        }
+      }
+    }
+
+    section {
+      title "UI Component Kits"
+
+      grid {
+        templatecard {
+          preview { src "assets/images/template-forms.svg" }
           badge "Free"
           heading "Form Components"
-          text "Text inputs, selects, checkboxes, radio buttons, textarea, and validation states."
-          button "Use Template" { click go "/examples" }
+          body "Text inputs, selects, checkboxes, radio buttons, textarea, file upload, and validation states."
+          tag "Components"
+          tag "Forms"
+          button "Open in Playground" { variant primary  click go "/playground" }
         }
-        card {
+        templatecard {
+          preview { src "assets/images/template-nav.svg" }
           badge "Free"
           heading "Navigation Patterns"
-          text "Top nav, sidebar nav, breadcrumbs, tabs, and mobile menu."
-          button "Use Template" { click go "/examples" }
+          body "Top nav, sidebar, breadcrumbs, tabs, dropdown menus, and mobile drawer."
+          tag "Layout"
+          tag "Components"
+          button "Open in Playground" { variant primary  click go "/playground" }
         }
-        card {
+        templatecard {
+          preview { src "assets/images/template-cards.svg" }
           badge "Free"
           heading "Card Layouts"
-          text "Feature cards, pricing cards, profile cards, stat cards, and media cards."
-          button "Use Template" { click go "/examples" }
+          body "Feature cards, pricing cards, profile cards, stat cards, media cards, and testimonial cards."
+          tag "Layout"
+          tag "Components"
+          button "Open in Playground" { variant primary  click go "/playground" }
         }
       }
     }

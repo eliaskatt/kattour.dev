@@ -239,6 +239,61 @@ body {
   padding: 24px;
 }
 
+/* ── Template Card ───────────────────────── */
+.k-template-card {
+  background: var(--k-surface);
+  border: 1px solid var(--k-border);
+  border-radius: var(--k-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+.k-template-card:hover {
+  border-color: var(--k-primary);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,.4);
+}
+.k-template-preview {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--k-border);
+  background: #0a0f1e;
+}
+.k-template-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.k-template-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.k-template-actions {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+/* ── Tag ─────────────────────────────────── */
+.k-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.06);
+  color: var(--k-text-muted);
+  border: 1px solid var(--k-border);
+}
+
 /* ── Badge ───────────────────────────────── */
 .k-badge {
   display: inline-flex;
@@ -557,7 +612,9 @@ function renderElement(element: ElementNode, ctx: CompileContext, scope: Runtime
     case 'grid':      return `<div class="k-grid">${element.children.map(c => renderNode(c, ctx, scope)).join('')}</div>`;
     case 'column':    return `<div class="k-column">${element.children.map(c => renderNode(c, ctx, scope)).join('')}</div>`;
     case 'row':       return `<div class="k-row">${element.children.map(c => renderNode(c, ctx, scope)).join('')}</div>`;
-    case 'card':      return `<div class="k-card">${element.children.map(c => renderNode(c, ctx, scope)).join('')}</div>`;
+    case 'card':         return `<div class="k-card">${element.children.map(c => renderNode(c, ctx, scope)).join('')}</div>`;
+    case 'templatecard': return renderTemplateCard(element, ctx, scope);
+    case 'tag':          return `<span class="k-tag">${escapeHtml(element.label ?? '')}</span>`;
     case 'text':      return renderText(element, ctx, scope);
     case 'title':     return renderTitle(element, ctx, scope);
     case 'button':    return renderButton(element, ctx, scope);
@@ -847,6 +904,38 @@ function renderImage(element: ElementNode, ctx: CompileContext, scope: RuntimeSc
   const src = element.label ?? element.properties.find(p => p.key === 'src')?.value ?? '';
   const alt = element.properties.find(p => p.key === 'alt')?.value ?? '';
   return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" loading="lazy" />`;
+}
+
+function renderTemplateCard(element: ElementNode, ctx: CompileContext, scope: RuntimeScope): string {
+  const children = element.children.filter(c => c.type === 'Element') as ElementNode[];
+  const previewEl = children.find(c => c.name === 'preview');
+  const headingEl = children.find(c => c.name === 'heading');
+  const bodyEl    = children.find(c => c.name === 'body');
+  const badges    = children.filter(c => c.name === 'badge');
+  const buttons   = children.filter(c => c.name === 'button');
+  const tags      = children.filter(c => c.name === 'tag' || c.name === 'tagrow');
+
+  const previewSrc = previewEl?.label ?? previewEl?.properties.find(p => p.key === 'src')?.value ?? '';
+  const previewAlt = headingEl?.label ?? '';
+
+  const previewHtml = previewSrc
+    ? `<img src="${escapeHtml(previewSrc)}" alt="${escapeHtml(previewAlt)}" class="k-template-preview" loading="lazy" />`
+    : `<div class="k-template-preview" style="display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15);font-size:13px;">No Preview</div>`;
+
+  const topBadges = badges.map(b => renderBadge(b, ctx, scope)).join('');
+  const tagsHtml = tags.length ? `<div class="k-template-tags">${tags.map(t => renderNode(t, ctx, scope)).join('')}</div>` : '';
+  const btnsHtml = buttons.map(b => renderButton(b, ctx, scope)).join('');
+
+  return `<div class="k-template-card">
+  ${previewHtml}
+  <div class="k-template-body">
+    ${topBadges ? `<div style="margin-bottom:4px">${topBadges}</div>` : ''}
+    ${headingEl ? `<h3 class="k-heading">${escapeHtml(headingEl.label ?? '')}</h3>` : ''}
+    ${bodyEl ? `<p class="k-body">${escapeHtml(bodyEl.label ?? '')}</p>` : ''}
+    ${tagsHtml}
+    ${btnsHtml ? `<div class="k-template-actions">${btnsHtml}</div>` : ''}
+  </div>
+</div>`;
 }
 
 function renderGeneric(element: ElementNode, ctx: CompileContext, scope: RuntimeScope): string {
