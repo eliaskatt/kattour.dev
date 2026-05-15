@@ -25,11 +25,23 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile=false
 
-      - name: Build packages
-        run: pnpm -r build
+      - name: Build compiler
+        run: pnpm --filter @kattour/compiler build
 
-      - name: Typecheck packages
-        run: pnpm -r typecheck
+      - name: Typecheck compiler
+        run: pnpm --filter @kattour/compiler typecheck
+
+      - name: Build CLI
+        run: pnpm --filter @kattour/cli build
+
+      - name: Typecheck CLI
+        run: pnpm --filter @kattour/cli typecheck
+
+      - name: Build kattour meta package
+        run: pnpm --filter kattour build
+
+      - name: Typecheck kattour meta package
+        run: pnpm --filter kattour typecheck
 
       - name: Publish compiler
         working-directory: packages/compiler
