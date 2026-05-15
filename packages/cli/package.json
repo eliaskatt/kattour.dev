@@ -27,7 +27,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@kattour/compiler": "1.1.0"
+    "@kattour/compiler": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "latest",
