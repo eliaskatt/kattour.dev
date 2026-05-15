@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import process from 'node:process';
-import { compile } from '@kattour/compiler';
+import { compile } from '../../compiler/src/index';
 
 const args = process.argv.slice(2);
 const command = args[0];
