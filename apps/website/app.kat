@@ -1,7 +1,7 @@
 page KattourWebsite
 
 theme {
-  primary "#cb0606"
+  primary "#4f46e5"
   radius 16
 }
 
@@ -12,6 +12,7 @@ component NavBar {
     title "Kattour"
     link "Docs" { to "/docs" }
     link "Examples" { to "/examples" }
+    link "Modules" { to "/modules" }
     link "Templates" { to "/templates" }
     link "Install" { to "/install" }
     link "Community" { to "/community" }
@@ -752,6 +753,152 @@ route "/community" {
           heading "Spread the word"
           text "Star the repo, share with your network, and help Kattour grow."
           button "Star on GitHub" { click go "https://github.com/eliaskatt/kattour.dev" }
+        }
+      }
+    }
+
+    SiteFooter
+  }
+}
+
+// ── Modules ─────────────────────────────────────────────────────────────────
+
+route "/modules" {
+  screen {
+    NavBar
+
+    section {
+      eyebrow "UI Modules"
+      title "20 Real-World Kattour Modules"
+      subtitle "Production-ready Kattour code snippets. Copy any module into the Playground and customize in seconds."
+    }
+
+    section {
+      heading "1. Hero Section"
+      split {
+        codeblock "page Landing\n\nstate title = \"Build Faster\"\n\nscreen {\n  column {\n    title \"$title\"\n    subtitle \"Kattour gives you one language\nfor every interface you build.\"\n    row {\n      button \"Get Started\" { click go \"/install\" }\n      button \"Learn More\" { variant outline }\n    }\n  }\n}"
+        card {
+          heading "Hero Section"
+          text "Full-width hero with headline, subtitle, and dual CTA buttons. Ideal for landing pages."
+          row { badge "Marketing"  badge "Responsive" }
+          button "Open in Playground" { click go "/playground" }
+        }
+      }
+    }
+
+    section {
+      heading "2. Login Form"
+      split {
+        codeblock "page Auth\n\nstate email = \"\"\nstate password = \"\"\n\nscreen {\n  column {\n    title \"Sign In\"\n    input \"Email\" { bind email }\n    input \"Password\" { type password  bind password }\n    button \"Login\" { click go \"/dashboard\" }\n    link \"Forgot password?\" { to \"/reset\" }\n  }\n}"
+        card {
+          heading "Login Form"
+          text "Clean authentication form with bound state inputs and a forgot password link."
+          row { badge "Auth"  badge "Form" }
+          button "Open in Playground" { click go "/playground" }
+        }
+      }
+    }
+
+    section {
+      heading "3. Stats Dashboard"
+      split {
+        codeblock "page Dashboard\n\nstate visits = 12480\nstate users = 3241\nstate revenue = 48920\n\nscreen {\n  column {\n    title \"Analytics\"\n    row {\n      card { heading \"$visits\"  text \"Total Visits\" }\n      card { heading \"$users\"   text \"Active Users\" }\n      card { heading \"$$revenue\" text \"Revenue\" }\n    }\n  }\n}"
+        card {
+          heading "Stats Dashboard"
+          text "Three stat cards with reactive state. Swap in real API data or computed values."
+          row { badge "Dashboard"  badge "Reactive" }
+          button "Open in Playground" { click go "/playground" }
+        }
+      }
+    }
+
+    section {
+      heading "4. Navigation Bar"
+      split {
+        codeblock "page App\n\ncomponent TopNav {\n  nav {\n    title \"MyApp\"\n    link \"Home\" { to \"/\" }\n    link \"Features\" { to \"/features\" }\n    link \"Pricing\" { to \"/pricing\" }\n    button \"Sign Up\" { click go \"/register\" }\n  }\n}\n\nscreen {\n  TopNav\n  hero { title \"Welcome\" }\n}"
+        card {
+          heading "Navigation Bar"
+          text "Reusable nav component with links and a CTA. Drop into any route with one line."
+          row { badge "Component"  badge "Navigation" }
+          button "Open in Playground" { click go "/playground" }
+        }
+      }
+    }
+
+    section {
+      heading "5. Card Grid"
+      split {
+        codeblock "page Blog\n\nscreen {\n  column {\n    title \"Latest Posts\"\n    grid {\n      card {\n        heading \"Getting Started\"\n        text \"Learn Kattour in 10 minutes.\"\n        button \"Read\" { click go \"/post/1\" }\n      }\n      card {\n        heading \"State Guide\"\n        text \"How state and computed work.\"\n        button \"Read\" { click go \"/post/2\" }\n      }\n      card {\n        heading \"Routing Guide\"\n        text \"Build multi-page apps easily.\"\n        button \"Read\" { click go \"/post/3\" }\n      }\n    }\n  }\n}"
+        card {
+          heading "Card Grid"
+          text "Three-column card grid. Great for blog posts, features, products, or team members."
+          row { badge "Grid"  badge "Content" }
+          button "Open in Playground" { click go "/playground" }
+        }
+      }
+    }
+
+    section {
+      heading "6. Counter Component"
+      split {
+        codeblock "page Counter\n\nstate count = 0\ncomputed doubled = $count * 2\n\nscreen {\n  column {\n    title \"Counter Demo\"\n    card {\n      heading \"Count: $count\"\n      text \"Doubled: $doubled\"\n      row {\n        button \"−\" { click count-- }\n        button \"Reset\" { click count = 0 }\n        button \"＋\" { click count++ }\n      }\n    }\n  }\n}"
+        card {
+          heading "Counter Component"
+          text "Interactive counter with state, computed values, and three action buttons."
+          row { badge "State"  badge "Interactive" }
+          button "Open in Playground" { click go "/playground" }
+        }
+      }
+    }
+
+    section {
+      heading "7. User Profile Card"
+      split {
+        codeblock "page Profile\n\nstate name = \"Elias Kattour\"\nstate role = \"Developer\"\nstate joined = \"2024\"\n\nscreen {\n  column {\n    card {\n      heading \"$name\"\n      badge \"$role\"\n      text \"Member since $joined\"\n      row {\n        button \"Edit Profile\" { click go \"/edit\" }\n        button \"Sign Out\" { variant outline }\n      }\n    }\n  }\n}"
+        card {
+          heading "User Profile Card"
+          text "Profile card with object state, role badge, and action buttons. Fully reactive."
+          row { badge "Profile"  badge "Object State" }
+          button "Open in Playground" { click go "/playground" }
+        }
+      }
+    }
+
+    section {
+      heading "8. Modal Dialog"
+      split {
+        codeblock "page App\n\nstate showModal = false\n\nscreen {\n  column {\n    button \"Open Modal\" { click showModal = true }\n\n    if $showModal {\n      card {\n        heading \"Confirm Action\"\n        text \"Are you sure? This cannot\nbe undone.\"\n        row {\n          button \"Cancel\" { variant outline  click showModal = false }\n          button \"Confirm\" { click showModal = false }\n        }\n      }\n    }\n  }\n}"
+        card {
+          heading "Modal Dialog"
+          text "Conditional modal using a state boolean. Toggle on/off with buttons — no libraries."
+          row { badge "Modal"  badge "Conditional" }
+          button "Open in Playground" { click go "/playground" }
+        }
+      }
+    }
+
+    section {
+      heading "9. Pricing Table"
+      split {
+        codeblock "page Pricing\n\nscreen {\n  column {\n    title \"Choose Your Plan\"\n    row {\n      card {\n        heading \"Starter\"\n        title \"Free\"\n        text \"Up to 3 projects\"\n        text \"Community support\"\n        button \"Get Started\" { click go \"/signup\" }\n      }\n      card {\n        heading \"Pro\"\n        title \"$12 / mo\"\n        badge \"Popular\"\n        text \"Unlimited projects\"\n        text \"Priority support\"\n        button \"Upgrade\" { click go \"/signup?plan=pro\" }\n      }\n    }\n  }\n}"
+        card {
+          heading "Pricing Table"
+          text "Two-tier pricing layout with feature lists and CTA buttons. Mark one plan as popular."
+          row { badge "Pricing"  badge "Marketing" }
+          button "Open in Playground" { click go "/playground" }
+        }
+      }
+    }
+
+    section {
+      heading "10. Settings Form"
+      split {
+        codeblock "page Settings\n\nstate username = \"elias\"\nstate email = \"elias@example.com\"\n\nscreen {\n  column {\n    title \"Account Settings\"\n    input \"Username\" { bind username }\n    input \"Email address\" { bind email }\n    button \"Save Changes\" { click go \"/settings\" }\n    button \"Cancel\" { variant outline  click go \"/profile\" }\n  }\n}"
+        card {
+          heading "Settings Form"
+          text "Account settings with two-way bound inputs. Changes reflected in real time."
+          row { badge "Form"  badge "Settings" }
+          button "Open in Playground" { click go "/playground" }
         }
       }
     }

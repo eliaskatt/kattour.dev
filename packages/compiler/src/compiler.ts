@@ -22,9 +22,9 @@ const KATTOUR_KEYWORDS = [
 const KATTOUR_CSS = `
 :root {
   color-scheme: dark;
-  --k-primary: #cb0606;
-  --k-primary-light: #f43f5e;
-  --k-bg: #07090f;
+  --k-primary: #4f46e5;
+  --k-primary-light: #818cf8;
+  --k-bg: #0f172a;
   --k-surface: rgba(13, 18, 30, 0.9);
   --k-surface-raised: rgba(17, 24, 39, 0.95);
   --k-border: rgba(255,255,255,0.07);
@@ -44,8 +44,8 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--k-bg);
   background-image:
-    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(203,6,6,0.13), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(79,70,229,0.06), transparent 50%);
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(79,70,229,0.2), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(168,85,247,0.1), transparent 50%);
   background-attachment: fixed;
   color: var(--k-text);
   font-family: var(--k-font);
@@ -68,7 +68,7 @@ body {
   top: 0;
   z-index: 200;
   width: 100%;
-  background: rgba(7,9,15,0.88);
+  background: rgba(15,23,42,0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--k-border);
@@ -122,12 +122,12 @@ body {
   align-items: center;
   padding: 8px 18px;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--k-primary), #ef4444);
+  background: linear-gradient(135deg, var(--k-primary), #6366f1);
   color: #fff !important;
   font-weight: 700;
   font-size: 14px;
   text-decoration: none;
-  box-shadow: 0 4px 14px rgba(203,6,6,0.35);
+  box-shadow: 0 4px 14px rgba(79,70,229,0.4);
   transition: opacity .15s, transform .1s;
   white-space: nowrap;
 }
@@ -260,7 +260,7 @@ body {
   object-fit: cover;
   display: block;
   border-bottom: 1px solid var(--k-border);
-  background: #0a0f1e;
+  background: #0f172a;
 }
 .k-template-body {
   padding: 20px;
@@ -304,9 +304,9 @@ body {
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  background: rgba(203,6,6,0.14);
+  background: rgba(79,70,229,0.14);
   color: #fca5a5;
-  border: 1px solid rgba(203,6,6,0.28);
+  border: 1px solid rgba(79,70,229,0.28);
   margin-bottom: 2px;
 }
 .k-badge.done   { background: rgba(34,197,94,0.12); color: #86efac; border-color: rgba(34,197,94,0.25); }
@@ -314,7 +314,7 @@ body {
 .k-badge.next   { background: rgba(99,102,241,0.14); color: #c7d2fe; border-color: rgba(99,102,241,0.28); }
 .k-badge.planned{ background: rgba(107,114,128,0.14); color: #d1d5db; border-color: rgba(107,114,128,0.25); }
 .k-badge.free   { background: rgba(34,197,94,0.12); color: #86efac; border-color: rgba(34,197,94,0.25); }
-.k-badge.open.source { background: rgba(203,6,6,0.14); }
+.k-badge.open.source { background: rgba(79,70,229,0.14); }
 .k-badge.community  { background: rgba(99,102,241,0.14); color: #c7d2fe; border-color: rgba(99,102,241,0.28); }
 .k-badge.contribute { background: rgba(251,191,36,0.12); color: #fde68a; border-color: rgba(251,191,36,0.25); }
 
@@ -393,9 +393,9 @@ button, a.k-btn {
   font: 600 15px var(--k-font);
   transition: opacity .15s, transform .1s, box-shadow .15s;
   text-decoration: none;
-  background: linear-gradient(135deg, var(--k-primary), #ef4444);
+  background: linear-gradient(135deg, var(--k-primary), #6366f1);
   color: #fff;
-  box-shadow: 0 4px 16px rgba(203,6,6,0.3);
+  box-shadow: 0 4px 16px rgba(79,70,229,0.35);
   white-space: nowrap;
 }
 button:hover, a.k-btn:hover { opacity: .85; }
@@ -430,7 +430,7 @@ input {
   transition: border-color .15s;
 }
 input::placeholder { color: var(--k-text-faint); }
-input:focus { outline: none; border-color: rgba(203,6,6,0.55); box-shadow: 0 0 0 3px rgba(203,6,6,0.12); }
+input:focus { outline: none; border-color: rgba(79,70,229,0.55); box-shadow: 0 0 0 3px rgba(79,70,229,0.12); }
 
 /* ── Divider ─────────────────────────────── */
 .k-divider { border: none; border-top: 1px solid var(--k-border); margin: 40px 0; }
@@ -460,8 +460,8 @@ input:focus { outline: none; border-color: rgba(203,6,6,0.55); box-shadow: 0 0 0
 
 /* ── Highlight ───────────────────────────── */
 .k-highlight {
-  background: linear-gradient(135deg, rgba(203,6,6,0.1), rgba(244,63,94,0.06));
-  border: 1px solid rgba(203,6,6,0.2);
+  background: linear-gradient(135deg, rgba(79,70,229,0.1), rgba(99,102,241,0.06));
+  border: 1px solid rgba(79,70,229,0.2);
   border-radius: var(--k-radius);
   padding: 32px;
 }
