@@ -1,0 +1,13 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Kattour Dashboard Example</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-gray-950 text-white min-h-screen font-sans"><header class="border-b border-gray-800 bg-gray-950/80 backdrop-blur sticky top-0 z-50"><div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"><a href="./" class="text-gray-300 hover:text-white">← Examples</a><a href="../playground/" class="bg-indigo-600 px-4 py-2 rounded-lg">Open Playground</a></div></header><main class="max-w-7xl mx-auto px-6 py-12 grid lg:grid-cols-[1.15fr_.85fr] gap-8"><section><h1 class="text-5xl font-black mb-4">Analytics Dashboard</h1><p class="text-gray-400 text-lg mb-8">A production-style dashboard layout with cards, activity and data panels.</p><div class="bg-gray-900 border border-gray-800 rounded-3xl p-6"><div class="grid md:grid-cols-[220px_1fr] gap-6"><aside class="bg-gray-950 rounded-2xl p-5 border border-gray-800"><h3 class="font-bold mb-6">Kattour Admin</h3><nav class="space-y-3 text-gray-400"><div class="text-indigo-300">Overview</div><div>Orders</div><div>Customers</div><div>Reports</div></nav></aside><div class="space-y-6"><div class="grid md:grid-cols-3 gap-4"><div class="bg-indigo-600 rounded-2xl p-5"><p class="text-indigo-100">Revenue</p><h2 class="text-3xl font-black">€48.2K</h2></div><div class="bg-gray-800 rounded-2xl p-5"><p class="text-gray-400">Users</p><h2 class="text-3xl font-black">12,420</h2></div><div class="bg-gray-800 rounded-2xl p-5"><p class="text-gray-400">Orders</p><h2 class="text-3xl font-black">1,284</h2></div></div><div class="bg-gray-800 rounded-2xl p-5"><h3 class="font-bold mb-4">Activity</h3><div class="space-y-3 text-gray-300"><p>New merchant connected</p><p>Invoice generated</p><p>Route updated</p></div></div></div></div></div></section><section class="space-y-6"><div class="bg-gray-900 border border-gray-800 rounded-3xl p-6"><h2 class="text-2xl font-bold mb-4">Kattour Code</h2><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-auto text-green-300">page Dashboard
+
+state revenue = "€48.2K"
+
+route "/" {
+  sidebar "Kattour Admin"
+  card "Revenue" {
+    text "$revenue"
+  }
+}</pre></div><div class="bg-gray-900 border border-gray-800 rounded-3xl p-6"><h2 class="text-2xl font-bold mb-4">AST Preview</h2><pre class="bg-gray-950 rounded-xl p-5 text-sm overflow-auto text-cyan-300">Program
+ └─ Route "/"
+    ├─ Sidebar
+    └─ Card Revenue</pre></div></section></main></body></html>

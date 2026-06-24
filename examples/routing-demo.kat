@@ -1,0 +1,67 @@
+page RoutingDemo
+
+theme {
+  primary "#cb0606"
+  radius 16
+}
+
+state username = "Elias"
+
+computed welcome = "Welcome " + $username
+
+effect route.path {
+  log "Route changed"
+}
+
+route "/" {
+  screen {
+    column {
+      title "$welcome"
+
+      text "This is the home route"
+
+      input {
+        bind username
+        placeholder "Your name"
+      }
+
+      row {
+        link "Dashboard" {
+          to "/dashboard"
+        }
+
+        link "Profile" {
+          to "/user/elias"
+        }
+      }
+    }
+  }
+}
+
+route "/dashboard" {
+  screen {
+    column {
+      title "Dashboard"
+
+      text "Hello $username"
+
+      link "Back Home" {
+        to "/"
+      }
+    }
+  }
+}
+
+route "/user/:name" {
+  screen {
+    column {
+      title "User: $route.params.name"
+
+      text "Dynamic route params are working"
+
+      link "Back Home" {
+        to "/"
+      }
+    }
+  }
+}

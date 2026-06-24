@@ -1,0 +1,35 @@
+page Home
+
+theme {
+  primary "#cb0606"
+  radius 18
+}
+
+state count = 0
+state username = "Elias"
+
+component CounterCard(title) {
+  card {
+    text "$title"
+
+    button "Count: $count" {
+      click count++
+    }
+  }
+}
+
+view {
+  screen {
+    column {
+      title "Kattour"
+
+      text "Hello $username"
+
+      button "Increase" {
+        click count++
+      }
+
+      CounterCard "Main Counter"
+    }
+  }
+}

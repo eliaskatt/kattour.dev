@@ -1,0 +1,32 @@
+page EffectDemo
+
+state username = "Elias"
+state clicks = 0
+
+computed greeting = "Hello " + $username
+
+effect username {
+  log "$username changed"
+}
+
+effect clicks {
+  log "Clicks updated"
+}
+
+view {
+  screen {
+    column {
+      title "$greeting"
+
+      text "Clicks: $clicks"
+
+      input {
+        bind username
+      }
+
+      button "Add" {
+        click clicks++
+      }
+    }
+  }
+}

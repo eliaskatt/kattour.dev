@@ -1,0 +1,24 @@
+/* style.css */
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    background-color: #f9fafb;
+    color: #333;
+  }
+  
+  a {
+    color: #10b981;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  pre {
+    background: #f3f4f6;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+  
